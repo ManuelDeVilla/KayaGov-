@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('usertype');
+            $table->string('image_path');
             $table->timestamps();
         });
 

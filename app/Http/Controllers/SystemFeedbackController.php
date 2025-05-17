@@ -20,16 +20,28 @@ class SystemFeedbackController extends Controller
      */
     public function create()
     {
-        //
+        return view('feedback.create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-    }
+{
+    $request->validate([
+        'username' => 'required|string|max:255',
+        'rating' => 'required|integer|min:1|max:5',
+        'feedback' => 'required|string',
+    ]);
+
+    \App\Models\system_feedback::create([
+        'username' => $request->username,
+        'rating' => $request->rating,
+        'feedback' => $request->feedback,
+    ]);
+
+    return redirect()->route('dashboard')->with('success', 'Feedback submitted!');
+}
 
     /**
      * Display the specified resource.

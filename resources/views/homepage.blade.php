@@ -7,9 +7,8 @@
 </head>
 <body>
     <header>
-        @include('includes.navbar')
+        @include('includes.header')
     </header>
-
     <h1>Home Page</h1>
 </body>
 </html>

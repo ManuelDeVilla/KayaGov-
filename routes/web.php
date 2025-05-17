@@ -24,5 +24,8 @@ Route::controller(UserController::class)->group(function() {
     Route::get('/login', 'showLogin')->name('show.login');
     // Handling requests
     Route::post('login', 'login')->name('login');
+
+    // Logout Routes
+    Route::get('/logout', 'logout')->name('logout');
 });
 

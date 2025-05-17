@@ -3,7 +3,7 @@
 <div class="main-header">
     <div class="logo">
         <a href="{{ route('homepage') }}">
-            <img src="{{ asset('images/kayagov_logo.png') }}" alt="KayaGov Logo" ">
+            <img src="{{ asset('images/kayagov_logo.png') }}" alt="KayaGov Logo">
         </a>
     </div>
     <nav class="nav-links">

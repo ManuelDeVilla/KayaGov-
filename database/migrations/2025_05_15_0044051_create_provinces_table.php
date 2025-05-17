@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('provinces', function (Blueprint $table) {
             $table->id();
-            $table->string('province');
+            $table->foreignId('region_id')->constrained('regions', 'id')->onDelete('cascade');
+            $table->string('province_initial');
+            $table->string('province')->strtoupper();
             $table->timestamps();
         });
     }

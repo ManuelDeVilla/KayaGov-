@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ConcernsController;
+use App\Http\Controllers\SystemFeedbackController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -27,5 +29,17 @@ Route::controller(UserController::class)->group(function() {
 
     // Logout Routes
     Route::get('/logout', 'logout')->name('logout');
+
+    // dashboard routes
+    Route::get('/dashboard', function () {
+    return view('dashboard');
+        })->name('dashboard');
+
+    // User Profile Routes
+    Route::get('/concerns', [ConcernsController::class, 'index'])->name('concerns.list');
+
+    // for feedback creation
+ Route::get('/feedback/create', [SystemFeedbackController::class, 'create'])->name('feedback.create');
+Route::post('/feedback', [SystemFeedbackController::class, 'store'])->name('feedback.store');
 });
 

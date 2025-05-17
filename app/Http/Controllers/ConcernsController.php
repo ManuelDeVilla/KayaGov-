@@ -12,7 +12,8 @@ class ConcernsController extends Controller
      */
     public function index()
     {
-        //
+    $concerns = \App\Models\concerns::all();
+    return view('concerns.index', compact('concerns'));
     }
 
     /**

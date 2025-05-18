@@ -30,10 +30,27 @@ Route::controller(UserController::class)->group(function() {
     // Logout Routes
     Route::get('/logout', 'logout')->name('logout');
 
-    // dashboard routes
-    Route::get('/dashboard', function () {
-    return view('dashboard');
-        })->name('dashboard');
+// since login and register are not yet ready, hardcode muna
+//     // dashboard routes
+//     Route::middleware(['auth'])->group(function () {
+//     Route::get('/dashboard/staff', function () {
+//         return view('dashboard.staff');
+//     })->name('dashboard.staff');
+
+//     Route::get('/dashboard/citizen', function () {
+//         return view('dashboard.citizen');
+//     })->name('dashboard.citizen');
+// });
+
+// route for hard coded dashboard
+Route::get('/dashboard/staff', function () {
+    return view('dashboard.staff');
+})->name('dashboard.staff');
+
+Route::get('/dashboard/citizen', function () {
+    return view('dashboard.citizen');
+})->name('dashboard.citizen');
+
 
     // User Profile Routes
     Route::get('/concerns', [ConcernsController::class, 'index'])->name('concerns.list');

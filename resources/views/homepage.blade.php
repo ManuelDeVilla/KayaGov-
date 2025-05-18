@@ -8,7 +8,6 @@
 </head>
 <body>
     <header>
-        @include('includes.header')
         @include('includes.navbar')
     </header>
     <h1>Home Page</h1>

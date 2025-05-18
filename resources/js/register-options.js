@@ -130,7 +130,8 @@ function selectorType (selector_type, search_value, wrapper, get_type) {
 
                             cities = {
                                 city: city_rows,
-                                province: province_initial
+                                province: province_initial,
+                                province_id: province_index
                             }
 
                             createOptions (cities, wrapper, selector_type)
@@ -141,38 +142,42 @@ function selectorType (selector_type, search_value, wrapper, get_type) {
     }
 }
 
-function createOptions (value, wrapper, selector_type, province_value) {
+function createOptions (value, wrapper, selector_type) {
+    let input_text_content = null
     let input_value = null
     const selector_text = wrapper.querySelector('.selector_text')
     const options = wrapper.querySelector('.options')
     const option_input = wrapper.querySelector('.input')
 
-    const input = document.createElement('p')
-    input.setAttribute('id', value.id);
-    input.setAttribute('class', 'selector-inputs');
+    const inputs = document.createElement('p')
+    inputs.setAttribute('id', value.id);
+    inputs.setAttribute('class', 'selector-inputs');
 
     switch (selector_type) {
         case 'region':
-            input.textContent = value.regions
-            input_value = value.regions
+            inputs.textContent = value.regions
+            input_text_content = value.regions
+            input_value = value.id
             break
         
         case 'province':
-            input.textContent = value.province
-            input_value = value.province
+            inputs.textContent = value.province
+            input_text_content = value.province
+            input_value = value.id
             break
 
         case 'city':
             console.log(value)
-            input.textContent = value.city.city + " [" + value.province + "]"
-            input_value = value.city.city + " [" + value.province + "]"
+            inputs.textContent = value.city.city + " [" + value.province + "]"
+            input_text_content = value.city.city + " [" + value.province + "]"
+            input_value = value.city.id
             break
     }
 
-    input.addEventListener('click', function () {
-        selector_text.textContent = input_value
+    inputs.addEventListener('click', function () {
+        selector_text.textContent = input_text_content
         option_input.setAttribute('value', input_value)
     })
 
-    options.appendChild(input)
+    options.appendChild(inputs)
 }

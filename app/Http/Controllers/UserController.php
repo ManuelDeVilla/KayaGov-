@@ -71,9 +71,9 @@ class UserController extends Controller
             'email' => 'required|email',
             'gender' => 'required|in:Male,Female',
             'usertype' => 'required',
-            'region' => 'required|exists:regions,regions',
-            'province' => 'required|exists:provinces,province',
-            'city' => 'required',
+            'region' => 'required|exists:regions,id',
+            'province' => 'required|exists:provinces,id',
+            'city' => 'required|exists:cities,id',
             'password' => 'required|min:6|max:20|confirmed'
         ]);
 
@@ -95,7 +95,7 @@ class UserController extends Controller
         return view('auth.login');
     }
     
-    public function login () 
+    public function login (Request $request) 
     {
 
     }

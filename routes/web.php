@@ -39,7 +39,7 @@ Route::controller(UserController::class)->group(function() {
     Route::get('/concerns', [ConcernsController::class, 'index'])->name('concerns.list');
 
     // for feedback creation
- Route::get('/feedback/create', [SystemFeedbackController::class, 'create'])->name('feedback.create');
-Route::post('/feedback', [SystemFeedbackController::class, 'store'])->name('feedback.store');
+    Route::get('/feedback/create', [SystemFeedbackController::class, 'create'])->name('feedback.create');
+    Route::post('/feedback', [SystemFeedbackController::class, 'store'])->name('feedback.store');
 });
 

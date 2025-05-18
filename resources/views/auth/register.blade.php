@@ -7,8 +7,8 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    @vite('resources/css/dropdowns.css')
-    @vite('resources/css/register.css')
+    @vite('resources/css/register/dropdowns.css')
+    @vite('resources/css/register/register.css')
 </head>
 <body>
     <header>

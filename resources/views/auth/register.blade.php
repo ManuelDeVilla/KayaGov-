@@ -29,7 +29,7 @@
             <div class="form-card">
                 <form action="{{ route('register') }}" method="post">
                     @csrf
-                    <input type="hidden" id="username" name="usertype" value="USER">
+                    <input type="hidden" id="username" name="usertype" value="citizen">
 
                     <div class="input">
                         <label for="username">Username</label>

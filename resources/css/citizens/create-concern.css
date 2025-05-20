@@ -1,0 +1,185 @@
+* {
+    font-family: "Montserrat", sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: #f8f8f9;
+}
+
+.body {
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+}
+
+.section-header {
+    margin-bottom: 20px;
+}
+
+.section-header * {
+    margin: 5px 0px 5px 0px;
+}
+
+.section-header h1 {
+    font-size: 25px;
+}
+
+.section-body {
+    width: 75%;
+    border-radius: 5px;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+    margin-bottom: 40px;
+}
+
+form {
+    width: 100%;
+}
+
+.form-header {
+    border-bottom: 1px rgb(188, 188, 188) solid;
+    margin-bottom: 30px;
+}
+
+.form-header p {
+    font-size: 25px;
+    font-weight: 700;
+    margin-left: 20px;
+    margin: 20px 0 10px 35px;
+}
+
+.input {
+    margin: 15px 0 15px 0;
+    padding: 0 30px 0 30px;
+}
+
+.input .input-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input, textarea, select {
+    display: block;
+    width: 100%;
+    border: 1px solid rgb(154, 153, 153);
+    border-radius: 10px;
+}
+
+input, textarea {
+    width: 96%;
+    padding: 10px 20px 10px 20px;
+}
+
+select {
+    padding: 10px 20px 10px 10px;
+}
+
+/* Selector-wrapper for city */
+select, .selector-wrapper {
+    display: block;
+    width: 100%;
+    padding: 10px 0 10px 0;
+    border-radius: 8px;
+    background-color: #fefffe;
+    border: 1px solid rgb(154, 153, 153);
+}
+
+.selector-wrapper .selector{
+    display: flex;
+    justify-content: space-between;
+}
+
+.selector-wrapper .selector span {
+    font-size: 13px;
+    margin: 0 3px 0 5px;
+}
+
+.file {
+    display: none;
+    padding: 0;
+    margin: 0;
+}
+
+.upload-wrapper {
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px dashed rgb(154, 153, 153);
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+/* For input label */
+.image-label {
+    display: none;
+}
+
+.image-label.active {
+    display: block;
+}
+
+/* JS created elements CSS */
+.image-detail-div {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0 10px 0;
+    padding: 10px 0 10px 0;
+    border: 1px solid rgb(154, 153, 153);
+    border-radius: 10px;
+}
+
+.required.active {
+    display: inline;
+}
+
+.required {
+    display: none;
+    color: red;
+}
+
+/* Back to styling html */
+.image-detail-label {
+    margin-left: 10px;
+}
+
+.image-detail-delete {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.button-wrapper {
+    height: 80px;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    border-top: 1px solid rgb(154, 153, 153);
+}
+
+.button-wrapper a {
+    height: 50%;
+    margin: 0 10px 0 10px;
+}
+
+.submit, .cancel {
+    padding: 0 30px 0 30px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.cancel {
+    height: 100%;
+    background-color: transparent;
+    border: 1px solid rgb(154, 153, 153);
+}
+
+.submit {
+    height: 50%;
+    background-color: #3266fe;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0 30px 0 10px;
+    border: none;
+}

@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('concerns', function (Blueprint $table) {
             $table->id();
             $table->string('title');
+            $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade');
             $table->text('description');
             $table->string('city');
+            $table->string('category');
             $table->integer('priority');
-            $table->string('pending');
+            $table->string('status');
             $table->timestamps();
         });
     }

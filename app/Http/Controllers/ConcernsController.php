@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\concerns;
+use App\Models\concerns_image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ConcernsController extends Controller
 {
@@ -12,8 +14,7 @@ class ConcernsController extends Controller
      */
     public function index()
     {
-    $concerns = \App\Models\concerns::all();
-    return view('concerns.index', compact('concerns'));
+
     }
 
     /**
@@ -22,6 +23,7 @@ class ConcernsController extends Controller
     public function create()
     {
         //
+        return view('citizens.create-concern');
     }
 
     /**
@@ -29,7 +31,31 @@ class ConcernsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validate_concern = $request->validate([
+            'title' => 'string|required',
+            'description' => 'required',
+            'category' => 'required',
+            'city' => 'required'
+        ]);
+
+        $validate_concern['user_id'] = Auth::id();
+        $validate_concern['status'] = 'pending';
+        $validate_concern['priority'] = 0;
+        $object_concern = concerns::create($validate_concern);
+
+        $validate_images = $request->file('file');
+        if ($validate_images) {
+            foreach ($validate_images as $validate_image) {
+                $image_path = $validate_image->store('image-concern', 'public');
+
+                concerns_image::create([
+                    'concerns_id' => $object_concern->id,
+                    'image_path' => $image_path
+                ]);
+            }
+        }
+
+        return redirect()->route('homepage');
     }
 
     /**

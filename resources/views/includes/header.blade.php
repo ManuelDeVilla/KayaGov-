@@ -1,5 +1,3 @@
-
-<link rel="stylesheet" href="{{ asset('css/header.css') }}">
 <div class="main-header">
     <div class="logo">
         <a href="{{ route('homepage') }}">

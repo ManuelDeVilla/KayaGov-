@@ -167,7 +167,6 @@ function createOptions (value, wrapper, selector_type) {
             break
 
         case 'city':
-            console.log(value)
             inputs.textContent = value.city.city + " [" + value.province + "]"
             input_text_content = value.city.city + " [" + value.province + "]"
             input_value = value.city.id

@@ -71,6 +71,7 @@ form .input {
     margin: 10px 0 10px 0;
 }
 
+/* Selector-wrappers */
 .selector-wrapper .selector{
     display: flex;
     justify-content: space-between;

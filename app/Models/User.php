@@ -51,4 +51,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function concern () {
+        return $this->hasMany(concerns::class, 'user_id');
+    }
 }

@@ -8,6 +8,7 @@ use App\Models\provinces;
 use App\Models\region;
 use App\Models\city;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
@@ -64,11 +65,9 @@ class UserController extends Controller
     // Processes register form
     public function register (Request $request)
     {
-        // dump($request->all());
-
         $validated = $request->validate([
             'username' => 'required|string|min:3|max:12|unique:users,username',
-            'email' => 'required|email',
+            'email' => 'required|email|unique:users,email',
             'gender' => 'required|in:Male,Female',
             'usertype' => 'required',
             'region' => 'required|exists:regions,id',
@@ -97,7 +96,19 @@ class UserController extends Controller
     
     public function login (Request $request) 
     {
+        $validated = $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|string'
+        ]);
 
+        if (Auth::attempt($validated)) {
+
+            return redirect()->route('homepage');
+        } else {
+            throw ValidationException::withMessages([
+                'error' => 'Sorry, Incorrect Email or Password. Please Try Again. Nigg@'
+            ]);
+        }
     }
 
     public function logout(Request $request)

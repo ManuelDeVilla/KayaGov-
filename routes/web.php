@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CityController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConcernsController;
 use App\Http\Controllers\SystemFeedbackController;
@@ -11,7 +12,7 @@ Route::get('/', function () {
 
 Route::controller(UserController::class)->group(function() {
 
-    // Get Region
+    // Get dropdown arrows in register
     Route::get('/get-search', 'getShowSelector')->name('get.show.values');
     Route::get('/get-show', 'getSearchSelector')->name('get.search.values');
 
@@ -25,21 +26,31 @@ Route::controller(UserController::class)->group(function() {
     // Showing login form
     Route::get('/login', 'showLogin')->name('show.login');
     // Handling requests
-    Route::post('login', 'login')->name('login');
+    Route::post('/login', 'login')->name('login');
 
     // Logout Routes
-    Route::get('/logout', 'logout')->name('logout');
-
-    // dashboard routes
-    Route::get('/dashboard', function () {
-    return view('dashboard');
-        })->name('dashboard');
-
-    // User Profile Routes
-    Route::get('/concerns', [ConcernsController::class, 'index'])->name('concerns.list');
+    Route::post('/logout', 'logout')->name('logout');
 
     // for feedback creation
     Route::get('/feedback/create', [SystemFeedbackController::class, 'create'])->name('feedback.create');
     Route::post('/feedback', [SystemFeedbackController::class, 'store'])->name('feedback.store');
+
+    // User Profile Routes
+    Route::get('/concerns', 'index')->name('concerns.list');
 });
 
+Route::controller(ConcernsController::class)->group(function () {
+    Route::get('/concerns/create', 'create')->name('create.concerns');
+    Route::post('concerns/create', 'store')->name('store.create');
+});
+
+// Used in creating concern
+Route::controller(CityController::class)->group(function () {
+    route::get('/show/cities', 'show')->name('show.create-concern');
+    route::get('/search/cities', 'search')->name('search.create-concern');
+});
+
+// dashboard routes
+Route::get('/dashboard', function () {
+return view('dashboard');
+})->name('dashboard');

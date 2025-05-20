@@ -12,5 +12,10 @@
         @include('includes.navbar')
     </header>
     <h1>Home Page</h1>
+
+    <!-- Tester if user is logged in or out -->
+     @auth
+        <h1>Logged In</h1>
+     @endauth
 </body>
 </html>

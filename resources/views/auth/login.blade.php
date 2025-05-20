@@ -7,10 +7,12 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    @vite('resources/css/header.css')
     @vite('resources/css/login.css')
 </head>
 <body>
     <header>
+        @include('includes.header')
         @include('includes.navbar')
     </header>
     
@@ -23,17 +25,29 @@
             </div>
 
             <div class="form-card">
-                <form action="" method="post">
+
+            <!-- Error Handler -->
+                @if ($errors->any())
+                    <div class="error-wrapper">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+
+                <form action="{{ route('login') }}" method="post">
                     @csrf
                     
                     <div class="input">
                         <label for="">Email</label>
-                        <input type="email" placeholder="Email...">
+                        <input type="email" name="email" placeholder="Email...">
                     </div>
                     
                     <div class="input">
                         <label for="">Password</label>
-                        <input type="password" placeholder="Password...">
+                        <input type="password" name="password" placeholder="Password...">
                     </div>
 
                     <div class="button-holder">

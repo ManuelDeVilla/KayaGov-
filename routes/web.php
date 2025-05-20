@@ -30,11 +30,19 @@ Route::controller(UserController::class)->group(function() {
 
     // Logout Routes
     Route::post('/logout', 'logout')->name('logout');
+    Route::get('/logout', 'logout')->name('logout');
 
-    // for feedback creation
-    Route::get('/feedback/create', [SystemFeedbackController::class, 'create'])->name('feedback.create');
-    Route::post('/feedback', [SystemFeedbackController::class, 'store'])->name('feedback.store');
+// since login and register are not yet ready, hardcode muna
+//     // dashboard routes
+//     Route::middleware(['auth'])->group(function () {
+//     Route::get('/dashboard/staff', function () {
+//         return view('dashboard.staff');
+//     })->name('dashboard.staff');
 
+//     Route::get('/dashboard/citizen', function () {
+//         return view('dashboard.citizen');
+//     })->name('dashboard.citizen');
+// });
     // User Profile Routes
     Route::get('/concerns', 'index')->name('concerns.list');
 });
@@ -49,6 +57,23 @@ Route::controller(CityController::class)->group(function () {
     route::get('/show/cities', 'show')->name('show.create-concern');
     route::get('/search/cities', 'search')->name('search.create-concern');
 });
+
+// route for hard coded dashboard
+Route::get('/dashboard/staff', function () {
+    return view('dashboard.staff');
+})->name('dashboard.staff');
+
+Route::get('/dashboard/citizen', function () {
+    return view('dashboard.citizen');
+})->name('dashboard.citizen');
+
+
+// User Profile Routes
+Route::get('/concerns', [ConcernsController::class, 'index'])->name('concerns.list');
+
+// for feedback creation
+Route::get('/feedback/create', [SystemFeedbackController::class, 'create'])->name('feedback.create');
+Route::post('/feedback', [SystemFeedbackController::class, 'store'])->name('feedback.store');
 
 // dashboard routes
 Route::get('/dashboard', function () {

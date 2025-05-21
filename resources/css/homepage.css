@@ -1,0 +1,330 @@
+* {
+    font-family: "Montserrat", sans-serif;
+    padding: 0;
+    margin: 0;
+}
+
+.list-section {
+    display: grid;
+    gap: 30px;
+    grid-template-columns: auto auto;
+}
+
+.search-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.search-wrapper {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-wrapper i {
+    color: #808080;
+    transform: translateX(35px);
+}
+.search-wrapper input {
+    width: 95%;
+    font-size: 15px;
+    padding: 10px 20px 10px 40px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    border: none;
+    border-radius: 10px;
+}
+
+.filter-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 30px;
+}
+
+.filter-wrapper .filter {
+    font-size: 15px;
+    background-color: inherit;
+    padding: 10px 30px 10px 30px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border: none;
+    cursor: pointer;
+}
+
+.filter-wrapper button i {
+    margin-right: 20px;
+}
+
+/* For Filter CSS */
+.option-wrapper {
+    display: none;
+}
+
+.filter-wrapper .option-wrapper.active {
+    display: block;
+    width: 30%;
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    background-color: #fefffe;
+    box-shadow: rgba(0, 0, 0, 0.09) 0px 2px 1px, rgba(0, 0, 0, 0.09) 0px 4px 2px, rgba(0, 0, 0, 0.09) 0px 8px 4px, rgba(0, 0, 0, 0.09) 0px 16px 8px, rgba(0, 0, 0, 0.09) 0px 32px 16px;
+}
+
+/* Option Header CSS */
+.option-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 20px 5px 20px;
+}
+
+.option-header p, .option-header button {
+    font-size: 20px;
+}
+
+.option-header p {
+    font-weight: 700;
+}
+
+.option-header button {
+    color: #808080;
+    text-decoration: underline;
+    border: none;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+/* Active Filters/Applied Filters CSS */
+.applied-filters {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 20px 0 20px 0;
+    border-bottom: 1px #808080 solid;
+}
+
+.applied-filters button {
+    border: none;
+    font-size: 15px;
+    padding: 10px 20px 10px 20px;
+    border-radius: 15px;
+    background-color: #808080;
+    cursor: pointer;
+}
+
+.applied-filters button i {
+    margin-right: 10px;
+}
+
+/* Sort By CSS */
+.sort-by-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px #808080 solid;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.pending, .in-progress, .resolved {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px #808080 solid;
+    cursor: pointer;
+}
+
+/* Province & City CSS */
+.province, .city {
+    border-bottom: none;
+}
+
+.province.active, .city.active {
+    border-bottom: 1px #808080 solid;
+}
+
+.province-header, .city-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-bottom: 1px #808080 solid;
+}
+
+.sort-search {
+    display: none;
+}
+
+.sort-search.active {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.sort-search.sort-province {
+    margin-right: 100px;
+}
+
+.sort-search.sort-city {
+    margin-right: 130px;
+}
+
+.sort-search input{
+    border: 1px #E3E3E3 solid;
+    padding: 5px 20px 5px 35px;
+}
+
+.sort-search.sort-province i {
+    position: absolute;
+    left: 100px;
+    color: #808080;
+}
+
+.sort-search.sort-city i {
+    position: absolute;
+    left: 70px;
+    color: #808080;
+}
+
+/* Province & City Options CSS */
+.province-options, .city-options {
+    display: none;
+}
+
+.province-options.active, .city-options.active {
+    display: block;
+    height: 110px;
+    overflow-y: scroll;
+}
+
+.province-options p, .city-options p {
+    padding: 10px 25px;
+}
+
+.province-options p:hover, .city-options p:hover {
+    background-color: #407BFF;
+}
+
+/* Submit/Apply Filters CSS */
+.submit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+}
+
+.submit button {
+    padding: 8px 35%;
+    border-radius: 10px;
+    border: none;
+    color: #E3E3E3;
+    background-color: #407BFF;
+    font-weight: 700;
+}
+
+.submit button:hover {
+    background-color: #316ded;
+}
+
+/* Card CSS */
+.card {
+    height: 220px;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 20px 50px 20px 50px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-header .header {
+    font-size: 25px;
+    font-weight: 700;
+}
+
+.icon {
+    margin-right: 5px;
+}
+
+/* Color of each status should change based on status */
+.icon.progress, .progress{
+    color: #9B7606;
+}
+
+/* Color of each status should change based on status */
+.status.progress, .category-wrapper.progress{
+    padding: 8px 20px 8px 20px;
+    background-color: #FAEFB1;
+    border-radius: 20px;
+}
+
+.status.progress p, .details p {
+    font-size: 15px;
+}
+
+.details {
+    display: flex;
+    align-items: center;
+}
+
+.category-wrapper {
+    margin-right: 20px;
+}
+
+.location, .icon.location {
+    color: #808080;
+}
+
+.description {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-align: justify;
+    text-overflow: ellipsis;
+}
+
+.card-footer{
+    display: flex;
+    align-items: center;
+}
+
+.card-footer *{
+    font-size: 12px;
+}
+
+.date {
+    width: 150px;
+    margin-right: 15px;
+}
+
+.priority, .share {
+    width: 70px;
+    margin-right: 10px;
+}
+
+.priority button, .share button {
+    background-color: inherit;
+    border: none;
+    cursor: pointer;
+}
+
+.view {
+    width: 130px;
+    margin-left: 230px;
+}
+
+.view a {
+    color: #407BFF;
+    text-decoration: none;
+}

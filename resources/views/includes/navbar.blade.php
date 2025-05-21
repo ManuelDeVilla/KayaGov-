@@ -6,11 +6,11 @@
     @endguest
 
     @auth
-        <a href="{{ route('create.concerns') }}">Create Concern</a>
         @if(Auth::user()->usertype === 'staff')
             <a href="{{ route('dashboard.staff') }}">Staff Dashboard</a>
         @elseif(Auth::user()->usertype === 'citizen')
             <a href="{{ route('dashboard.citizen') }}">Citizen Dashboard</a>
+            <a href="{{ route('create.concerns') }}">Create Concern</a>
         
             <form action="{{ route('logout') }}" method="POST">
                 @csrf

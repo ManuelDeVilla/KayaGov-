@@ -39,22 +39,22 @@
                     </div>
 
                     <form action="">
-                        <div class="sort-by">
-                            <div class="sort-by-header">
+                        <div id="sort-by" class="sort-by">
+                            <div id="sort-header" class="sort-by-header">
                                 <p>Sort By</p>
                                 <i class="fa-solid fa-angle-up"></i>
                             </div>
-                            <div class="pending">
+                            <div id="pending" class="pending">
                                 <p>Pending</p>
-                                <i class="fa-regular fa-square"></i>
+                                <i id="pending-icon" class="fa-regular fa-square"></i>
                             </div>
-                            <div class="in-progress">
+                            <div id="in_progress" class="in-progress">
                                 <p>In Progress</p>
-                                <i class="fa-regular fa-square"></i>
+                                <i id="in-progress-icon" class="fa-regular fa-square"></i>
                             </div>
-                            <div class="resolved">
+                            <div id="resolved" class="resolved">
                                 <p>Resolved</p>
-                                <i class="fa-regular fa-square"></i>
+                                <i id="resolved-icon" class="fa-regular fa-square"></i>
                             </div>
                         </div>
 

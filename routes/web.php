@@ -4,6 +4,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConcernsController;
 use App\Http\Controllers\SystemFeedbackController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -60,6 +61,8 @@ Route::controller(CityController::class)->group(function () {
 
 // route for hard coded dashboard
 Route::get('/dashboard/staff', function () {
+
+    
     return view('dashboard.staff');
 })->name('dashboard.staff');
 
@@ -79,3 +82,5 @@ Route::post('/feedback', [SystemFeedbackController::class, 'store'])->name('feed
 Route::get('/dashboard', function () {
 return view('dashboard');
 })->name('dashboard');
+
+Route::get('/dashboard/citizen', [DashboardController::class, 'citizen']);

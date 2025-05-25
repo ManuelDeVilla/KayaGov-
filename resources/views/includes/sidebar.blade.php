@@ -61,12 +61,10 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <form action="{{ route('logout') }}" method="POST" style="margin: 0;">
-                        @csrf
-                        <button type="submit" class="nav-link logout-button">
+                        <a href="{{ route('logout') }}" method="POST" style="margin: 0;" class="nav-link">
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Logout</span>
-                        </button>
+                        </a>
                     </form>
                     </li>
                 @endauth

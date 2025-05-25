@@ -6,7 +6,6 @@
     <title>Document</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    @extends('layouts.app')
     @vite('resources/css/homepage.css')
     @vite('resources/css/header.css')
     @vite('resources/css/citizens/sidebar-styles.css')
@@ -15,6 +14,7 @@
 <body>
 <div class="app-container">
         <!-- Main Content -->
+         @include('includes.sidebar')
         <main class="main-content">
             <div class="content-wrapper">
                 <div class="content-container">

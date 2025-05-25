@@ -73,6 +73,8 @@ ul {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     overflow: hidden;
+    transition: var(--transition);
+    margin-left: 250px;
 }
 
 .concern-header {
@@ -136,6 +138,8 @@ ul {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow);
     padding: 1.5rem;
+    transition: var(--transition);
+    margin-left: 250px;
 }
 
 .comments-header {
@@ -241,6 +245,8 @@ ul {
     padding: 1.5rem;
     align-self: flex-start;
     flex-shrink: 0;
+    transition: var(--transition);
+    margin-top: 40px;
 }
 
 .details-header {

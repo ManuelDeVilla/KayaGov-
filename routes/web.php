@@ -83,6 +83,9 @@ Route::get('/citizen/concern/details', function () {
 // concerns page
 Route::get('/citizens/concerns', [ConcernsController::class, 'index'])->name('citizens.concerns.index');
 
+Route::get('/citizen/dashboard', [DashboardController::class, 'index'])->name('dashboard.citizen');
+
+
 
 //create
 Route::get('/citizen/concerns/create', function () {

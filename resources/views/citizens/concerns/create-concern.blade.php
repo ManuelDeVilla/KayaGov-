@@ -10,11 +10,12 @@
     @vite('resources/css/header.css')
     @vite('resources/css/citizens/create-concern-dropdown.css')
     @vite('resources/css/citizens/create-concern.css')
+    @vite('resources/css/citizens/sidebar-styles.css')
 </head>
 <body>
     <header>
         @include('includes.header')
-        @include('includes.navbar')
+        @include('includes.sidebar')
     </header>
 
     <section class="body">

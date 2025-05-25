@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Concerns</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @vite('resources/css/homepage.css')
@@ -13,8 +13,9 @@
 <body>
     <header>
         @include('includes.header')
-        @include('includes.sidebar')
     </header>
+    
+     @include('includes.sidebar')
     <div class="body">
         <section class="search-section">
             <div class="search-wrapper">
@@ -107,6 +108,136 @@
         <section class="list-section">
             <div class="card">
                 <div class="card-header">
+                    <p class="header">Broken Road</p>
+                    <div class="status progress">
+                        <p class="progress"><span class="icon progress"><i class="fa-solid fa-circle-exclamation"></i></span>Completed</p>
+                    </div>
+                </div>
+                
+                <div class="details">
+                    <div class="category-wrapper progress">
+                        <p class="progress"><span class="icon progress"><i class="fa-regular fa-map"></i></span>Roads</p>
+                    </div>
+
+                    <div class="location-wrapper">
+                        <p class="location"><span class="icon location"><i class="fa-solid fa-location-dot"></i></span>Calamba, Laguna</p>
+                    </div>
+                </div>
+
+                <div class="description">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque quisquam nobis fugit expedita sit minima, cumque corrupti, itaque molestias atque quo. Eum, aliquam quis possimus ducimus autem accusamus iste similique! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque quisquam nobis fugit expedita sit minima, cumque corrupti, itaque molestias atque quo. Eum, aliquam quis possimus ducimus autem accusamus iste similique!</p>
+                </div>
+
+                <div class="card-footer">
+                    <div class="date">
+                        <p><span class="icon"><i class="fa-regular fa-clock"></i></span>May 12, 2003</p>
+                    </div>
+
+                    <div class="priority">
+                        <button><i class="fa-solid fa-arrow-up"></i></button>
+                        <span>12ss</span>
+                    </div>
+
+                    <div class="share">
+                        <button><i class="fa-solid fa-retweet"></i></button>
+                        <span>12ss</span>
+                    </div>
+                    <div class="view">
+                        <a href="{{ route('citizens.concerns.details') }}">
+                        View Details <i class="fa-solid fa-arrow-right-long"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <p class="header">Broken Street Light Fix</p>
+                    <div class="status progress">
+                        <p class="progress"><span class="icon progress"><i class="fa-solid fa-circle-exclamation"></i></span>In Progress</p>
+                    </div>
+                </div>
+                
+                <div class="details">
+                    <div class="category-wrapper progress">
+                        <p class="progress"><span class="icon progress"><i class="fa-solid fa-bolt"></i></span>Electricity</p>
+                    </div>
+
+                    <div class="location-wrapper">
+                        <p class="location"><span class="icon location"><i class="fa-solid fa-location-dot"></i></span>Santa Rosa, Laguna</p>
+                    </div>
+                </div>
+
+                <div class="description">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque quisquam nobis fugit expedita sit minima, cumque corrupti, itaque molestias atque quo. Eum, aliquam quis possimus ducimus autem accusamus iste similique! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque quisquam nobis fugit expedita sit minima, cumque corrupti, itaque molestias atque quo. Eum, aliquam quis possimus ducimus autem accusamus iste similique!</p>
+                </div>
+
+                <div class="card-footer">
+                    <div class="date">
+                        <p><span class="icon"><i class="fa-regular fa-clock"></i></span>May 12, 2003</p>
+                    </div>
+
+                    <div class="priority">
+                        <button><i class="fa-solid fa-arrow-up"></i></button>
+                        <span>12ss</span>
+                    </div>
+
+                    <div class="share">
+                        <button><i class="fa-solid fa-retweet"></i></button>
+                        <span>12ss</span>
+                    </div>
+
+                    <div class="view">
+                        <a href="">View Details <i class="fa-solid fa-arrow-right-long"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <p class="header">Water Overflowing in Dahlia</p>
+                    <div class="status progress">
+                        <p class="progress"><span class="icon progress"><i class="fa-solid fa-check"></i></span>Resolved</p>
+                    </div>
+                </div>
+                
+                <div class="details">
+                    <div class="category-wrapper progress">
+                        <p class="progress"><span class="icon progress"><i class="fa-solid fa-water"></i></span>Water</p>
+                    </div>
+
+                    <div class="location-wrapper">
+                        <p class="location"><span class="icon location"><i class="fa-solid fa-location-dot"></i></span>Santa Rosa, Laguna</p>
+                    </div>
+                </div>
+
+                <div class="description">
+                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque quisquam nobis fugit expedita sit minima, cumque corrupti, itaque molestias atque quo. Eum, aliquam quis possimus ducimus autem accusamus iste similique! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque quisquam nobis fugit expedita sit minima, cumque corrupti, itaque molestias atque quo. Eum, aliquam quis possimus ducimus autem accusamus iste similique!</p>
+                </div>
+
+                <div class="card-footer">
+                    <div class="date">
+                        <p><span class="icon"><i class="fa-regular fa-clock"></i></span>May 12, 2003</p>
+                    </div>
+
+                    <div class="priority">
+                        <button><i class="fa-solid fa-arrow-up"></i></button>
+                        <span>12ss</span>
+                    </div>
+
+                    <div class="share">
+                        <button><i class="fa-solid fa-retweet"></i></button>
+                        <span>12ss</span>
+                    </div>
+
+                    <div class="view">
+                        <a href="">View Details <i class="fa-solid fa-arrow-right-long"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
                     <p class="header">May Nigga sa Kanto</p>
                     <div class="status progress">
                         <p class="progress"><span class="icon progress"><i class="fa-solid fa-circle-exclamation"></i></span>In Progress</p>
@@ -185,9 +316,10 @@
                         <button><i class="fa-solid fa-retweet"></i></button>
                         <span>12ss</span>
                     </div>
-
                     <div class="view">
-                        <a href="">View Details <i class="fa-solid fa-arrow-right-long"></i></a>
+                        <a href="{{ route('citizens.concerns.details') }}">
+                        View Details <i class="fa-solid fa-arrow-right-long"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -228,9 +360,10 @@
                         <button><i class="fa-solid fa-retweet"></i></button>
                         <span>12ss</span>
                     </div>
-
                     <div class="view">
-                        <a href="">View Details <i class="fa-solid fa-arrow-right-long"></i></a>
+                        <a href="{{ route('citizens.concerns.details') }}">
+                        View Details <i class="fa-solid fa-arrow-right-long"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -271,9 +404,10 @@
                         <button><i class="fa-solid fa-retweet"></i></button>
                         <span>12ss</span>
                     </div>
-
                     <div class="view">
-                        <a href="">View Details <i class="fa-solid fa-arrow-right-long"></i></a>
+                        <a href="{{ route('citizens.concerns.details') }}">
+                        View Details <i class="fa-solid fa-arrow-right-long"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -314,52 +448,10 @@
                         <button><i class="fa-solid fa-retweet"></i></button>
                         <span>12ss</span>
                     </div>
-
                     <div class="view">
-                        <a href="">View Details <i class="fa-solid fa-arrow-right-long"></i></a>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-header">
-                    <p class="header">May Nigga sa Kanto</p>
-                    <div class="status progress">
-                        <p class="progress"><span class="icon progress"><i class="fa-solid fa-circle-exclamation"></i></span>In Progress</p>
-                    </div>
-                </div>
-                
-                <div class="details">
-                    <div class="category-wrapper progress">
-                        <p class="progress"><span class="icon progress"><i class="fa-regular fa-map"></i></span>Roads</p>
-                    </div>
-
-                    <div class="location-wrapper">
-                        <p class="location"><span class="icon location"><i class="fa-solid fa-location-dot"></i></span>Santa Rosa, Laguna</p>
-                    </div>
-                </div>
-
-                <div class="description">
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque quisquam nobis fugit expedita sit minima, cumque corrupti, itaque molestias atque quo. Eum, aliquam quis possimus ducimus autem accusamus iste similique! Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque quisquam nobis fugit expedita sit minima, cumque corrupti, itaque molestias atque quo. Eum, aliquam quis possimus ducimus autem accusamus iste similique!</p>
-                </div>
-
-                <div class="card-footer">
-                    <div class="date">
-                        <p><span class="icon"><i class="fa-regular fa-clock"></i></span>May 12, 2003</p>
-                    </div>
-
-                    <div class="priority">
-                        <button><i class="fa-solid fa-arrow-up"></i></button>
-                        <span>12ss</span>
-                    </div>
-
-                    <div class="share">
-                        <button><i class="fa-solid fa-retweet"></i></button>
-                        <span>12ss</span>
-                    </div>
-
-                    <div class="view">
-                        <a href="">View Details <i class="fa-solid fa-arrow-right-long"></i></a>
+                        <a href="{{ route('citizens.concerns.details') }}">
+                        View Details <i class="fa-solid fa-arrow-right-long"></i>
+                        </a>
                     </div>
                 </div>
             </div>

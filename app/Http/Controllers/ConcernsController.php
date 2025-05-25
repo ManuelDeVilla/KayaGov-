@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\concerns;
+use App\Models\concerns_comments;
 use App\Models\concerns_image;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class ConcernsController extends Controller
 {
@@ -14,7 +16,7 @@ class ConcernsController extends Controller
      */
     public function index()
     {
-
+       return view('citizens.concerns.index');
     }
 
     /**
@@ -23,7 +25,7 @@ class ConcernsController extends Controller
     public function create()
     {
         //
-        return view('citizens.create-concern');
+        return view('citizens.concerns.create-concern');
     }
 
     /**
@@ -61,9 +63,25 @@ class ConcernsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(concerns $concerns)
+    public function show($id)
     {
-        //
+        $concerns = concerns::findOrFail($id);
+        return view('citizens.concerns.details', compact('concern'));    
+    }
+        
+
+     public function addComment(Request $request, concerns_comments $concern)
+    {
+        // $validated = $request->validate([
+        //     'comment' => 'required|max:1000'
+        // ]);
+
+        // $concern->comments()->create([
+        //     'user_id' => auth()->id(),
+        //     'content' => $validated['comments']
+        // ]);
+
+        // return redirect()->back()->with('success', 'Comment added successfully!');
     }
 
     /**

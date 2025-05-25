@@ -4,6 +4,11 @@
     margin: 0;
 }
 
+.body {
+    margin-left: 300px; /* match this to the width of your sidebar */
+    padding: 1rem;
+}
+
 .list-section {
     display: grid;
     gap: 30px;
@@ -237,13 +242,14 @@
 /* Card CSS */
 .card {
     height: 220px;
-    width: 70%;
+    width: 80%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     padding: 20px 50px 20px 50px;
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
 }
 
 .card-header {

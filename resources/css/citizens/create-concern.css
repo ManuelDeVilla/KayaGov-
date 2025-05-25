@@ -11,7 +11,8 @@ body {
 .body {
     display: flex;
     flex-direction: column;
-    margin-left: 30px;
+    margin-left: 400px;
+    margin-top: 40px;
 }
 
 .section-header {

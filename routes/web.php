@@ -48,8 +48,8 @@ Route::controller(UserController::class)->group(function() {
 });
 
 Route::controller(ConcernsController::class)->group(function () {
-    Route::get('/concerns/create', 'create')->name('create.concerns');
-    Route::post('concerns/create', 'store')->name('store.create');
+    Route::get('/citizens/concerns/create', 'create')->name('citizens.concerns.create');
+    Route::post('citizens/concerns/create', 'store')->name('store.create');
 });
 
 // Used in creating concern
@@ -66,6 +66,32 @@ Route::get('/dashboard/staff', function () {
 Route::get('/dashboard/citizen', function () {
     return view('dashboard.citizen');
 })->name('dashboard.citizen');
+
+//user profile
+Route::get('/citizens/user-profile', function () {
+    return view('citizens.user-profile');
+})->name('user-profile');
+
+// concerns details
+Route::get('/citizen/concern/details', function () {
+    return view('citizens.concerns.details');
+})->name('citizens.concerns.details');
+
+// concerns page
+Route::get('/citizens/concerns', [ConcernsController::class, 'index'])->name('citizens.concerns.index');
+
+
+//create
+Route::get('/citizen/concerns/create', function () {
+    return view('citizens.concerns.create'); // Make sure this Blade file exists
+})->name('create.concerns');
+
+
+//comments 
+Route::post('/concerns/{concern}/comment', [ConcernsController::class, 'addComment'])->name('concerns.comment');
+
+//pendings concerns
+Route::get('/concerns/pending', [ConcernsController::class, 'pending'])->name('concerns.pending');
 
 
 // User Profile Routes

@@ -12,10 +12,6 @@
     @vite('resources/css/register/register.css')
 </head>
 <body>
-    <header>
-        @include('includes.header')
-        @include('includes.navbar')
-    </header>
 
     <div class="body">
 

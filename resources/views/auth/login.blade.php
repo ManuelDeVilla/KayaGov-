@@ -11,10 +11,6 @@
     @vite('resources/css/login.css')
 </head>
 <body>
-    <header>
-        @include('includes.header')
-        @include('includes.navbar')
-    </header>
     
     <div class="body">
         <section class="form">

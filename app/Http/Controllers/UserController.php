@@ -103,7 +103,7 @@ class UserController extends Controller
 
         if (Auth::attempt($validated)) {
 
-            return redirect()->route('homepage');
+            return redirect()->route('dashboard')->with('success', 'Welcome back, ' . Auth::user()->username . '!');
         } else {
             throw ValidationException::withMessages([
                 'error' => 'Sorry, Incorrect Email or Password. Please Try Again. Nigg@'

@@ -1,4 +1,4 @@
-   
+ 
     <aside class="sidebar">
             <div class="sidebar-section">
                 <div class="logo">
@@ -8,13 +8,16 @@
             </div>
                 <h3>Main</h3>
                 <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a href="{{ route('homepage') }}" class="nav-link">
-                            <i class="fas fa-chart-line"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
+                    @auth
+                        @if(auth()->user()->usertype === 'citizen' || auth()->user()->usertype === 'staff')
+                        <li class="nav-item">
+                            <a href="{{ route('dashboard') }}" class="nav-link">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                    @endif
+                    @endauth        <li class="nav-item">
                         <a href="{{ route('citizens.concerns.index')}}" class="nav-link">
                             <i class="fas fa-exclamation-circle"></i>
                             <span>Concerns</span>

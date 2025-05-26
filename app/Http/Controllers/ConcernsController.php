@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\city;
 use App\Models\concerns;
+use App\Models\concerns_comments;
 use App\Models\concerns_image;
 use App\Models\provinces;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 
 class ConcernsController extends Controller
 {
@@ -60,6 +60,29 @@ class ConcernsController extends Controller
         } else {
             return view('homepage', ['concerns' => $concerns]);
         }
+    public function index(Request $request)
+{
+
+    
+    // Query concerns with filters
+        $provinces = Provinces::all();
+        $concerns = concerns::query()
+            ->when($request->search, function($query, $search) {
+                $query->where(function($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                      ->orWhere('description', 'like', "%{$search}%");
+                });
+            })
+            ->when($request->status, function($query, $status) {
+                $query->whereIn('status', $status);
+            })
+            ->when($request->province, function($query, $province) {
+                $query->whereIn('province_id', $province);
+            })
+            ->latest()
+            ->paginate(15);
+
+        return view('citizens.concerns.index', compact('concerns', 'provinces'));
     }
 
     /**
@@ -68,7 +91,7 @@ class ConcernsController extends Controller
     public function create()
     {
         //
-        return view('citizens.create-concern');
+        return view('citizens.concerns.create-concern');
     }
 
     /**
@@ -106,9 +129,25 @@ class ConcernsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(concerns $concerns)
+    public function show($id)
     {
-        //
+        $concerns = concerns::findOrFail($id);
+        return view('citizens.concerns.details', compact('concern'));    
+    }
+        
+
+     public function addComment(Request $request, concerns_comments $concern)
+    {
+        // $validated = $request->validate([
+        //     'comment' => 'required|max:1000'
+        // ]);
+
+        // $concern->comments()->create([
+        //     'user_id' => auth()->id(),
+        //     'content' => $validated['comments']
+        // ]);
+
+        // return redirect()->back()->with('success', 'Comment added successfully!');
     }
 
     /**

@@ -1,0 +1,174 @@
+/* Dashboard Styles */
+* {
+    font-family: "Montserrat", sans-serif;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* Layout */
+.body {
+    margin-left: 300px;
+    padding: 2rem;
+    min-height: 100vh;
+    background-color: #f5f5f5;
+}
+
+/* Header Section */
+.header-section {
+    margin-bottom: 2rem;
+}
+
+.header-section h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+}
+
+/* Summary Section */
+.summary-section {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.summary-card {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.summary-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.summary-icon.pending { background-color: #fff3e0; color: #ff9800; }
+.summary-icon.in-progress { background-color: #e3f2fd; color: #2196F3; }
+.summary-icon.resolved { background-color: #e8f5e9; color: #4CAF50; }
+
+.summary-info h3 {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 0.25rem;
+}
+
+.summary-info p {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+}
+
+/* Concerns List */
+.concerns-list {
+    background: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.concerns-list h2 {
+    font-size: 1.25rem;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.concern-item {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #eee;
+    gap: 1rem;
+}
+
+.concern-item:last-child {
+    border-bottom: none;
+}
+
+.concern-status {
+    font-size: 0.75rem;
+}
+
+.concern-status.pending { color: #ff9800; }
+.concern-status.in-progress { color: #2196F3; }
+.concern-status.resolved { color: #4CAF50; }
+
+.concern-info {
+    flex: 1;
+}
+
+.concern-info h3 {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 0.25rem;
+}
+
+.concern-meta {
+    font-size: 0.85rem;
+    color: #666;
+    display: flex;
+    gap: 1rem;
+}
+
+.concern-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.concern-actions {
+    margin-left: auto;
+}
+
+.btn-view {
+    padding: 0.5rem 1rem;
+    background-color: #f5f5f5;
+    color: #333;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    transition: background-color 0.2s;
+}
+
+.btn-view:hover {
+    background-color: #e0e0e0;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .body {
+        margin-left: 0;
+    }
+    
+    .summary-section {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 640px) {
+    .concern-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .concern-actions {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .btn-view {
+        display: block;
+        text-align: center;
+        margin-top: 1rem;
+    }
+}

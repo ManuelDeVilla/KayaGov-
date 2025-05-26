@@ -11,10 +11,6 @@
     @vite('resources/css/login.css')
 </head>
 <body>
-    <header>
-        @include('includes.header')
-        @include('includes.navbar')
-    </header>
     
     <div class="body">
         <section class="form">
@@ -51,7 +47,7 @@
                     </div>
 
                     <div class="button-holder">
-                        <button class="submit-button" type="submit">Create Account</button>
+                        <button class="submit-button" type="submit">Sign in</button>
                     </div>
                 </form>
             </div>

@@ -1,185 +1,192 @@
+/* Base Styles */
+:root {
+    --primary-color: #3266fe;
+    --border-color: rgb(154, 153, 153);
+    --border-radius: 10px;
+    --shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px;
+}
+
 * {
     font-family: "Montserrat", sans-serif;
     padding: 0;
     margin: 0;
+    box-sizing: border-box;
 }
 
+/* Layout */
 body {
     background-color: #f8f8f9;
+    min-height: 100vh;
 }
 
 .body {
+    margin-left: 300px;
+    padding: 2rem;
+}
+
+/* Header Section */
+.back-page {
+    margin-bottom: 1rem;
+}
+
+.back-page a {
+    color: inherit;
+    text-decoration: none;
     display: flex;
-    flex-direction: column;
-    margin-left: 30px;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .section-header {
-    margin-bottom: 20px;
-}
-
-.section-header * {
-    margin: 5px 0px 5px 0px;
+    margin-bottom: 2rem;
 }
 
 .section-header h1 {
-    font-size: 25px;
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
 }
 
+/* Form Section */
 .section-body {
-    width: 75%;
-    border-radius: 5px;
-    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
-    margin-bottom: 40px;
-}
-
-form {
-    width: 100%;
+    max-width: 800px;
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
 }
 
 .form-header {
-    border-bottom: 1px rgb(188, 188, 188) solid;
-    margin-bottom: 30px;
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border-color);
 }
 
 .form-header p {
-    font-size: 25px;
-    font-weight: 700;
-    margin-left: 20px;
-    margin: 20px 0 10px 35px;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
+.form-body {
+    padding: 2rem;
+}
+
+/* Form Inputs */
 .input {
-    margin: 15px 0 15px 0;
-    padding: 0 30px 0 30px;
+    margin-bottom: 1.5rem;
 }
 
-.input .input-label {
+.input-label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
 }
 
-input, textarea, select {
-    display: block;
+input,
+textarea,
+select,
+.selector-wrapper {
     width: 100%;
-    border: 1px solid rgb(154, 153, 153);
-    border-radius: 10px;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
 }
 
-input, textarea {
-    width: 96%;
-    padding: 10px 20px 10px 20px;
+textarea {
+    min-height: 120px;
+    resize: vertical;
 }
 
-select {
-    padding: 10px 20px 10px 10px;
-}
-
-/* Selector-wrapper for city */
-select, .selector-wrapper {
-    display: block;
-    width: 100%;
-    padding: 10px 0 10px 0;
-    border-radius: 8px;
-    background-color: #fefffe;
-    border: 1px solid rgb(154, 153, 153);
-}
-
-.selector-wrapper .selector{
-    display: flex;
-    justify-content: space-between;
-}
-
-.selector-wrapper .selector span {
-    font-size: 13px;
-    margin: 0 3px 0 5px;
-}
-
-.file {
-    display: none;
-    padding: 0;
-    margin: 0;
-}
-
+/* Upload Section */
 .upload-wrapper {
-    height: 50px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    border: 2px dashed rgb(154, 153, 153);
-    border-radius: 10px;
+    gap: 1rem;
+    padding: 1rem;
+    border: 2px dashed var(--border-color);
+    border-radius: var(--border-radius);
     cursor: pointer;
+    transition: border-color 0.2s;
 }
 
-/* For input label */
-.image-label {
-    display: none;
+.upload-wrapper:hover {
+    border-color: var(--primary-color);
 }
 
-.image-label.active {
-    display: block;
-}
-
-/* JS created elements CSS */
+/* Image Preview */
 .image-detail-div {
     display: flex;
     justify-content: space-between;
-    margin: 10px 0 10px 0;
-    padding: 10px 0 10px 0;
-    border: 1px solid rgb(154, 153, 153);
-    border-radius: 10px;
+    align-items: center;
+    padding: 0.75rem 1rem;
+    margin-top: 0.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+.image-detail-delete {
+    color: #dc3545;
+    cursor: pointer;
+}
+
+/* Required Fields */
+.required {
+    color: #dc3545;
+    display: none;
 }
 
 .required.active {
     display: inline;
 }
 
-.required {
-    display: none;
-    color: red;
-}
-
-/* Back to styling html */
-.image-detail-label {
-    margin-left: 10px;
-}
-
-.image-detail-delete {
-    margin-right: 10px;
-    cursor: pointer;
-}
-
+/* Form Actions */
 .button-wrapper {
-    height: 80px;
     display: flex;
-    justify-content: end;
-    align-items: center;
-    border-top: 1px solid rgb(154, 153, 153);
+    justify-content: flex-end;
+    gap: 1rem;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid var(--border-color);
 }
 
-.button-wrapper a {
-    height: 50%;
-    margin: 0 10px 0 10px;
-}
-
-.submit, .cancel {
-    padding: 0 30px 0 30px;
-    border-radius: 10px;
+.submit,
+.cancel {
+    padding: 0.75rem 2rem;
+    border-radius: var(--border-radius);
+    font-weight: 500;
     cursor: pointer;
 }
 
 .cancel {
-    height: 100%;
-    background-color: transparent;
-    border: 1px solid rgb(154, 153, 153);
+    background: transparent;
+    border: 1px solid var(--border-color);
 }
 
 .submit {
-    height: 50%;
-    background-color: #3266fe;
+    background: var(--primary-color);
     color: white;
-    font-size: 15px;
-    font-weight: 600;
-    margin: 0 30px 0 10px;
     border: none;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .body {
+        margin-left: 0;
+    }
+    
+    .section-body {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    .form-body {
+        padding: 1rem;
+    }
+    
+    .button-wrapper {
+        flex-direction: column;
+    }
+    
+    .submit,
+    .cancel {
+        width: 100%;
+    }
 }

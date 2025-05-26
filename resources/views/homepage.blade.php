@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-
+    <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @vite('resources/css/homepage.css')
     @vite('resources/css/header.css')
+    @vite('resources/css/citizens/sidebar-styles.css')
 </head>
 <body>
     <header>
         @include('includes.header')
-        @include('includes.navbar')
+        @include('includes.sidebar')
     </header>
-    
     <div class="body">
         <div class="body-header">
             @auth
@@ -103,7 +102,7 @@
                 </div>
             </div>
         </section>
-
+           
         <section class="list-section">
             @foreach ($concerns as $concern)
                 <div class="card">

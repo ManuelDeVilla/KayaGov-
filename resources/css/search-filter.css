@@ -1,0 +1,204 @@
+/* Variables */
+:root {
+    --primary-color: #407BFF;
+    --primary-hover: #316ded;
+    --gray-light: #E3E3E3;
+    --gray-medium: #808080;
+    --shadow-sm: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+    --border-radius: 20px;
+}
+
+/* Search & Filter Section */
+.search-section {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* Search Input */
+.search-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.search-wrapper input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid var(--gray-light);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+}
+
+.search-wrapper .icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-medium);
+}
+
+/* Filter Button & Wrapper */
+.filter-wrapper {
+    position: relative;
+}
+
+.filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    background: white;
+    border: 1px solid var(--gray-light);
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+
+.filter i {
+    font-size: 0.9rem;
+}
+
+/* Filter Options Panel */
+.option-wrapper {
+    position: absolute;
+    right: 0;
+    top: 100%;
+    width: 300px;
+    background: white;
+    margin-top: 0.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    padding: 1.5rem;
+    display: none;
+    z-index: 1000;
+}
+
+.option-wrapper.active {
+    display: block;
+}
+
+/* Option Header */
+.option-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray-light);
+}
+
+.option-header p {
+    font-weight: 600;
+    color: #333;
+}
+
+.option-header button {
+    color: var(--primary-color);
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* Status Filter */
+.sort-by-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.status-option {
+    padding: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.status-option label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+/* Province Filter */
+.province-header {
+    margin: 1.5rem 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.sort-province {
+    position: relative;
+}
+
+.sort-province input {
+    width: 100%;
+    padding: 0.5rem 1rem 0.5rem 2rem;
+    border: 1px solid var(--gray-light);
+    border-radius: var(--border-radius);
+    font-size: 0.9rem;
+}
+
+.sort-province .icon {
+    position: absolute;
+    left: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--gray-medium);
+}
+
+.province-options {
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 0.5rem 0;
+}
+
+.province-options label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    cursor: pointer;
+}
+
+/* Submit Button */
+.submit {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--gray-light);
+}
+
+.submit button {
+    width: 100%;
+    padding: 0.75rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.2s;
+}
+
+.submit button:hover {
+    background: var(--primary-hover);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .search-section {
+        flex-direction: column;
+    }
+
+    .option-wrapper {
+        position: fixed;
+        right: 1rem;
+        left: 1rem;
+        width: auto;
+        max-height: 80vh;
+        overflow-y: auto;
+    }
+}

@@ -5,18 +5,36 @@ namespace App\Http\Controllers;
 use App\Models\concerns;
 use App\Models\concerns_comments;
 use App\Models\concerns_image;
+use App\Models\Provinces;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 
 class ConcernsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-       return view('citizens.concerns.index');
+    public function index(Request $request)
+{
+
+    
+    // Query concerns with filters
+        $provinces = Provinces::all();
+        $concerns = concerns::query()
+            ->when($request->search, function($query, $search) {
+                $query->where(function($q) use ($search) {
+                    $q->where('title', 'like', "%{$search}%")
+                      ->orWhere('description', 'like', "%{$search}%");
+                });
+            })
+            ->when($request->status, function($query, $status) {
+                $query->whereIn('status', $status);
+            })
+            ->when($request->province, function($query, $province) {
+                $query->whereIn('province_id', $province);
+            })
+            ->latest()
+            ->paginate(15);
+
+        return view('citizens.concerns.index', compact('concerns', 'provinces'));
     }
 
     /**

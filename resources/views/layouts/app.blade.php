@@ -9,7 +9,6 @@
 <body>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('includes.header')
-    @include('includes.navbar')
 
     <div class="py-4">
         @yield('content')

@@ -47,7 +47,7 @@
                     </div>
 
                     <div class="button-holder">
-                        <button class="submit-button" type="submit">Create Account</button>
+                        <button class="submit-button" type="submit">Sign in</button>
                     </div>
                 </form>
             </div>

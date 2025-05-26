@@ -325,7 +325,7 @@ img {
   display: flex;
   flex-direction: column;
   background-color: var(--color-gray-100);
-  margin-left: 245px;
+  margin-left: 320px;
   transition: margin-left var(--transition-normal);
 }
 

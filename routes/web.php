@@ -3,12 +3,10 @@
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConcernsController;
+use App\Http\Controllers\ProvincesController;
 use App\Http\Controllers\SystemFeedbackController;
+use App\Models\provinces;
 use Illuminate\Support\Facades\Route;
-
-Route::get('/', function () {
-    return view('homepage');
-})->name('homepage');
 
 Route::controller(UserController::class)->group(function() {
 
@@ -48,15 +46,26 @@ Route::controller(UserController::class)->group(function() {
 });
 
 Route::controller(ConcernsController::class)->group(function () {
+    Route::get('/', 'index')->name('homepage');
     Route::get('/concerns/create', 'create')->name('create.concerns');
     Route::post('concerns/create', 'store')->name('store.create');
+    Route::get('/concerns/search', 'search')->name('search.concerns');
+    Route::get('/concerns/sort', 'sort')->name('sort.concerns');
 });
 
-// Used in creating concern
 Route::controller(CityController::class)->group(function () {
+    // Used in creating concern
     route::get('/show/cities', 'show')->name('show.create-concern');
     route::get('/search/cities', 'search')->name('search.create-concern');
 });
+
+// Getting Province in filter for list of concerns
+Route::controller(ProvincesController::class)->group(function () {
+    // Used in filters for homepage
+    route::get('/list/province', 'listProvince')->name('list.province');
+    route::get('/list/search-province', 'searchListProvince')->name('list.search-province');
+});
+
 
 // route for hard coded dashboard
 Route::get('/dashboard/staff', function () {

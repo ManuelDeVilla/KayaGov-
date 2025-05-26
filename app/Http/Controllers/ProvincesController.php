@@ -2,64 +2,30 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\province;
+use App\Models\city;
+use App\Models\provinces;
 use Illuminate\Http\Request;
 
-class ProvinceController extends Controller
+class ProvincesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
+    public function listProvince(Request $request) {
+        
+        if ($request->input('city')) {
+            $selected_city = $request->input('city');
+            $find_city = city::where('id', $selected_city)->first();
+
+            $province = provinces::where('id', $find_city->province_id)->first();
+        } else {
+            $province = provinces::orderBy('province', 'asc')->get();
+        }
+        return response()->json($province);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    function searchListProvince(Request $request) {
+        $search = $request->input('search');
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $province = provinces::where('province', 'like', $search . '%')->orderBy('province', 'asc')->get();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(province $province)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(province $province)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, province $province)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(province $province)
-    {
-        //
+        return response()->json($province);
     }
 }

@@ -12,9 +12,13 @@ selector.addEventListener('click', function () {
         search_region.value = ''
     }
 
+    search_region.addEventListener('click', function (event) {
+        event.stopPropagation()
+    })
+
     // Hides the options div if clicked somewhere in the document
     document.addEventListener('click', function (event) {
-        if (!selector.contains(event.target) && options.classList.contains('active') && (!search_region.contains(event.target))) {
+        if (!selector.contains(event.target) && options.classList.contains('active')) {
             options.classList.toggle('active');
             selectorArrow.classList.remove('fa-angle-up')
             selectorArrow.classList.add('fa-angle-down')
@@ -64,7 +68,7 @@ function requestType (searchValue, get_type) {
             break
 
         case 'search':
-            $.get(show_city, {search: searchValue}, function (cities) {
+            $.get(search_city, {search: searchValue}, function (cities) {
                 cities.city.forEach((city) => {
                     const province_initial = cities.province.find(array => city.province_id == array.id)
                     const province_array = province_initial

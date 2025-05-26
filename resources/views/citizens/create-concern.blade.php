@@ -69,7 +69,7 @@
                             </div>
 
                             <div class="options">
-                                <input type="hidden" id="city" class="input" name="city">
+                                <input type="hidden" id="city" class="input" name="city_id">
                                 <div class="search-wrapper">
                                     <input type="text" class="search-input" placeholder="Search a City...">
                                     <i class="fa fa-search"></i>

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('title');
             $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade');
             $table->text('description');
-            $table->string('city');
+            $table->foreignId('city_id')->constrained('cities', 'id')->onDelete('cascade');
             $table->string('category');
             $table->integer('priority');
             $table->string('status');

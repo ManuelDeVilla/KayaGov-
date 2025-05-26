@@ -7,7 +7,20 @@
 .list-section {
     display: grid;
     gap: 30px;
-    grid-template-columns: auto auto;
+    grid-template-columns: 50% 50%;
+}
+
+.body-header {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.body-header * {
+    width: 65%;
+    margin-right: 30px;
 }
 
 .search-section {
@@ -18,7 +31,7 @@
 }
 
 .search-wrapper {
-    width: 50%;
+    width: 60%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -105,6 +118,11 @@
 }
 
 .applied-filters button {
+    display: none;
+}
+
+.applied-filters .active {
+    display: block;
     border: none;
     font-size: 15px;
     padding: 10px 20px 10px 20px;

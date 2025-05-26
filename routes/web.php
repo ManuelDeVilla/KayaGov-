@@ -33,17 +33,6 @@ Route::controller(UserController::class)->group(function() {
     Route::post('/logout', 'logout')->name('logout');
     Route::get('/logout', 'logout')->name('logout');
 
-// since login and register are not yet ready, hardcode muna
-//     // dashboard routes
-//     Route::middleware(['auth'])->group(function () {
-//     Route::get('/dashboard/staff', function () {
-//         return view('dashboard.staff');
-//     })->name('dashboard.staff');
-
-//     Route::get('/dashboard/citizen', function () {
-//         return view('dashboard.citizen');
-//     })->name('dashboard.citizen');
-// });
     // User Profile Routes
     Route::get('/concerns', 'index')->name('concerns.list');
 });
@@ -59,16 +48,6 @@ Route::controller(CityController::class)->group(function () {
     route::get('/search/cities', 'search')->name('search.create-concern');
 });
 
-// route for hard coded dashboard
-Route::get('/dashboard/staff', function () {
-
-    
-    return view('dashboard.staff');
-})->name('dashboard.staff');
-
-Route::get('/dashboard/citizen', function () {
-    return view('dashboard.citizen');
-})->name('dashboard.citizen');
 
 //user profile
 Route::get('/citizens/user-profile', function () {
@@ -83,13 +62,13 @@ Route::get('/citizen/concern/details', function () {
 // concerns page
 Route::get('/citizens/concerns', [ConcernsController::class, 'index'])->name('citizens.concerns.index');
 
-Route::get('/citizen/dashboard', [DashboardController::class, 'index'])->name('dashboard.citizen');
+
 
 
 
 //create
 Route::get('/citizen/concerns/create', function () {
-    return view('citizens.concerns.create'); // Make sure this Blade file exists
+    return view('citizens.concerns.create'); 
 })->name('create.concerns');
 
 
@@ -107,9 +86,9 @@ Route::get('/concerns', [ConcernsController::class, 'index'])->name('concerns.li
 Route::get('/feedback/create', [SystemFeedbackController::class, 'create'])->name('feedback.create');
 Route::post('/feedback', [SystemFeedbackController::class, 'store'])->name('feedback.store');
 
-// dashboard routes
+// Dashboard Routes
 Route::get('/dashboard', function () {
-return view('dashboard');
+    return view('dashboard'); 
 })->name('dashboard');
 
-Route::get('/dashboard/citizen', [DashboardController::class, 'citizen']);
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

@@ -60,29 +60,27 @@ class ConcernsController extends Controller
         } else {
             return view('homepage', ['concerns' => $concerns]);
         }
-    public function index(Request $request)
-{
 
-    
+        // Hindi ko sure kung kanino to pero, patry nalang gamiten yung code sa taas, since complete na siya with working js
     // Query concerns with filters
-        $provinces = Provinces::all();
-        $concerns = concerns::query()
-            ->when($request->search, function($query, $search) {
-                $query->where(function($q) use ($search) {
-                    $q->where('title', 'like', "%{$search}%")
-                      ->orWhere('description', 'like', "%{$search}%");
-                });
-            })
-            ->when($request->status, function($query, $status) {
-                $query->whereIn('status', $status);
-            })
-            ->when($request->province, function($query, $province) {
-                $query->whereIn('province_id', $province);
-            })
-            ->latest()
-            ->paginate(15);
+        // $provinces = Provinces::all();
+        // $concerns = concerns::query()
+        //     ->when($request->search, function($query, $search) {
+        //         $query->where(function($q) use ($search) {
+        //             $q->where('title', 'like', "%{$search}%")
+        //               ->orWhere('description', 'like', "%{$search}%");
+        //         });
+        //     })
+        //     ->when($request->status, function($query, $status) {
+        //         $query->whereIn('status', $status);
+        //     })
+        //     ->when($request->province, function($query, $province) {
+        //         $query->whereIn('province_id', $province);
+        //     })
+        //     ->latest()
+        //     ->paginate(15);
 
-        return view('citizens.concerns.index', compact('concerns', 'provinces'));
+        // return view('citizens.concerns.index', compact('concerns', 'provinces'));
     }
 
     /**

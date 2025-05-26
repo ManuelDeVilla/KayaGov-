@@ -24,7 +24,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ route('citizens.concerns.create')}}" class="nav-link">
+                        <a href="{{ route('create.concerns')}}" class="nav-link">
                             <i class="fas fa-plus-circle"></i>
                             <span>Create Concern</span>
                         </a>

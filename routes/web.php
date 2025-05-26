@@ -71,16 +71,6 @@ Route::get('/citizen/concern/details', function () {
 // concerns page
 Route::get('/citizens/concerns', [ConcernsController::class, 'index'])->name('citizens.concerns.index');
 
-
-
-
-
-//create
-Route::get('/citizen/concerns/create', function () {
-    return view('citizens.concerns.create'); 
-})->name('create.concerns');
-
-
 //comments 
 Route::post('/concerns/{concern}/comment', [ConcernsController::class, 'addComment'])->name('concerns.comment');
 

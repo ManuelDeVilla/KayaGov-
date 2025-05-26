@@ -86,8 +86,14 @@ Route::get('/feedback/create', [SystemFeedbackController::class, 'create'])->nam
 Route::post('/feedback', [SystemFeedbackController::class, 'store'])->name('feedback.store');
 
 // Dashboard Routes
-Route::get('/dashboard', function () {
-    return view('dashboard'); 
-})->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard'); 
+// })->name('dashboard');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/citizen-dashboard', [DashboardController::class, 'citizenDashboard'])->name('citizens.dashboard');
+    Route::get('/staff-dashboard', [DashboardController::class, 'staffDashboard'])->name('staffs.dashboard');
+});

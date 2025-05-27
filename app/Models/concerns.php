@@ -9,6 +9,10 @@ class concerns extends Model
     //
     protected $fillable = ['title', 'description', 'category', 'city_id', 'priority', 'status', 'user_id'];
 
+        protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];    
     public function city () {
         return $this->belongsTo(city::class, 'city_id');
     }

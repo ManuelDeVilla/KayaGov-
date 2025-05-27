@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <title>KayaGov</title>
+    <link rel="icon" type="image/png" href="{{ asset('images/login.png') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
 </head>
-<body>
+<!-- <body>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @include('includes.header')
 
@@ -23,5 +24,5 @@
     </div>
 
     <script src="{{ asset('js/app.js') }}"></script>
-</body>
+</body> -->
 </html>

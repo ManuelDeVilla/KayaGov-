@@ -23,18 +23,6 @@
                             <span>Concerns</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ route('create.concerns')}}" class="nav-link">
-                            <i class="fas fa-plus-circle"></i>
-                            <span>Submit Concern</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-list"></i>
-                            <span>My Concerns</span>
-                        </a>
-                    </li>
                 </ul>
             </div>
             

@@ -1,5 +1,6 @@
 <?php
 
+
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConcernsController;
@@ -37,8 +38,6 @@ Route::controller(UserController::class)->group(function() {
 
 Route::controller(ConcernsController::class)->group(function () {
     Route::get('/', 'index')->name('homepage');
-    Route::get('/concerns/create', 'create')->name('create.concerns');
-    Route::post('concerns/create', 'store')->name('store.create');
     Route::get('/concerns/search', 'search')->name('search.concerns');
     Route::get('/concerns/sort', 'sort')->name('sort.concerns');
 });
@@ -55,8 +54,6 @@ Route::controller(ProvincesController::class)->group(function () {
     route::get('/list/province', 'listProvince')->name('list.province');
     route::get('/list/search-province', 'searchListProvince')->name('list.search-province');
 });
-
-
 
 //user profile
 Route::get('/citizens/user-profile', function () {
@@ -77,23 +74,28 @@ Route::post('/concerns/{concern}/comment', [ConcernsController::class, 'addComme
 //pendings concerns
 Route::get('/concerns/pending', [ConcernsController::class, 'pending'])->name('concerns.pending');
 
-
-// User Profile Routes
-Route::get('/concerns', [ConcernsController::class, 'index'])->name('concerns.list');
-
 // for feedback creation
 Route::get('/feedback/create', [SystemFeedbackController::class, 'create'])->name('feedback.create');
 Route::post('/feedback', [SystemFeedbackController::class, 'store'])->name('feedback.store');
 
-// Dashboard Routes
-// Route::get('/dashboard', function () {
-//     return view('dashboard'); 
-// })->name('dashboard');
-
-// Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+// Protected routes (require authentication)
 Route::middleware(['auth'])->group(function () {
+    // Dashboard Routes
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/citizen-dashboard', [DashboardController::class, 'citizenDashboard'])->name('citizens.dashboard');
     Route::get('/staff-dashboard', [DashboardController::class, 'staffDashboard'])->name('staffs.dashboard');
+
+    // Concerns routes (consolidated)
+    Route::get('/concerns/create', [ConcernsController::class, 'create'])->name('concerns.create');
+    Route::post('/concerns/create', [ConcernsController::class, 'store'])->name('store.create');
+    Route::get('/concerns/{id}', [ConcernsController::class, 'show'])->name('concerns.show');
+    
+    // Citizen specific routes
+    Route::prefix('citizens')->name('citizens.')->group(function () {
+        Route::get('/concerns/{id}', [ConcernsController::class, 'show'])->name('concerns.details');
+    });
 });
+
+// Public concern creation route (if you want non-authenticated users to create concerns)
+Route::get('/concerns/create', [ConcernsController::class, 'create'])->name('create.concerns');
+Route::post('/concerns/create', [ConcernsController::class, 'store'])->name('store.create');

@@ -76,15 +76,9 @@
                             <span class="status-badge {{ strtolower(str_replace(' ', '-', $concern->status)) }}">
                                 {{ ucfirst($concern->status) }}
                             </span>
-                            @if(Route::has('citizens.concerns.details'))
-                                <a href="{{ route('citizens.concerns.details', $concern->id) }}" class="btn-view">
-                                    View Details
-                                </a>
-                            @else
-                                <a href="#" class="btn-view">
-                                    View Details
-                                </a>
-                            @endif
+                            <a href="#" class="btn-view">
+                                View Details
+                            </a>
                         </div>
                     </div>
                 @endforeach
@@ -92,7 +86,7 @@
                 <div class="no-concerns">
                     <i class="fas fa-inbox"></i>
                     <p>You haven't submitted any concerns yet.</p>
-                    <a href="{{ route('concerns.create') ?? '#' }}" class="btn-primary">Submit Your First Concern</a>
+                    <a href="#" class="btn-primary">Submit Your First Concern</a>
                 </div>
             @endif
         </section>

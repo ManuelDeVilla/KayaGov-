@@ -5,13 +5,44 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 40px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1000;
 }
 
-.logo {
-    font-size: 2rem;
-    font-weight: bold;
+/* Header Left Section */
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+/* Menu Button */
+.menu-button {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
     color: #2c3e50;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.menu-button:hover {
+    background-color: #f8f9fa;
+    color: #007bff;
+}
+
+/* Header Right Section */
+.header-right {
+    display: flex;
+    align-items: center;
+}
+
+/* Navigation Links */
+.nav-links {
+    display: flex;
+    align-items: center;
 }
 
 .nav-links a {
@@ -25,15 +56,75 @@
 .nav-links a:hover {
     color: #007bff;
 }
+
+/* User Profile */
 .user-profile {
-    margin-right: 100px;
-    /* height:32px;
-    width:32px; */
-    border-radius:50%;
-    vertical-align:middle;
+    display: flex;
+    margin-right: 20px;
+    align-items: center;
+    padding: 8px 16px;
+    border-radius: 25px;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+    cursor: pointer;
 }
 
-.user-profile span {
-    margin-left:8px;
-    vertical-align:middle;
+.user-profile:hover {
+    background-color: #e9ecef;
+    transform: translateY(-1px);
+}
+
+.user-icon {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.user-name {
+    margin-left: 12px;
+    font-weight: 500;
+    color: #2c3e50;
+    font-size: 0.95rem;
+}
+
+/* Logo (if you want to add it back) */
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-header {
+        padding: 0 20px;
+    }
+    
+    .user-profile {
+        padding: 6px 12px;
+    }
+    
+    .user-name {
+        font-size: 0.9rem;
+    }
+    
+    .user-icon {
+        height: 28px;
+        width: 28px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-header {
+        padding: 0 15px;
+    }
+    
+    .user-profile {
+        padding: 4px 8px;
+    }
+    
+    .user-name {
+        margin-left: 8px;
+    }
 }

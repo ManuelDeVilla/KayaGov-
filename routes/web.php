@@ -7,6 +7,7 @@ use App\Http\Controllers\ConcernsController;
 use App\Http\Controllers\ProvincesController;
 use App\Http\Controllers\SystemFeedbackController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AdminController;
 use App\Models\provinces;
 use Illuminate\Support\Facades\Route;
 
@@ -99,3 +100,11 @@ Route::middleware(['auth'])->group(function () {
 // Public concern creation route (if you want non-authenticated users to create concerns)
 Route::get('/concerns/create', [ConcernsController::class, 'create'])->name('create.concerns');
 Route::post('/concerns/create', [ConcernsController::class, 'store'])->name('store.create');
+
+// Admin Routes
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::post('/staff/verify/{id}', [AdminController::class, 'verifyStaff'])->name('verify.staff');
+    Route::post('/staff/reject/{id}', [AdminController::class, 'rejectStaff'])->name('reject.staff');
+    Route::delete('/concern/{id}', [AdminController::class, 'deleteConcern'])->name('concern.delete');
+});

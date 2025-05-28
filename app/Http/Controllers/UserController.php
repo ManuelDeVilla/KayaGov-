@@ -86,7 +86,7 @@ class UserController extends Controller
         $created_user = User::create($validated);
         Auth::login($created_user);
 
-        return redirect()->route('homepage');
+        return redirect()->route('dashboard');
     }
 
     public function showLogin ()

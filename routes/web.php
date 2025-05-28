@@ -12,6 +12,8 @@ use App\Http\Controllers\ProfileController;
 use App\Models\provinces;
 use Illuminate\Support\Facades\Route;
 
+
+
 Route::controller(UserController::class)->group(function() {
 
     // Get dropdown arrows in register

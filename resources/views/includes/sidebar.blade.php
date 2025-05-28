@@ -58,7 +58,7 @@
 
                 @auth
                 <li class="nav-item">
-                        <a href="{{ route('user-profile') }}" class="nav-link">
+                        <a href="{{ route('citizen.profile.show') }}" class="nav-link">
                             <i class="fas fa-user"></i>
                             <span>User Profile</span>
                         </a>

@@ -8,6 +8,7 @@ use App\Http\Controllers\ProvincesController;
 use App\Http\Controllers\SystemFeedbackController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\ProfileController;
 use App\Models\provinces;
 use Illuminate\Support\Facades\Route;
 
@@ -56,10 +57,11 @@ Route::controller(ProvincesController::class)->group(function () {
     route::get('/list/search-province', 'searchListProvince')->name('list.search-province');
 });
 
-//user profile
-Route::get('/citizens/user-profile', function () {
-    return view('citizens.user-profile');
-})->name('user-profile');
+//editing profile
+Route::middleware(['auth'])->group(function () {
+    Route::get('/citizens/profile', [ProfileController::class, 'showProfile'])->name('citizen.profile.show');
+    Route::put('/citizens/profile', [ProfileController::class, 'update'])->name('citizen.profile.update');
+});
 
 // concerns details
 Route::get('/citizen/concern/details', function () {

@@ -12,6 +12,7 @@
     @vite('resources/css/header.css')
     @vite('resources/css/citizens/sidebar-styles.css')
     @vite('resources/js/sidebar.js')
+      @vite('resources/css/footer.css')
 </head>
 <body>
     <header>
@@ -93,4 +94,7 @@
         </section>
     </div>
 </body>
+<footer>
+    @include('includes.footer')
+</footer>
 </html>

@@ -1,0 +1,152 @@
+
+.main-footer {
+    width: 100%;
+    background: #f5f8fa;
+    color: #495057;
+    border-top: 2px solid #4A90E2;
+    box-shadow: 0 -1px 8px rgba(0,0,0,0.04);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    z-index: 100;
+    padding: 0;
+}
+
+.footer-content {
+    max-width: 1000px;
+    margin-left: 300px;
+    padding: 0.7rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 56px;
+    width: 100%;
+}
+
+.footer-left {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: #4A90E2;
+    font-size: 16px;
+}
+
+.footer-brand i {
+    font-size: 20px;
+    color: #4A90E2;
+}
+
+.brand-name {
+    font-size: 16px;
+    letter-spacing: 0.5px;
+}
+
+.footer-text {
+    color: #6c757d;
+    font-size: 13px;
+    font-weight: 400;
+}
+
+.footer-right {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+.feedback-text {
+    color: #6c757d;
+    font-size: 13px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.feedback-text i {
+    color: #e74c3c;
+    font-size: 13px;
+}
+
+.feedback-btn {
+    background: #4A90E2;
+    color: white;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 0.45rem 1.1rem;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(74, 144, 226, 0.08);
+    border: none;
+}
+
+.feedback-btn:hover, .feedback-btn:focus {
+    background: #357abd;
+    color: #fff;
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 4px 12px rgba(74, 144, 226, 0.18);
+    outline: none;
+}
+
+.feedback-btn i {
+    font-size: 13px;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .footer-content {
+        flex-direction: column;
+        min-height: auto;
+        padding: 0.8rem 1rem;
+        gap: 0.7rem;
+        align-items: flex-start;
+    }
+    .footer-left, .footer-right {
+        flex-direction: column;
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .footer-content {
+        padding: 0.6rem 0.5rem;
+    }
+    .brand-name, .footer-brand {
+        font-size: 14px;
+    }
+    .footer-brand i {
+        font-size: 16px;
+    }
+    .feedback-text, .footer-text {
+        font-size: 11px;
+    }
+    .feedback-btn {
+        font-size: 11px;
+        padding: 0.35rem 0.7rem;
+    }
+}
+
+/* Remove shimmer and animation for a cleaner look */
+.main-footer::before {
+    display: none;
+}
+
+.footer-brand:hover {
+    transform: scale(1.04);
+    transition: transform 0.15s;
+}
+
+.footer-brand:hover i {
+    color: #357abd;
+}

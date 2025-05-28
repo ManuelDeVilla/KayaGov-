@@ -233,10 +233,5 @@
         </div>
     @endif
 </div>
-
 </body>
-</html>
-            
-        
-</body>
-</html>
+</html>        

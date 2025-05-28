@@ -10,6 +10,7 @@
     @vite('resources/css/staffs/staff-dashboard.css')
     @vite('resources/css/header.css')
     @vite('resources/css/staffs/staff-sidebar.css')
+    @vite('resources/css/footer.css')
     @vite('resources/js/sidebar.js')
 </head>
 <body>
@@ -111,5 +112,8 @@
             @endif
         </div> -->
     </div>
+<footer>
+    @include('includes.footer')
+</footer>
 </body>
 </html>

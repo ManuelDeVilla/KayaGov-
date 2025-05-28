@@ -30,11 +30,12 @@
                             </svg>
                         </div>
                         <div class="profile-status">
-                            <span class="edit-button" id="enable-edit">Edit</span>
                             <span class="role-badge">Citizen</span>
                         </div>
                     </div>
-                    <h1 class="profile-title">My Profile</h1>
+                        <h1 class="profile-title">
+                            {{ ($profile->first_name ?? '') . ' ' . ($profile->last_name ?? '') }}
+                        </h1>
                 </div>
 
                 <div class="profile-content"> 

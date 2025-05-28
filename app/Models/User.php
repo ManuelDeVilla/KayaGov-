@@ -26,7 +26,11 @@ class User extends Authenticatable
         'region',
         'province',
         'city',
-        'image_path'
+        'image_path',
+        'first_name',
+        'last_name',
+        'email',
+        'phone'
     ];
 
     /**
@@ -55,4 +59,9 @@ class User extends Authenticatable
     public function concern () {
         return $this->hasMany(concerns::class, 'user_id');
     }
+
+    public function profile()
+{
+    return $this->hasOne(ProfileUser::class);
+}
 }

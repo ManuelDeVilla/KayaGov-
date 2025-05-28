@@ -104,9 +104,14 @@ Route::get('/concerns/create', [ConcernsController::class, 'create'])->name('cre
 Route::post('/concerns/create', [ConcernsController::class, 'store'])->name('store.create');
 
 // Admin Routes
-Route::prefix('admin')->name('admin.')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::post('/staff/verify/{id}', [AdminController::class, 'verifyStaff'])->name('verify.staff');
     Route::post('/staff/reject/{id}', [AdminController::class, 'rejectStaff'])->name('reject.staff');
     Route::delete('/concern/{id}', [AdminController::class, 'deleteConcern'])->name('concern.delete');
+    
+    // System Feedback Routes (moved inside admin group)
+    Route::get('/system-feedbacks', [SystemFeedbackController::class, 'index'])->name('system-feedbacks.index');
+    Route::patch('/system-feedbacks/{feedback}/status', [SystemFeedbackController::class, 'updateStatus'])->name('system-feedbacks.update-status');
+
 });

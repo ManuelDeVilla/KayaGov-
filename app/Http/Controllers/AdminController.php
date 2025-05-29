@@ -55,4 +55,10 @@ class AdminController extends Controller
 
         return redirect()->back()->with('success', 'Concern deleted successfully');
     }
+
+    public function staffList()
+    {
+        $staffMembers = User::where('usertype', 'staff')->get();
+        return view('admin.staff_lists.index', compact('staffMembers'));
+    }
 }

@@ -116,4 +116,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('/system-feedbacks', [SystemFeedbackController::class, 'index'])->name('system-feedbacks.index');
     Route::patch('/system-feedbacks/{feedback}/status', [SystemFeedbackController::class, 'updateStatus'])->name('system-feedbacks.update-status');
 
+    // get the user profile
+    Route::get('/profile', [UserController::class, 'profile'])->name('user-profile');
+
+    // Government Staff List
+    Route::get('/staff-lists', [AdminController::class, 'staffList'])->name('staff_lists.index');
 });

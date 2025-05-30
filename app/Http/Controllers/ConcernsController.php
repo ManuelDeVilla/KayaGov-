@@ -48,18 +48,25 @@ class ConcernsController extends Controller
 
         $concerns = $query_concerns->orderBy('id', 'desc')->get();
         $city = city::all();
+        $provinces = provinces::all();
+        
 
         // If request came from ajax return json
         if (request()->ajax()) {
             return response()->json([
                 'concerns' => $concerns,
-                'cities' => $city
+                'cities' => $city,
+                'provinces' => $provinces,
             ]);
 
             // Else if it came as an http request return the view
         } else {
-            return view('homepage', ['concerns' => $concerns]);
-        }
+        return view('citizens.concerns.index', [
+            'concerns' => $concerns,
+            'cities' => $city,
+            'provinces' => $provinces,
+        ]);        
+    }
 
         // Hindi ko sure kung kanino to pero, patry nalang gamiten yung code sa taas, since complete na siya with working js
     // Query concerns with filters
@@ -121,7 +128,7 @@ class ConcernsController extends Controller
             }
         }
 
-        return redirect()->route('homepage');
+        return redirect()->route('citizens.concerns.index');
     }
 
     /**
@@ -130,23 +137,25 @@ class ConcernsController extends Controller
     public function show($id)
     {
         $concerns = concerns::findOrFail($id);
-        return view('citizens.concerns.details', compact('concern'));    
+        return view('citizens.concerns.details', compact('concerns'));
+        
+        
     }
         
 
-     public function addComment(Request $request, concerns_comments $concern)
-    {
-        // $validated = $request->validate([
-        //     'comment' => 'required|max:1000'
-        // ]);
+    //  public function addComment(Request $request, concerns_comments $concern)
+    // {
+    //     $validated = $request->validate([
+    //         'comment' => 'required|max:1000'
+    //     ]);
 
-        // $concern->comments()->create([
-        //     'user_id' => auth()->id(),
-        //     'content' => $validated['comments']
-        // ]);
+    //     $concern->comments()->create([
+    //         'user_id' => auth()->id(),
+    //         'content' => $validated['comments']
+    //     ]);
 
-        // return redirect()->back()->with('success', 'Comment added successfully!');
-    }
+    //     return redirect()->back()->with('success', 'Comment added successfully!');
+    // }
 
     /**
      * Show the form for editing the specified resource.

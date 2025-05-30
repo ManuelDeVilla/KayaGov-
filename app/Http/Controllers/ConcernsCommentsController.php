@@ -4,62 +4,41 @@ namespace App\Http\Controllers;
 
 use App\Models\concerns_comments;
 use Illuminate\Http\Request;
+use App\Models\concerns;
+use Illuminate\Support\Facades\Auth;
 
 class ConcernsCommentsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    // Other methods ...
 
     /**
      * Store a newly created resource in storage.
+     * Add Concern $concern as parameter to get the specific concern
      */
-    public function store(Request $request)
+    public function store(Request $request, concerns $concern)
     {
-        //
+        $request->validate([
+            'comment' => 'required|string',
+        ]);
+
+        // Use the Concern model instance to create comment
+        $concern->comments()->create([
+            'user_id' => Auth::id(),
+            'comment' => $request->input('comment'),
+        ]);
+
+        return redirect()->back()->with('success', 'Comment added!');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(concerns_comments $concerns_comments)
+    public function show($id)
     {
-        //
+        $concerns = concerns::with('comments.user')->findOrFail($id);
+
+        return view('citizens.concerns.details', compact('concerns'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(concerns_comments $concerns_comments)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, concerns_comments $concerns_comments)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(concerns_comments $concerns_comments)
-    {
-        //
-    }
+    // Other methods ...
 }

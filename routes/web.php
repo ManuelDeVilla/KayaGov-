@@ -11,6 +11,14 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Models\provinces;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\concernsCommentsController;
+
+Route::view('/', 'home')->name('landing');
+
+// Route to the homepage
+Route::get('/home', function () {
+    return view('home');
+})->name('home');
 
 
 
@@ -41,7 +49,7 @@ Route::controller(UserController::class)->group(function() {
 });
 
 Route::controller(ConcernsController::class)->group(function () {
-    Route::get('/', 'index')->name('homepage');
+    Route::get('/concerns', 'index')->name('concerns.index');
     Route::get('/concerns/search', 'search')->name('search.concerns');
     Route::get('/concerns/sort', 'sort')->name('sort.concerns');
 });
@@ -66,7 +74,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // concerns details
-Route::get('/citizen/concern/details', function () {
+Route::get('/citizens/concern/details', function () {
     return view('citizens.concerns.details');
 })->name('citizens.concerns.details');
 
@@ -75,6 +83,7 @@ Route::get('/citizens/concerns', [ConcernsController::class, 'index'])->name('ci
 
 //comments 
 Route::post('/concerns/{concern}/comment', [ConcernsController::class, 'addComment'])->name('concerns.comment');
+Route::post('/concerns/{concern}/comments', [concernsCommentsController::class, 'store'])->name('concerns.comments.store');
 
 //pendings concerns
 Route::get('/concerns/pending', [ConcernsController::class, 'pending'])->name('concerns.pending');

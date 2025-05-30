@@ -20,7 +20,7 @@ class concerns extends Model
         return $this->hasMany(concern_report::class, 'concerns_id');
     }
 
-    public function concern_comments () {
+    public function comments () {
         return $this->hasMany(concerns_comments::class, 'concerns_id');
     }
 

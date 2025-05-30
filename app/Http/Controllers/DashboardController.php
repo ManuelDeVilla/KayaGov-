@@ -28,7 +28,7 @@ class DashboardController extends Controller
    public function citizenDashboard()
    {
         // Fetch concerns using the concerns model for citizens - only user's own concerns
-        $concerns = concerns::with(['concern_reports', 'concern_comments', 'concern_images', 'city'])
+        $concerns = concerns::with(['concern_reports', 'comments', 'concern_images', 'city'])
             ->where('user_id', Auth::id())
             ->orderBy('created_at', 'desc')
             ->get();
@@ -44,7 +44,7 @@ class DashboardController extends Controller
    public function staffDashboard()
    {
         // Fetch data relevant for staff dashboard - all concerns
-        $concerns = concerns::with(['concern_reports', 'concern_comments', 'concern_images', 'users', 'city'])
+        $concerns = concerns::with(['concern_reports', 'comments', 'concern_images', 'users', 'city'])
             ->orderBy('created_at', 'desc')
             ->get();
 

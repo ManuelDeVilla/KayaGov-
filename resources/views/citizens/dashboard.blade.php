@@ -12,7 +12,7 @@
     @vite('resources/css/header.css')
     @vite('resources/css/citizens/sidebar-styles.css')
     @vite('resources/js/sidebar.js')
-      @vite('resources/css/footer.css')
+    @vite('resources/css/footer.css')
 </head>
 <body>
     <header>
@@ -78,7 +78,7 @@
                             <span class="status-badge {{ strtolower(str_replace(' ', '-', $concern->status)) }}">
                                 {{ ucfirst($concern->status) }}
                             </span>
-                            <a href="#" class="btn-view">
+                            <a href="{{ route('citizens.concerns.details', ['id' => $concern->id]) }}" class="btn-view">
                                 View Details
                             </a>
                         </div>

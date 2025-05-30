@@ -57,7 +57,7 @@
                                 <span class="icon location">
                                     <i class="fa-solid fa-location-dot"></i>
                                 </span>
-                                {{ $concern->city }}
+                                {{ $concern->cities }}
                             </p>
                         </div>
                     </div>

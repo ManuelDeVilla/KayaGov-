@@ -2,7 +2,7 @@
     <aside class="sidebar">
             <div class="sidebar-section">
                 <div class="logo">
-                <a href="{{ route('homepage') }}">
+                <a href="{{ route('landing') }}">
                     <img src="{{ asset('images/kayagov_logo.png') }}" alt="KayaGov Logo">
                 </a>
             </div>

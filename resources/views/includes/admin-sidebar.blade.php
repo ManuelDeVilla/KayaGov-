@@ -20,6 +20,10 @@
                     <span>All Concerns</span>
                 </a>
             </li>
+            <a href="{{ route('admin.staff_lists.index') }}" class="nav-link">  <i class="fas fa-exclamation-circle"></i>
+                    <span>Government Staffs</span>
+                </a>
+            </li> 
             <li class="nav-item">
                 <a href="#" class="nav-link">
                     <i class="fas fa-user-check"></i>    
@@ -38,12 +42,6 @@
     <div class="sidebar-section">
         <h3>Account</h3>
         <ul class="nav-menu">
-            <li class="nav-item">
-                <a href="{{ route('user-profile') }}" class="nav-link">
-                    <i class="fas fa-user"></i>
-                    <span>User Profile</span>
-                </a>
-            </li>
             <li class="nav-item">
                 <form method="POST" action="{{ route('logout') }}">
                     @csrf

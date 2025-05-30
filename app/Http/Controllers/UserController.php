@@ -119,4 +119,11 @@ class UserController extends Controller
         return redirect()->route('home');
     }
 
+    public function profile()
+    {
+        return view('profile'); 
+    }
+
+
+
 }

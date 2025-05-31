@@ -3,12 +3,21 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\concerns;
 
 class concerns_comments extends Model
 {
-    protected $fillable = ['concerns_id', 'comments'];
+
+    protected $table = 'concerns_comments';
+
+    protected $fillable = ['comment', 'concerns_id', 'user_id'];
     //
     public function concern () {
         return $this->belongsTo(concerns::class, 'concerns_id');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

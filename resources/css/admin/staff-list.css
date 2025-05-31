@@ -1,0 +1,81 @@
+body, .staff-list-container, .staff-list-table {
+    font-family: 'Segoe UI', 'Roboto', Arial, 'Helvetica Neue', sans-serif;
+    font-size: 1rem;
+    color: #222;
+    background: none;
+}
+.staff-list-container {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    padding: 2.5rem 2rem 2rem 2rem;
+    margin-left: 380px;
+    margin-top: auto;
+    max-width: 1100px;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+}
+.staff-list-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #1a237e;
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.5px;
+    text-align: left;
+}
+.staff-list-table-wrapper {
+    overflow-x: auto;
+    border-radius: 8px;
+    background: #f8fafc;
+    box-shadow: 0 1px 4px rgba(60,60,60,0.04);
+    padding: 1rem 0.5rem;
+}
+.staff-list-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: transparent;
+    font-size: 1rem;
+}
+.staff-list-table th, .staff-list-table td {
+    padding: 0.85rem 1.1rem;
+    text-align: left;
+    border-bottom: 1px solid #e3e8ee;
+}
+.staff-list-table th {
+    background: #e3e8ee;
+    color: #263159;
+    font-weight: 600;
+    font-size: 1.05rem;
+    letter-spacing: 0.2px;
+    border-top: 1px solid #e3e8ee;
+}
+.staff-list-table tr:last-child td {
+    border-bottom: none;
+}
+.staff-list-table tbody tr:hover {
+    background: #f1f5fb;
+    transition: background 0.2s;
+}
+.staff-list-table td {
+    color: #333;
+    vertical-align: middle;
+}
+.no-staff {
+    text-align: center;
+    color: #b0b0b0;
+    font-style: italic;
+    padding: 2rem 0;
+    font-size: 1.1rem;
+}
+@media (max-width: 800px) {
+    .staff-list-container {
+        padding: 1.2rem 0.5rem;
+    }
+    .staff-list-title {
+        font-size: 1.3rem;
+    }
+    .staff-list-table th, .staff-list-table td {
+        padding: 0.6rem 0.5rem;
+        font-size: 0.97rem;
+    }
+}

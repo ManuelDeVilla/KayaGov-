@@ -1,3 +1,4 @@
+@extends('layouts.app')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,7 +58,7 @@
                                 <span class="icon location">
                                     <i class="fa-solid fa-location-dot"></i>
                                 </span>
-                                {{ $concern->cities }}
+                                {{ $concern->city }}
                             </p>
                         </div>
                     </div>

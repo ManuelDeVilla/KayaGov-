@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('provinces', function (Blueprint $table) {
+        Schema::create('user_verifications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('region_id')->constrained('regions', 'id')->onDelete('cascade');
-            $table->string('province_initial');
-            $table->string('province')->strtoupper();
+            $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade');
+            $table->string('coe_path')->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('provinces');
+        Schema::dropIfExists('user_verifications');
     }
 };

@@ -17,9 +17,43 @@ Route::controller(UserController::class)->group(function() {
 
     // Register Routes
     // Showing register form
+    // Create Citizen Accounts
     Route::get('/register','showRegister')->name('show.register');
     // Handling requests
     Route::post('/register','register')->name('register');
+
+    // Show User Location form - For Admin
+    Route::get('/register/location','locationRegisterShow')->name('show.register.location');
+    // Creates Admin, Government accounts - For Admin
+    Route::post('/register/location','register')->name('register.location');
+
+    // Creating Staff Accounts
+    Route::get('/create/staff','showRegisterStaff')->name('show.staff.register');
+    Route::post('/create/staff','registerStaff')->name('staff.register');
+
+    // Location Part of the form
+    Route::get('/staff/register/location','locationStaffRegisterShow')->name('staff.show.register.location');
+    Route::post('/staff/register/location','registerStaff')->name('staff.register.location');
+
+    // Upload Files
+    Route::get('/staff/register/coe','coeUpload')->name('staff.show.register.coe');
+    Route::post('/staff/register/coe','registerStaff')->name('staff.register.coe');
+    
+    // Waiting page of Staffs After 
+    Route::get('/staff/waiting','staffWaitingPage')->name(name: 'staff.waiting-page');
+
+    // Creating admin and staff account, only for ADMIN
+    Route::prefix('admin')->group(function () {
+        // Showing register form for creating staff and admin
+        Route::get('/register','showAccountForm')->name('show.create-account');
+        // Showing register form for creating staff and admin
+        Route::post('/register','register')->name('create-account');
+
+        // For Staff Verification
+        Route::get('staff-verification', 'listStaffVerification')->name('list.staff-verification');
+        // Verifies the account
+        Route::post('staff-verification', 'staffVerification')->name('submit.verification');
+    });
 
     // Login Routes
     // Showing login form
@@ -30,13 +64,10 @@ Route::controller(UserController::class)->group(function() {
     // Logout Routes
     Route::post('/logout', 'logout')->name('logout');
     Route::get('/logout', 'logout')->name('logout');
-
-    // User Profile Routes
-    Route::get('/concerns', 'index')->name('concerns.list');
 });
 
 Route::controller(ConcernsController::class)->group(function () {
-    Route::get('/', 'index')->name('homepage');
+    Route::get('/concern', 'index')->name('concern-list');
     Route::get('/concerns/create', 'create')->name('create.concerns');
     Route::post('concerns/create', 'store')->name('store.create');
     Route::get('/concerns/search', 'search')->name('search.concerns');
@@ -68,9 +99,6 @@ Route::get('/citizen/concern/details', function () {
     return view('citizens.concerns.details');
 })->name('citizens.concerns.details');
 
-// concerns page
-Route::get('/citizens/concerns', [ConcernsController::class, 'index'])->name('citizens.concerns.index');
-
 //comments 
 Route::post('/concerns/{concern}/comment', [ConcernsController::class, 'addComment'])->name('concerns.comment');
 
@@ -90,4 +118,4 @@ Route::get('/dashboard', function () {
     return view('dashboard'); 
 })->name('dashboard');
 
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/', [DashboardController::class, 'index'])->name('dashboard');

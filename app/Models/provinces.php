@@ -6,12 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class provinces extends Model
 {
-    protected $fillable = ['region_id', 'province_initial', 'province'];
-    
-    public function region () 
-    {
-        return $this->belongsTo(Region::class, 'region_id');
-    }
+    protected $fillable = ['province_initial', 'province'];
     
     public function cities () 
     {
@@ -21,5 +16,9 @@ class provinces extends Model
     public function concerns() 
     {
         return $this->hasMany(concerns::class);
+    }
+
+    public function users () {
+        return $this->hasOne(User::class, 'province_id');
     }
 }

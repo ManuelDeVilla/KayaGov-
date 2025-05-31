@@ -158,7 +158,7 @@
 
     <script>
         const search_concerns = "{{ route('search.concerns') }}"
-        const show_concerns = "{{ route('homepage') }}"
+        const show_concerns = "{{ route('concern-list') }}"
         const sort_concerns = "{{ route('sort.concerns') }}"
         const list_province = "{{ route('list.province') }}"
         const list_search_province = "{{ route('list.search-province') }}"

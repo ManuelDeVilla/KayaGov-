@@ -172,6 +172,7 @@ class ConcernsController extends Controller
         //
     }
 
+    //For search in concern-list can be used whenever there is filter button for concern as long as the divs has same id's and classes 
     public function search (Request $request) {
         $search = $request->input('search');
         $query_concerns = concerns::query();
@@ -215,6 +216,7 @@ class ConcernsController extends Controller
         ]);
     }
 
+    //For sort in concern-list can be used whenever there is filter button for concern as long as the divs has same id's and classes 
     public function sort (Request $request) {
         // Create an object of concerns model
         $query = concerns::query();

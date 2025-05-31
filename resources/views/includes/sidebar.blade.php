@@ -2,7 +2,7 @@
     <aside class="sidebar">
             <div class="sidebar-section">
                 <div class="logo">
-                <a href="{{ route('homepage') }}">
+                <a href="{{ route('concern-list') }}">
                     <img src="{{ asset('images/kayagov_logo.png') }}" alt="KayaGov Logo">
                 </a>
             </div>
@@ -16,9 +16,10 @@
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                    @endif
-                    @endauth        <li class="nav-item">
-                        <a href="{{ route('citizens.concerns.index')}}" class="nav-link">
+                        @endif
+                    @endauth
+                    <li class="nav-item">
+                        <a href="{{ route('concern-list')}}" class="nav-link">
                             <i class="fas fa-exclamation-circle"></i>
                             <span>Concerns</span>
                         </a>
@@ -35,6 +36,23 @@
                             <span>My Concerns</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a href="{{ route('show.create-account') }}" class="nav-link">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <span>Create Account</span>
+                        </a>
+                    </li>
+
+                    @auth
+                        @if (Auth::user()->usertype == 'admin')
+                            <li class="nav-item">
+                                <a href="{{ route('list.staff-verification') }}" class="nav-link">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                    <span>Staff Verification</span>
+                                </a>
+                            </li>
+                        @endif
+                    @endauth
                 </ul>
             </div>
             
@@ -57,7 +75,7 @@
                 @endguest
 
                 @auth
-                <li class="nav-item">
+                    <li class="nav-item">
                         <a href="{{ route('user-profile') }}" class="nav-link">
                             <i class="fas fa-user"></i>
                             <span>User Profile</span>
@@ -68,7 +86,6 @@
                             <i class="fas fa-sign-out-alt"></i>
                             <span>Logout</span>
                         </a>
-                    </form>
                     </li>
                 @endauth
             </ul>

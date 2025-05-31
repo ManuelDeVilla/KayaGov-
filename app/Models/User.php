@@ -23,9 +23,8 @@ class User extends Authenticatable
         'password',
         'usertype',
         'gender',
-        'region',
-        'province',
-        'city',
+        'province_id',
+        'city_id',
         'image_path'
     ];
 
@@ -54,5 +53,17 @@ class User extends Authenticatable
 
     public function concern () {
         return $this->hasMany(concerns::class, 'user_id');
+    }
+
+    public function verification () {
+        return $this->hasOne(user_verification::class, 'user_id');
+    }
+
+    public function province () {
+        return $this->belongsTo(provinces::class, 'province_id');
+    }
+
+    public function cities () {
+        return $this->belongsTo(city::class, 'city_id');
     }
 }

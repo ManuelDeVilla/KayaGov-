@@ -22,16 +22,17 @@
 
             <div class="form-card">
 
-            <!-- Error Handler -->
-                @if ($errors->any())
-                    <div class="error-wrapper">
-                        <ul>
+                <!-- Error Handler -->
+                <div class="form-handler-wrapper">
+                    @if ($errors->any())
+                        <ul class="form-handler">
+                            <li class="error-header">Error Found</li>
                             @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
+                                <li class="errors">{{ $error }}</li>
                             @endforeach
                         </ul>
-                    </div>
-                @endif
+                    @endif
+                </div>
 
                 <form action="{{ route('login') }}" method="post">
                     @csrf

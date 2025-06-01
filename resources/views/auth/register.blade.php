@@ -24,6 +24,18 @@
             </div>
 
             <div class="form-card">
+
+                <!-- Error Handler -->
+                @if ($errors->any())
+                    <div class="error-wrapper">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                @endif
+                
                 <form action="{{ route('register') }}" method="post">
                     @csrf
                     <input type="hidden" id="username" name="usertype" value="citizen">
@@ -123,14 +135,6 @@
         <div class="image-section">
             <img src="{{ asset('images/register.png') }}" alt="">
         </div>
-
-        @if ($errors->any())
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-@endif
     </div>
     
     <script>

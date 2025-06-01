@@ -54,6 +54,11 @@ Route::controller(UserController::class)->group(function() {
         Route::get('/register','showAccountForm')->name('show.create-account');
         // Showing register form for creating staff and admin
         Route::post('/register','register')->name('create-account');
+
+        // For Staff Verification
+        Route::get('staff-verification', 'listStaffVerification')->name('list.staff-verification');
+        // Verifies the account
+        Route::post('staff-verification', 'staffVerification')->name('submit.verification');
     });
 
     // Login Routes

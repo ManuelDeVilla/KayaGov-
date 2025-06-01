@@ -16,4 +16,8 @@ class city extends Model
     public function concern () {
         return $this->hasMany(concerns::class, 'city_id');
     }
+
+    public function users () {
+        return $this->hasOne(city::class, 'city_id');
+    }
 }

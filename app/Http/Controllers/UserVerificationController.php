@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\region;
+use App\Models\user_verification;
 use Illuminate\Http\Request;
 
-class RegionController extends Controller
+class UserVerificationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class RegionController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(region $region)
+    public function show(user_verification $user_verification)
     {
         //
     }
@@ -42,7 +42,7 @@ class RegionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(region $region)
+    public function edit(user_verification $user_verification)
     {
         //
     }
@@ -50,7 +50,7 @@ class RegionController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, region $region)
+    public function update(Request $request, user_verification $user_verification)
     {
         //
     }
@@ -58,7 +58,7 @@ class RegionController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(region $region)
+    public function destroy(user_verification $user_verification)
     {
         //
     }

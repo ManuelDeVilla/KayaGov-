@@ -1,0 +1,91 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Montserrat", sans-serif;
+}
+
+.header {
+    margin-bottom: 40px;
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.search-bar input {
+    width: 60%;
+    border: 1px grey solid;
+    border-radius: 10px;
+    padding: 10px 35px;
+}
+
+.search-bar i {
+    transform: translateX(27px);
+}
+
+.user-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.user-list {
+    width: 80%;
+    padding: 20px;
+}
+
+.user-header {
+    padding: 20px 25px;
+    border-bottom: 1px grey solid;
+}
+
+.user-header p {
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.user-content {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.user-verification {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 30px 25px 30px 25px;
+    border-bottom: 1px grey solid;
+}
+
+.details-section {
+    width: 30%;
+}
+
+.action-section {
+    width: 25%;
+}
+
+.details-section, .action-section form {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    padding: 8px 20px;
+    color: #407BFF;
+    background: none;
+    font-weight: 600;
+    border: 2px #407BFF solid;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+}
+
+button:hover {
+    color: white;
+    background: #407BFF;
+}

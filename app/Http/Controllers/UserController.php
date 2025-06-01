@@ -75,6 +75,9 @@ class UserController extends Controller
             'city' => 'required|exists:cities,id',
             'password' => 'required|min:6|max:20|confirmed'
         ]);
+        $validated['province'] = provinces::find($validated['province'])->province;
+        $validated['city'] = city::find($validated['city'])->city;
+
 
         if ($validated['gender'] == 'Male') {
             $image_path = '/storage/public/default-male.png';
@@ -116,7 +119,7 @@ class UserController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success', 'You have been logged out successfully.');
     }
 
     public function profile()

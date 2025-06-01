@@ -60,6 +60,11 @@ class User extends Authenticatable
         return $this->hasMany(concerns::class, 'user_id');
     }
 
+    public function city()
+    {
+        return $this->belongsTo(city::class, 'city_id');
+    }
+
     public function profile()
 {
     return $this->hasOne(ProfileUser::class);

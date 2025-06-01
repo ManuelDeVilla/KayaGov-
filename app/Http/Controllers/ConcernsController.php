@@ -48,25 +48,18 @@ class ConcernsController extends Controller
 
         $concerns = $query_concerns->orderBy('id', 'desc')->get();
         $city = city::all();
-        $provinces = provinces::all();
-        
 
         // If request came from ajax return json
         if (request()->ajax()) {
             return response()->json([
                 'concerns' => $concerns,
-                'cities' => $city,
-                'provinces' => $provinces,
+                'cities' => $city
             ]);
 
             // Else if it came as an http request return the view
         } else {
-        return view('citizens.concerns.index', [
-            'concerns' => $concerns,
-            'cities' => $city,
-            'provinces' => $provinces,
-        ]);        
-    }
+            return view('citizens.concerns.index', ['concerns' => $concerns]);
+        }
 
         // Hindi ko sure kung kanino to pero, patry nalang gamiten yung code sa taas, since complete na siya with working js
     // Query concerns with filters
@@ -128,7 +121,7 @@ class ConcernsController extends Controller
             }
         }
 
-        return redirect()->route('citizens.concerns.index');
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -137,25 +130,23 @@ class ConcernsController extends Controller
     public function show($id)
     {
         $concerns = concerns::findOrFail($id);
-        return view('citizens.concerns.details', compact('concerns'));
-        
-        
+        return view('citizens.concerns.details', ['concerns' => $concerns]);          
     }
         
 
-    //  public function addComment(Request $request, concerns_comments $concern)
-    // {
-    //     $validated = $request->validate([
-    //         'comment' => 'required|max:1000'
-    //     ]);
+     public function addComment(Request $request, concerns_comments $concern)
+    {
+        // $validated = $request->validate([
+        //     'comment' => 'required|max:1000'
+        // ]);
 
-    //     $concern->comments()->create([
-    //         'user_id' => auth()->id(),
-    //         'content' => $validated['comments']
-    //     ]);
+        // $concern->comments()->create([
+        //     'user_id' => auth()->id(),
+        //     'content' => $validated['comments']
+        // ]);
 
-    //     return redirect()->back()->with('success', 'Comment added successfully!');
-    // }
+        // return redirect()->back()->with('success', 'Comment added successfully!');
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -181,6 +172,7 @@ class ConcernsController extends Controller
         //
     }
 
+    //For search in concern-list can be used whenever there is filter button for concern as long as the divs has same id's and classes 
     public function search (Request $request) {
         $search = $request->input('search');
         $query_concerns = concerns::query();
@@ -224,6 +216,7 @@ class ConcernsController extends Controller
         ]);
     }
 
+    //For sort in concern-list can be used whenever there is filter button for concern as long as the divs has same id's and classes 
     public function sort (Request $request) {
         // Create an object of concerns model
         $query = concerns::query();

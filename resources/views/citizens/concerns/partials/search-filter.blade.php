@@ -21,7 +21,7 @@
             <button type="button" class="clear-filters">Clear All</button>
         </div>
 
-        <form action="{{ route('citizens.concerns.index') }}" method="GET">
+        <form action="{{ route('search.concerns') }}" method="GET">
             <!-- Status Filters -->
             <div id="sort-by" class="sort-by">
                 <div class="sort-by-header">

@@ -48,7 +48,6 @@
                     </div>
 
                     <div class="input">
-                        <label for="">Region</label>
                         <div class="selector-wrapper" id="region-selector">
                             <div class="selector">
                                 <span class="selector_text">Select A Region</span>

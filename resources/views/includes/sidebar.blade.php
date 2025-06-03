@@ -36,15 +36,14 @@
                             <span>My Concerns</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="{{ route('show.create-account') }}" class="nav-link">
-                            <i class="fa-solid fa-user-plus"></i>
-                            <span>Create Account</span>
-                        </a>
-                    </li>
-
                     @auth
                         @if (Auth::user()->usertype == 'admin')
+                            <li class="nav-item">
+                                <a href="{{ route('show.create-account') }}" class="nav-link">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                    <span>Create Account</span>
+                                </a>
+                            </li>
                             <li class="nav-item">
                                 <a href="{{ route('list.staff-verification') }}" class="nav-link">
                                     <i class="fa-solid fa-user-plus"></i>

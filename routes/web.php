@@ -20,8 +20,6 @@ Route::get('/home', function () {
     return view('home');
 })->name('home');
 
-
-
 Route::controller(UserController::class)->group(function() {
 
     // Get dropdown arrows in register
@@ -35,10 +33,20 @@ Route::controller(UserController::class)->group(function() {
     // Handling requests
     Route::post('/register','register')->name('register');
 
-    // Show User Location form - For Admin
+    // Show User Location form - For User
     Route::get('/register/location','locationRegisterShow')->name('show.register.location');
     // Creates Admin, Government accounts - For Admin
     Route::post('/register/location','register')->name('register.location');
+
+    // Create Account Page for Admin
+    Route::get('/create/admin','showCreateAccountAdmin')->name('show.admin.create');
+    // Handling requests
+    Route::post('/create/admin','createAccountAdmin')->name('admin.create');
+
+    // Show User Location form - For Admin
+    Route::get('/create/admin/location','locationRegisterShow')->name('show.create.admin.location');
+    // Creates Admin, Government accounts - For Admin
+    Route::post('/create/admin/location','register')->name('create.admin.location');
 
     // Creating Staff Accounts
     Route::get('/create/staff','showRegisterStaff')->name('show.staff.register');

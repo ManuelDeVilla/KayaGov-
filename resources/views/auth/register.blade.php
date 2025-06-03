@@ -1,4 +1,3 @@
-@include('layouts.app')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @vite('resources/css/header.css')
-    @vite('resources/css/register/dropdowns.css')
     @vite('resources/css/register/register.css')
 </head>
 <body>
@@ -26,108 +24,61 @@
             <div class="form-card">
 
                 <!-- Error Handler -->
-                @if ($errors->any())
-                    <div class="error-wrapper">
-                        <ul>
+                <div class="form-handler-wrapper">
+                    @if ($errors->any())
+                        <ul class="form-handler">
+                            <li class="error-header">Error Found</li>
                             @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
+                                <li class="errors">{{ $error }}</li>
                             @endforeach
                         </ul>
-                    </div>
-                @endif
+                    @endif
+                </div>
                 
-                <form action="{{ route('register') }}" method="post">
+                <form id="form" action="{{ route('register') }}" method="post">
                     @csrf
-                    <input type="hidden" id="username" name="usertype" value="citizen">
 
                     <div class="input">
                         <label for="username">Username</label>
                         <input type="text" id="username" name="username" placeholder="Username...">
+
+                        <p id="username-label" class="error-handler">Username Should be 3 - 16 characters.</p>
                     </div>
 
                     <div class="input">
                         <label for="email">Email Address</label>
                         <input type="email" id="email" name="email" placeholder="Email...">
+                        
+                        <p id="email-label" class="error-handler hidden">Please input your Email Mah Nigg@.</p>
                     </div>
 
                     <div class="input">
                         <label for="gender">Gender</label>
                         <select name="gender" id="gender">
-                            <option disabled selected>Gender</option>
+                            <option value="" disabled selected>Gender</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
                         </select>
-                    </div>
-
-                    <div class="input">
-                        <label for="">Region</label>
-                        <div class="selector-wrapper" id="region-selector">
-                            <div class="selector">
-                                <span class="selector_text">Select A Region</span>
-                                <span id="arrow">&#129131;</span>
-                            </div>
-
-                            <div class="options">
-                                <input type="hidden" class="selector_type" value="region">
-                                <input type="hidden" class="input" name="region">
-                                <div class="search-wrapper">
-                                    <input type="text" class="search-input" placeholder="Search a City...">
-                                    <i class="fa fa-search"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="input">
-                        <label for="">Province</label>
-                        <div class="selector-wrapper" id="province-selector">
-                            <div class="selector">
-                                <span class="selector_text">Select a Province</span>
-                                <span id="arrow">&#129131;</span>
-                            </div>
-
-                            <div class="options">
-                                <input type="hidden" class="selector_type" value="province">
-                                <input type="hidden" class="input" name="province">
-                                <div class="search-wrapper">
-                                    <input type="text" class="search-input" placeholder="Search a City...">
-                                    <i class="fa fa-search"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="input">
-                        <label for="">City</label>
-                        <div class="selector-wrapper">
-                            <div class="selector">
-                                <span class="selector_text">Select a City</span>
-                                <span id="arrow">&#129131;</span>
-                            </div>
-
-                            <div class="options">
-                                <input type="hidden" class="selector_type" value="city">
-                                <input type="hidden" class="input" name="city">
-                                <div class="search-wrapper">
-                                    <input type="text" class="search-input" placeholder="Search a City...">
-                                    <i class="fa fa-search"></i>
-                                </div>
-                            </div>
-                        </div>
+                        
+                        <p id="gender-label" class="error-handler hidden">Please Select a Gender Mah Nigg@.</p>
                     </div>
 
                     <div class="input">
                         <label for="password">Password</label>
                         <input type="password" id="password" name="password" placeholder="Password...">
+                        
+                        <p id="password-label" class="error-handler">Password should be 6 - 20 characters.</p>
                     </div>
 
                     <div class="input">
                         <label for="password_confirmation">Confirm Password</label>
                         <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password">
+                        
+                        <p id="password_confirmation_label" class="error-handler hidden">Password do not match.</p>
                     </div>
 
                     <div class="button-holder">
-                        <button class="submit-button" type="submit">Create Account</button>
+                        <button class="submit-button" type="submit">Next</button>
                     </div>
                 </form>
             </div>
@@ -142,6 +93,6 @@
         const getShowSelector = "{{ route('get.show.values') }}";
         const getSearchSelector = "{{ route('get.search.values') }}";
     </script>
-    @vite('resources/js/register-options.js')
+    @vite('resources/js/create-account.js')
 </body>
 </html>

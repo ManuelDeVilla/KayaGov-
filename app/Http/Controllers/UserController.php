@@ -112,6 +112,67 @@ class UserController extends Controller
             'username' => 'required|string|min:3|max:16|unique:users,username',
             'email' => 'required|email|unique:users,email',
             'gender' => 'required|in:Male,Female',
+            'password' => 'required|min:6|max:20|confirmed'
+            ]);
+
+            if ($validated['gender'] == 'Male') {
+                $image_path = '/storage/public/default-male.png';
+            } else {
+                $image_path = '/storage/public/default-female.png';
+            }
+            $validated['usertype'] = 'citizen';
+            $validated['image_path'] = $image_path;
+
+            session(['registering_user' => $validated]);
+            return redirect()->route('show.register.location');
+
+            // else if the routename is register.location, process its contents
+        } else if (request()->routeIs('register.location')) {
+            $registering_user = session()->pull('registering_user');
+            
+            if ($registering_user) {
+
+                $created_account = User::create([
+                'username' => $registering_user['username'],
+                'email' => $registering_user['email'],
+                'gender' => $registering_user['gender'],
+                'usertype' => $registering_user['usertype'],
+                'password' => $registering_user['password'],
+                'image_path' => $registering_user['image_path'],
+                'province_id' => $request->input('province'),
+                'city_id' => $request->input('city')
+                ]);
+
+                // If the user that created the account is admin
+                if (Auth::user()->usertype == 'admin') {
+                    return redirect()->route('concern-list');
+
+                    // If the user created the account is just a citizen
+                } else {
+                    Auth::login($created_account);
+                    return redirect()->route('concern-list');
+                }
+            }
+        }
+    }
+
+    // To Show Location form for register
+    public function locationRegisterShow () {
+        return view('auth.save-location');
+    }
+
+    // Create Account Page for Admin
+    public function showCreateAccountAdmin () {
+        return view('auth.register');
+    }
+
+    public function createAccountAdmin (Request $request) {
+        // If route name is register then process its contents
+        if (request()->routeIs('admin.create')) {
+            $validated = $request->validate([
+            'username' => 'required|string|min:3|max:16|unique:users,username',
+            'email' => 'required|email|unique:users,email',
+            'gender' => 'required|in:Male,Female',
             'usertype' => 'required',
             'password' => 'required|min:6|max:20|confirmed'
             ]);
@@ -124,10 +185,10 @@ class UserController extends Controller
             $validated['image_path'] = $image_path;
 
             session(['registering_user' => $validated]);
-            return redirect()->route('show.register.location');
+            return redirect()->route('show.admin.create');
 
             // else if the routename is register.location, process its contents
-        } else if (request()->routeIs('register.location')) {
+        } else if (request()->routeIs('create.admin.location')) {
             $registering_user = session()->pull('registering_user');
             
             if ($registering_user) {
@@ -166,11 +227,6 @@ class UserController extends Controller
                 }
             }
         }
-    }
-
-    // To Show Location form for register
-    public function locationRegisterShow () {
-        return view('auth.save-location');
     }
 
     // For Staff Creation

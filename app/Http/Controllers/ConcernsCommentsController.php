@@ -9,12 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class ConcernsCommentsController extends Controller
 {
-    // Other methods ...
-
-    /**
-     * Store a newly created resource in storage.
-     * Add Concern $concern as parameter to get the specific concern
-     */
+    public function index()
+    {
+        // You probably don't need this for comments
+        // But if required by resource route:
+        return redirect()->route('concerns.list');
+    }
     public function store(Request $request, concerns $concern)
     {
         $request->validate([

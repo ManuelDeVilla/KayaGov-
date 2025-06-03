@@ -88,7 +88,7 @@
                 <div class="no-concerns">
                     <i class="fas fa-inbox"></i>
                     <p>You haven't submitted any concerns yet.</p>
-                    <a href="#" class="btn-primary">Submit Your First Concern</a>
+                    <a href="{{ route('create.concerns') }}}}" class="btn-primary">Submit Your First Concern</a>
                 </div>
             @endif
         </section>

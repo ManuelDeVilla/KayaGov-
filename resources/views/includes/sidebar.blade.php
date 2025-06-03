@@ -1,11 +1,11 @@
- 
+ @vite(['resources/css/app.css', 'resources/js/app.js'])
     <aside class="sidebar">
             <div class="sidebar-section">
                 <div class="logo">
-                <a href="{{ route('landing') }}">
-                    <img src="{{ asset('images/kayagov_logo.png') }}" alt="KayaGov Logo">
-                </a>
-            </div>
+                    <div class="flex items-center">
+                        <span class="text-3xl font-bold text-blue-600">KayaGov?</span>
+                    </div>
+                </div>
                 <h3>Main</h3>
                 <ul class="nav-menu">
                     @auth
@@ -24,6 +24,7 @@
                             <span>Concerns</span>
                         </a>
                     </li>
+
                     <li class="nav-item">
                         <a href="{{ route('create.concerns')}}" class="nav-link">
                             <i class="fas fa-plus-circle"></i>
@@ -75,7 +76,7 @@
 
                 @auth
                 <li class="nav-item">
-                        <a href="{{ route('citizen.profile.show') }}" class="nav-link">
+                        <a href="{{ route('profile') }}" class="nav-link">
                             <i class="fas fa-user"></i>
                             <span>User Profile</span>
                         </a>

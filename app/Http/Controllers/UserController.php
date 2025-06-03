@@ -360,7 +360,7 @@ class UserController extends Controller
         Auth::logout();
         $request->session()->invalidate();
         $request->session()->regenerateToken();
-        return redirect()->route('home');
+        return redirect()->route('home')->with('success', 'You have been logged out successfully.');
     }
 
     // For creating new ADMIN or STAFF accounts

@@ -22,9 +22,9 @@ file_input.addEventListener('change', function (event) {
     }
 
     file_array.forEach((file, index) => {
-        if (!file) {
-            uploaded_image_label.classList.toggle('active')
-        }
+
+        uploaded_image_label.classList.remove('hidden')
+        uploaded_image_label.classList.add('active')
 
         const image_detail_div = document.createElement('div')
         image_detail_div.setAttribute('class', 'image-detail-div')
@@ -54,6 +54,11 @@ file_input.addEventListener('change', function (event) {
 function removeImage(file_name) {
     const delete_image = file_array.findIndex(image => image.name == file_name)
     file_array.splice(delete_image, 1)
+
+    if (file_array.length == 0) {
+        uploaded_image_label.classList.remove('active')
+        uploaded_image_label.classList.add('hidden')
+    }
 }
 
 // Updates the file list of files input

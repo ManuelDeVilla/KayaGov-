@@ -89,7 +89,7 @@
                     </div>
 
                     <div class="uploaded-image-wrapper input">
-                        <label class="image-label" for="">Uploaded Images</label>
+                        <label class="image-label hidden" for="">Uploaded Images</label>
                     </div>
 
                     <div class="button-wrapper">

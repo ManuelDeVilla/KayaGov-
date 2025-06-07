@@ -3,6 +3,8 @@ const options = document.querySelector('.options')
 const search_region = document.querySelector('.search-input')
 const selectorArrow = document.querySelector('#arrow')
 
+let latest_ajax_request = 0
+
 selector.addEventListener('click', function () {
     options.classList.toggle('active')
     let optionIsActive = options.classList.contains('active')
@@ -22,6 +24,11 @@ selector.addEventListener('click', function () {
             options.classList.toggle('active');
             selectorArrow.classList.remove('fa-angle-up')
             selectorArrow.classList.add('fa-angle-down')
+
+            // Resets the search region if clicked outside the wrapper
+            if (search_region.value.trim() != '') {
+                search_region.value = ''
+            }
         }
     })
 
@@ -33,20 +40,25 @@ selector.addEventListener('click', function () {
         // Creates the options
         let searchValue = null
         var get_type = 'show'
-        requestType(searchValue, get_type)
+        requestType(searchValue, get_type, null)
 
         search_region.addEventListener('input', function (event) {
             let searchValue = event.target.value
             get_type = 'search'
-            requestType(searchValue, get_type)
+
+            const current_ajax = ++latest_ajax_request
+
+            requestType(searchValue, get_type, current_ajax)
         })
+
     } else {
         selectorArrow.classList.remove('fa-angle-up')
         selectorArrow.classList.add('fa-angle-down')
     }
 })
 
-function requestType (searchValue, get_type) {
+function requestType (searchValue, get_type, request_id) {
+
     const selector_inputs = document.querySelectorAll('.selector-inputs')
 
     // Removes existing selectors
@@ -69,7 +81,21 @@ function requestType (searchValue, get_type) {
 
         case 'search':
             $.get(search_city, {search: searchValue}, function (cities) {
+                const selector_inputs = document.querySelectorAll('.selector-inputs')
+
+                // Removes existing selectors
+                if (selector_inputs) {
+                    selector_inputs.forEach(selector_input => {
+                       selector_input.remove()
+                    })
+                }
+
+                if (request_id != latest_ajax_request) {
+                    return false
+                }
+
                 cities.city.forEach((city) => {
+
                     const province_initial = cities.province.find(array => city.province_id == array.id)
                     const province_array = province_initial
                     createOptions(city, province_array)
@@ -80,6 +106,7 @@ function requestType (searchValue, get_type) {
 }
 
 function createOptions (city, province_array) {
+
     const selector_text = document.querySelector('.selector_text')
     const options = document.querySelector('.options')
     const option_input = document.querySelector('#city')

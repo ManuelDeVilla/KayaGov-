@@ -75,14 +75,12 @@ function selectorType (selector_type, search_value, wrapper, get_type, get_id) {
     // For showing ALL options
     if (get_type == 'show') {
         if (get_id && selector_type == 'province') {
-            console.log('asdasd')
             $.get(getShowSelector,
             {
                 province_id: get_id
             },
 
             function(values) {
-                console.log(values)
 
                 const province_wrapper = document.querySelector('#province-selector')
 
@@ -112,7 +110,7 @@ function selectorType (selector_type, search_value, wrapper, get_type, get_id) {
 
                     createOptions (cities, wrapper, 'city')
                 })
-            })
+            })  
 
         } else if (get_id && selector_type == 'city') {
             $.get(getShowSelector,
@@ -162,7 +160,6 @@ function selectorType (selector_type, search_value, wrapper, get_type, get_id) {
             },
 
             function(values) {
-                console.log(values)
 
                 const province_wrapper = document.querySelector('#province-selector')
                 const city_wrapper = document.querySelector('#city-selector')
@@ -244,7 +241,6 @@ function selectorType (selector_type, search_value, wrapper, get_type, get_id) {
         },
 
         function(values) {
-            console.log('sdfsdfsdfsdf')
             const province_wrapper = document.querySelector('#province-selector')
 
             const all_inputs = province_wrapper.querySelectorAll('.selector-inputs')
@@ -284,7 +280,6 @@ function selectorType (selector_type, search_value, wrapper, get_type, get_id) {
             },
 
             function(values) {
-                console.log('sdfsdfsdfsdf')
                 const city_wrapper = document.querySelector('#city-selector')
 
                 const all_inputs = city_wrapper.querySelectorAll('.selector-inputs')
@@ -403,7 +398,6 @@ function createOptions (value, wrapper, selector_type) {
         var get_type = 'show'
 
         const countTrue = Object.values(selected_options).filter(Boolean).length
-        console.log(selected_options)
 
         if (wrapper.id == 'province-selector' && countTrue == 1) {
             const selector_type = 'city'

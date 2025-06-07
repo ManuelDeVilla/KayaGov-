@@ -81,13 +81,23 @@ body {
 
 input,
 textarea,
-select,
-.selector-wrapper {
+select {
     width: 100%;
     padding: 0.75rem 1rem;
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
     font-size: 0.9rem;
+}
+
+.selector-wrapper {
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius);
+}
+
+.options.active {
+    width: 50%;
+    margin-top: 20px;
+    overflow: scroll;
 }
 
 textarea {
@@ -109,6 +119,15 @@ textarea {
 
 .upload-wrapper:hover {
     border-color: var(--primary-color);
+}
+
+/* Image Label */
+.image-label.active {
+    display: block;
+}
+
+.image-label.hidden {
+    display: none;
 }
 
 /* Image Preview */

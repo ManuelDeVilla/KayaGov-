@@ -153,7 +153,7 @@
     <!-- Tester if user is logged in or out -->
     @auth
         <h1>Logged In</h1>
-        <p>{{ Auth::user()->city }}</p>
+        <p>{{ Auth::user()->city->city }}</p>
     @endauth
 
     <script>

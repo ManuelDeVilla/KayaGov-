@@ -11,7 +11,7 @@ use App\Models\provinces;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 
-Route::get('home', function () {
+Route::get('/', function () {
     return view('home');
 })->name('home');
 
@@ -142,8 +142,8 @@ Route::get('/feedback/create', [SystemFeedbackController::class, 'create'])->nam
 Route::post('/feedback', [SystemFeedbackController::class, 'store'])->name('feedback.store');
 
 // Dashboard Routes
-Route::get('/dashboard', function () {
-    return view('dashboard'); 
-})->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard'); 
+// })->name('dashboard');
 
-Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

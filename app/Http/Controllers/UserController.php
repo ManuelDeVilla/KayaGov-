@@ -144,7 +144,7 @@ class UserController extends Controller
                 ]);
 
                 // If the user that created the account is admin
-                if (Auth::user()->usertype == 'admin') {
+                if (Auth::check() && Auth::user()->usertype == 'admin') {
                     return redirect()->route('concern-list');
 
                     // If the user created the account is just a citizen

@@ -2,14 +2,13 @@
     <aside class="sidebar">
             <div class="sidebar-section">
                 <div class="logo">
-                <a href="{{ route('homepage') }}">
+                <a href="{{ route('dashboard') }}">
                     <img src="{{ asset('images/kayagov_logo.png') }}" alt="KayaGov Logo">
                 </a>
             </div>
                 <h3>Main</h3>
                 <ul class="nav-menu">
-                    @auth
-                        @if(auth()->user()->usertype === 'citizen' || auth()->user()->usertype === 'staff')
+                    @if(auth()->user()->usertype === 'citizen' || auth()->user()->usertype === 'staff')
                         <li class="nav-item">
                             <a href="{{ route('dashboard') }}" class="nav-link">
                                 <i class="fas fa-chart-line"></i>
@@ -17,8 +16,9 @@
                             </a>
                         </li>
                     @endif
-                    @endauth        <li class="nav-item">
-                        <a href="{{ route('citizens.concerns.index')}}" class="nav-link">
+                    
+                    <li class="nav-item">
+                        <a href="{{ route('concern-list')}}" class="nav-link">
                             <i class="fas fa-exclamation-circle"></i>
                             <span>Concerns</span>
                         </a>
@@ -46,7 +46,7 @@
 
                 @auth
                 <li class="nav-item">
-                        <a href="{{ route('user-profile') }}" class="nav-link">
+                        <a href="{{ route('profile') }}" class="nav-link">
                             <i class="fas fa-user"></i>
                             <span>User Profile</span>
                         </a>

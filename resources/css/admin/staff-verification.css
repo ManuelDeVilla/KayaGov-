@@ -79,6 +79,7 @@ button {
     color: #407BFF;
     background: none;
     font-weight: 600;
+    font-size: 15px;
     border: 2px #407BFF solid;
     border-radius: 10px;
     cursor: pointer;

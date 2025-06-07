@@ -91,24 +91,25 @@ filter_button.addEventListener('click', function (event) {
     // Stops event listener of the parent
     event.stopPropagation()
     filter_div.classList.add('active')
+    console.log(sort)
 
-    Object.entries(sort.status).forEach(([keys, values]) => {
-
+    // Applied status
+    for (const [keys, values] of Object.entries(sort.status)) {
         // If there is a true value show the apply_status div
         if (values) {
             // If it does not have an active in classlist add one and change the text content to the status that is true
-            if (!apply_status.classList.contains('active')) {
-                apply_status.classList.add('active')
-            }
+            apply_status.classList.add('active')
             apply_text_status.textContent = keys
+            break
 
             // If there is no true value do not show the apply_status div
         } else {
             apply_status.classList.remove('active')
             apply_text_status.textContent = ''
         }
-    })
+    }
 
+    // Applied Province
     // If not null then show apply_province div and its text content set to the value of sort.province
     if (sort.province != null) {
         if (!apply_province.classList.contains('active')) {
@@ -122,6 +123,7 @@ filter_button.addEventListener('click', function (event) {
         apply_text_province.textContent = ''
     }
 
+    // Applied City
     // If not null then show apply_city div and its text content set to the value of sort.city
     if (sort.city != null) {
         if (!apply_city.classList.contains('active')) {
@@ -294,6 +296,8 @@ const province_searchbar = document.querySelector('#province-searchbar')
 const province_options = document.querySelector('#province-options')
 const province_search = document.querySelector('#search-province')
 
+let latest_province_input = 0
+
 // When province is click show province options & search div
 province_div.addEventListener('click', function() {
     province_div.classList.toggle('active')
@@ -316,6 +320,7 @@ province_div.addEventListener('click', function() {
         province_search.addEventListener('input', function(event) {
 
             const search_input = event.target.value.trim()
+            const current_province_input = ++latest_province_input
 
             $.get(list_search_province,
                 {
@@ -323,7 +328,9 @@ province_div.addEventListener('click', function() {
                     city: sort_temp.city
                 },
                 function (provinces) {
-                    showProvince (provinces)
+                    if (current_province_input == latest_province_input) {
+                        showProvince (provinces)
+                    }
                 }
             )
         })
@@ -340,12 +347,15 @@ province_div.addEventListener('click', function() {
         province_search.addEventListener('input', function(event) {
 
             const search_input = event.target.value.trim()
+            const current_province_input = ++latest_province_input
 
             $.get(list_search_province,
                 {search: search_input},
                 function (provinces) {
-                    showProvince (provinces)
-                    apply_text_province.dispatchEvent(new Event('textChange'))
+                    if (current_province_input == latest_province_input) {
+                        showProvince (provinces)
+                        apply_text_province.dispatchEvent(new Event('textChange'))
+                    }
                 }
             )
         })
@@ -399,6 +409,8 @@ const city_searchbar = document.querySelector('#city-searchbar')
 const city_options = document.querySelector('#city-options')
 const city_search = document.querySelector('#search-city')
 
+let latest_city_input = 0
+
 // When province is click show city options & search div
 city_div.addEventListener('click', function() {
     city_div.classList.toggle('active')
@@ -422,6 +434,7 @@ city_div.addEventListener('click', function() {
 
         city_search.addEventListener('input', function (event) {
             const search_value = event.target.value.trim()
+            const current_city_input = ++latest_city_input
 
             $.get(list_search_city,
                 {
@@ -429,7 +442,9 @@ city_div.addEventListener('click', function() {
                     province: selected_province
                 },
                 function (cities) {
-                    showCity (cities)
+                    if (current_city_input == latest_city_input) {
+                        showCity (cities)
+                    }
                 }
             )
         })
@@ -446,11 +461,15 @@ city_div.addEventListener('click', function() {
         city_search.addEventListener('input', function (event) {
             const search_value = event.target.value.trim()
 
+            const current_city_input = ++latest_city_input
+
             $.get(list_search_city,
                 {search: search_value},
                 function (cities) {
-                    showCity (cities)
-                    apply_text_city.dispatchEvent(new Event('textChange'))
+                    if (current_city_input == latest_city_input) {
+                        showCity (cities)
+                        apply_text_city.dispatchEvent(new Event('textChange'))
+                    }
                 }
             )
         })
@@ -612,6 +631,7 @@ search_input.addEventListener('input', function (event) {
 // For Deleting applied sorts for status
 apply_status.addEventListener('click', function () {
     Object.entries(sort.status).forEach(([key, value]) => {
+        sort.status[key] = false
         sort_temp.status[key] = false
     })
     apply_status.classList.remove('active')
@@ -650,27 +670,39 @@ apply_filter.addEventListener('click', function() {
 
     // Puts the temp_sort to sort
     // For status
-    Object.entries(sort_temp.status).forEach(([key, value]) => {
-        sort.status[key] = value
-        sort_temp.status[key] = false
-    })
+    const sort_temp_true = Object.values(sort_temp.status).some(value => Boolean(value))
+    
+    if (sort_temp_true) {
+        Object.entries(sort_temp.status).forEach(([key, value]) => {
+            sort.status[key] = value
+            sort_temp.status[key] = false
+        })
+    }
 
     // Stores the values of temp to applied sort objects
-    sort.province = sort_temp.province
-    sort_names.province = sort_temp_names.province
-    // Empties the values of the temp
-    sort_temp_names.province = null
-    sort_temp.province = null
+    if (sort_temp.province) {
+        sort.province = sort_temp.province
+        sort_names.province = sort_temp_names.province
+        // Empties the values of the temp
+        sort_temp_names.province = null
+        sort_temp.province = null
+    }
 
-    sort.city = sort_temp.city
-    sort_names.city = sort_temp_names.city
-    // Empties the values of the temp
-    sort_temp_names.city = null
-    sort_temp.city = null
+    if (sort_temp.city) {
+        sort.city = sort_temp.city
+        sort_names.city = sort_temp_names.city
+        // Empties the values of the temp
+        sort_temp_names.city = null
+        sort_temp.city = null
+    }
 
+    // console.log('sort')
     // console.log(sort)
+    // console.log('sort_names')
     // console.log(sort_names)
+    // console.log('sort_temp')
     // console.log(sort_temp)
+    // console.log('sort_temp_names')
     // console.log(sort_temp_names)
 
     // Gets the results
@@ -936,6 +968,16 @@ document.addEventListener('click', function() {
     pending.classList.remove('active')
     in_progress.classList.remove('active')
     resolved.classList.remove('active')
+
+    // Remove Checked Statuses per status
+    pending_icon.classList.remove('fa-solid', 'fa-square-check')
+    pending_icon.classList.add('fa-regular', 'fa-square')
+
+    resolved_icon.classList.remove('fa-solid', 'fa-square-check')
+    resolved_icon.classList.add('fa-regular', 'fa-square')
+
+    in_progress_icon.classList.remove('fa-solid', 'fa-square-check')
+    in_progress_icon.classList.add('fa-regular', 'fa-square')
 
     // Removing province active divs when closed
     province_div.classList.remove('active')

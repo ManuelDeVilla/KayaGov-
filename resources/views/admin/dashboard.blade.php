@@ -1,4 +1,3 @@
-
 @include('layouts.app')
 <!DOCTYPE html>
 <html lang="en">

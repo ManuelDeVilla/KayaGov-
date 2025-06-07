@@ -13,7 +13,11 @@
 <body>
     <header>
         @include('includes.header')
-        @include('includes.sidebar')
+        @if(Auth::user()->usertype == 'staff')
+            @include('includes.staff-sidebar')
+        @else
+            @include('includes.sidebar')
+        @endif
     </header>
     <div class="body">
         <div class="body-header">
@@ -69,32 +73,34 @@
                         </div>
                     </div>
 
-                    <div id="province" class="province">
-                        <div class="province-header">
-                            <p>Province</p>
-                            <div id="province-searchbar" class="sort-search sort-province">
-                                <i class="fas fa-search icon"></i>
-                                <input type="text" id="search-province" placeholder="Search Province...">
+                    @if (Auth::user()->usertype != 'staff')
+                        <div id="province" class="province">
+                            <div class="province-header">
+                                <p>Province</p>
+                                <div id="province-searchbar" class="sort-search sort-province">
+                                    <i class="fas fa-search icon"></i>
+                                    <input type="text" id="search-province" placeholder="Search Province...">
+                                </div>
+                                <i class="fa-solid fa-angle-up"></i>
                             </div>
-                            <i class="fa-solid fa-angle-up"></i>
-                        </div>
-                        <div id="province-options" class="province-options">
-                        </div>
-                    </div>
-
-                    <div id="city" class="city">
-                        <div class="city-header">
-                            <p>City</p>
-                            <div id="city-searchbar" class="sort-search sort-city">
-                                <i class="fas fa-search icon"></i>
-                                <input type="text" id="search-city" placeholder="Search City...">
+                            <div id="province-options" class="province-options">
                             </div>
-                            <i class="fa-solid fa-angle-up"></i>
                         </div>
 
-                        <div id="city-options" class="city-options">
+                        <div id="city" class="city">
+                            <div class="city-header">
+                                <p>City</p>
+                                <div id="city-searchbar" class="sort-search sort-city">
+                                    <i class="fas fa-search icon"></i>
+                                    <input type="text" id="search-city" placeholder="Search City...">
+                                </div>
+                                <i class="fa-solid fa-angle-up"></i>
+                            </div>
+
+                            <div id="city-options" class="city-options">
+                            </div>
                         </div>
-                    </div>
+                    @endif
 
                     <div class="submit">
                         <button id="submit-filter">Apply Filters</button>
@@ -148,13 +154,13 @@
                 </div>
             @endforeach
         </section>
-    </div>
 
-    <!-- Tester if user is logged in or out -->
-    @auth
-        <h1>Logged In</h1>
-        <p>{{ Auth::user()->city->city }}</p>
-    @endauth
+        <!-- Tester if user is logged in or out -->
+        @auth
+            <h1>Logged In</h1>
+            <p>{{ Auth::user()->city->city }}</p>
+        @endauth
+    </div>
 
     <script>
         const search_concerns = "{{ route('search.concerns') }}"

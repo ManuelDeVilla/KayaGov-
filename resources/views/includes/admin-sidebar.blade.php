@@ -2,36 +2,52 @@
 <aside class="sidebar">
     <div class="sidebar-section">
         <div class="logo">
-            <a href="{{ route('homepage') }}">
+            <a href="{{ route('dashboard') }}">
                 <img src="{{ asset('images/kayagov_logo.png') }}" alt="KayaGov Logo">
             </a>
         </div>
         <h3>Admin Panel</h3>
         <ul class="nav-menu">
             <li class="nav-item">
-                <a href="{{ route('admin.dashboard') }}" class="nav-link">
+                <a href="{{ route('dashboard') }}" class="nav-link">
                     <i class="fas fa-chart-line"></i>
                     <span>Dashboard</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('citizens.concerns.index') }}" class="nav-link">
+                <a href="{{ route('concern-list') }}" class="nav-link">
                     <i class="fas fa-exclamation-circle"></i>
                     <span>All Concerns</span>
                 </a>
             </li>
-            <a href="{{ route('admin.staff_lists.index') }}" class="nav-link">  <i class="fas fa-exclamation-circle"></i>
+
+            <li>
+                <a href="{{ route('staff-lists') }}" class="nav-link">
+                    <i class="fas fa-exclamation-circle"></i>
                     <span>Government Staffs</span>
                 </a>
-            </li> 
+            </li>
+
+            </li>
+
+            <!-- Create Account -->
+             <li class="nav-item">
+                <a href="{{ route('show.admin.create') }}" class="nav-link">
+                    <i class="fas fa-user-check"></i>    
+                    <span>Create Account</span>
+                </a>
+            </li>
+
+            <!-- List of Staff Verification -->
             <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="{{ route('list.staff-verification') }}" class="nav-link">
                     <i class="fas fa-user-check"></i>    
                     <span>Pending Staff Verifications</span>
                 </a>
             </li>
+
             <li class="nav-item">
-                <a href="{{ route('admin.system-feedbacks.index') }}" class="nav-link">
+                <a href="{{ route('feedback') }}" class="nav-link">
                     <i class="fas fa-comments"></i>
                     <span>System Feedbacks</span>
                 </a>      

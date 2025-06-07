@@ -42,11 +42,17 @@ class ConcernsController extends Controller
         }
 
         if (Auth::check()) {
-            $user_city = Auth::user()->city;
-            $concerns = $query_concerns->orderByRaw('city_id = ? DESC', [$user_city])->orderBy('id', 'desc');
+            if (Auth::user()->usertype == 'staff') {
+                $user_city = Auth::user()->city_id;
+                $query_concerns->where('city_id', $user_city);
+
+            } else {
+                $user_city = Auth::user()->city_id;
+                $query_concerns->orderByRaw('city_id = ? DESC', [$user_city])->orderBy('id', 'desc');
+            }
         }
 
-        $concerns = $query_concerns->orderBy('id', 'desc')->get();
+        $concerns = $query_concerns->get();
         $city = city::all();
 
         // If request came from ajax return json
@@ -250,9 +256,9 @@ class ConcernsController extends Controller
         }
 
         if (Auth::check()) {
-            $city = Auth::user()->city;
+            $city_id = Auth::user()->city_id;
 
-            $query->orderByRaw('city_id = ? desc', [$city]);
+            $query->orderByRaw('city_id = ? desc', [$city_id]);
         }
 
         $concerns = $query->orderBy('id', 'desc')->get();

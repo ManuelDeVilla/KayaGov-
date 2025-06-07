@@ -9,14 +9,12 @@
                 <h3>Main</h3>
                 <ul class="nav-menu">
                     @auth
-                        @if(auth()->user()->usertype === 'citizen' || auth()->user()->usertype === 'staff')
                         <li class="nav-item">
                             <a href="{{ route('dashboard') }}" class="nav-link">
                                 <i class="fas fa-chart-line"></i>
                                 <span>Dashboard</span>
                             </a>
                         </li>
-                        @endif
                     @endauth
                     <li class="nav-item">
                         <a href="{{ route('concern-list')}}" class="nav-link">

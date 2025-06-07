@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CityController;
 use App\Http\Controllers\ConcernsCommentsController;
 use App\Http\Controllers\UserController;
@@ -83,7 +84,7 @@ Route::controller(UserController::class)->group(function() {
 });
 
 Route::controller(ConcernsController::class)->group(function () {
-    Route::get('/concern', 'index')->name('concern-list');
+    Route::get('/concern', 'index')->name(name: 'concern-list');
     Route::get('/concerns/create', 'create')->name('create.concerns');
     Route::post('concerns/create', 'store')->name('store.create');
     Route::get('/concerns/search', 'search')->name('search.concerns');
@@ -137,9 +138,13 @@ Route::get('/concerns/pending', [ConcernsController::class, 'pending'])->name('c
 // User Profile Routes
 Route::get('/concerns', [ConcernsController::class, 'index'])->name('concerns.list');
 
-// for feedback creation
-Route::get('/feedback/create', [SystemFeedbackController::class, 'create'])->name('feedback.create');
-Route::post('/feedback', [SystemFeedbackController::class, 'store'])->name('feedback.store');
+// Feedback Controller
+Route::controller(SystemFeedbackController::class)->group(function () {
+    Route::get('/feedback', 'index')->name('feedback');
+    // for feedback creation
+    Route::get('/feedback/create', 'create')->name('feedback.create');
+    Route::post('/feedback', 'store')->name('feedback.store');
+});
 
 // Dashboard Routes
 // Route::get('/dashboard', function () {
@@ -147,3 +152,8 @@ Route::post('/feedback', [SystemFeedbackController::class, 'store'])->name('feed
 // })->name('dashboard');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// Route for Admin Controller
+Route::controller(AdminController::class)->group(function () {
+    Route::get('admin/staff/lists', 'staffLists')->name('staff-lists');
+});

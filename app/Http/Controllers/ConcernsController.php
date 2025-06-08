@@ -30,6 +30,13 @@ class ConcernsController extends Controller
                     if ($key == 'prioritize') {
                         $query_concerns->withCount('priority')->orderBy('priority_count', 'desc');
                         $isPrioritize = true;
+
+                        $concerns = $query_concerns->get();
+                        $city = city::all();
+                        return response()->json([
+                            'concerns' => $concerns,
+                            'cities' => $city
+                        ]);
                     } else {
                         $query_concerns->where('status', $key);
                     }
@@ -65,17 +72,21 @@ class ConcernsController extends Controller
             $concerns = $query_concerns->withCount('priority')->get();
         }
 
-        $city = city::all();
+        // $city = city::all();
 
-        // If request came from ajax return json
-        if (request()->ajax()) {
-            return response()->json([
-                'concerns' => $concerns,
-                'cities' => $city
-            ]);
+        // // If request came from ajax return json
+        // if (request()->ajax()) {
+        //     return response()->json([
+        //         'concerns' => $concerns,
+        //         'cities' => $city
+        //     ]);
 
-            // Else if it came as an http request return the view
-        } else {
+        //     // Else if it came as an http request return the view
+        // } else {
+        //     return view('citizens.concerns.index', ['concerns' => $concerns]);
+        // }
+
+        if (!request()->ajax()) {
             return view('citizens.concerns.index', ['concerns' => $concerns]);
         }
 
@@ -124,7 +135,6 @@ class ConcernsController extends Controller
 
         $validate_concern['user_id'] = Auth::id();
         $validate_concern['status'] = 'pending';
-        $validate_concern['priority'] = 0;
         $object_concern = concerns::create($validate_concern);
 
         $validate_images = $request->file('file');

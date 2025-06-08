@@ -38,7 +38,7 @@
                     @auth
                         @if (Auth::user()->usertype == 'admin')
                             <li class="nav-item">
-                                <a href="{{ route('show.create-account') }}" class="nav-link">
+                                <a href="{{ route('show.admin.create') }}" class="nav-link">
                                     <i class="fa-solid fa-user-plus"></i>
                                     <span>Create Account</span>
                                 </a>

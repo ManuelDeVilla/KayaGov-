@@ -733,7 +733,6 @@ apply_status.addEventListener('click', function () {
         prioritize_icon.classList.remove('fa-solid', 'fa-square-check')
         prioritize_icon.classList.add('fa-regular', 'fa-square')
     }
-    console.log(1)
 })
 
 // Removes applied div for apply province and removes its temp values
@@ -781,14 +780,14 @@ apply_filter.addEventListener('click', function() {
         sort_temp.city = null
     }
 
-    // console.log('sort')
-    // console.log(sort)
-    // console.log('sort_names')
-    // console.log(sort_names)
-    // console.log('sort_temp')
-    // console.log(sort_temp)
-    // console.log('sort_temp_names')
-    // console.log(sort_temp_names)
+    console.log('sort')
+    console.log(sort)
+    console.log('sort_names')
+    console.log(sort_names)
+    console.log('sort_temp')
+    console.log(sort_temp)
+    console.log('sort_temp_names')
+    console.log(sort_temp_names)
 
     // Gets the results
     // If there are values in search bar
@@ -1002,7 +1001,7 @@ function createConcern (concern, city) {
     priority_icon.classList.add('fa-solid', 'fa-arrow-up')
 
     const priority_number = document.createElement('span')
-    priority_number.textContent = " " + concern.priority
+    priority_number.textContent = " " + concern.priority_count
 
     const priority_id = document.createElement('span')
     priority_id.setAttribute('id', concern.id)

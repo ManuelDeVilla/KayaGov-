@@ -19,6 +19,7 @@ class ConcernsController extends Controller
     public function index(Request $request)
     {
         $query_concerns = concerns::query();
+        $isPrioritize = false;
 
         // If the sort exists and the search is empty
         if ($request->input('sort')) {
@@ -26,43 +27,51 @@ class ConcernsController extends Controller
 
             foreach ($sort['status'] as $key => $value) {
                 if ($value == 'true') {
-                    $query_concerns->where('status', $key);
+                    if ($key == 'prioritize') {
+                        $query_concerns->withCount('priority')->orderBy('priority_count', 'desc');
+                        $isPrioritize = true;
+                    } else {
+                        $query_concerns->where('status', $key);
+                    }
                     break;
                 }
             }
 
-            if ($sort['province'] != null) {
-                $get_city_id = city::where('province_id', $sort['province'])->pluck('id');
+            // if ($sort['province'] != null) {
+            //     $get_city_id = city::where('province_id', $sort['province'])->pluck('id');
 
-                $query_concerns->whereIn('city_id', $get_city_id);
-            }
+            //     $query_concerns->whereIn('city_id', $get_city_id);
+            // }
 
-            if ($sort['city'] != null) {
-                $query_concerns->where('city_id', $sort['city']);
-            }
+            // if ($sort['city'] != null) {
+            //     $query_concerns->where('city_id', $sort['city']);
+            // }
         }
 
-        if (Auth::check()) {
-            if (Auth::user()->usertype == 'staff') {
-                $user_city = Auth::user()->city_id;
-                $query_concerns->where('city_id', $user_city);
+        // if (Auth::check()) {
+        //     if (Auth::user()->usertype == 'staff') {
+        //         $user_city = Auth::user()->city_id;
+        //         $query_concerns->where('city_id', $user_city);
 
-            } else {
-                $user_city = Auth::user()->city_id;
-                $query_concerns->orderByRaw('city_id = ? DESC', [$user_city])->orderBy('id', 'desc');
-            }
+        //     } else {
+        //         $user_city = Auth::user()->city_id;
+        //         $query_concerns->orderByRaw('city_id = ? DESC', [$user_city])->orderBy('id', 'desc');
+        //     }
+        // }
+
+        if ($isPrioritize) {
+            $concerns = $query_concerns->get();
+        } else {
+            $concerns = $query_concerns->withCount('priority')->get();
         }
 
-        $concerns = $query_concerns->withCount('priority')->get();
         $city = city::all();
-        // $priority = concern_priorities::all();
 
         // If request came from ajax return json
         if (request()->ajax()) {
             return response()->json([
                 'concerns' => $concerns,
-                'cities' => $city,
-                // 'priority' => $priority
+                'cities' => $city
             ]);
 
             // Else if it came as an http request return the view

@@ -163,7 +163,7 @@ class UserController extends Controller
 
     // Create Account Page for Admin
     public function showCreateAccountAdmin () {
-        return view('auth.register');
+        return view('auth.create-account');
     }
 
     public function createAccountAdmin (Request $request) {
@@ -185,7 +185,7 @@ class UserController extends Controller
             $validated['image_path'] = $image_path;
 
             session(['registering_user' => $validated]);
-            return redirect()->route('show.admin.create');
+            return redirect()->route('show.admin.location');
 
             // else if the routename is register.location, process its contents
         } else if (request()->routeIs('create.admin.location')) {
@@ -361,11 +361,6 @@ class UserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
         return redirect()->route('home')->with('success', 'You have been logged out successfully.');
-    }
-
-    // For creating new ADMIN or STAFF accounts
-    public function showAccountForm () {
-        return view('auth.create-account');
     }
 
     public function createAccount (Request $request) {

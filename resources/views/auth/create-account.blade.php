@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Auth;
 
 if (Auth::check() && Auth::user()->usertype == 'admin') {
-    $route = route('create.admin.location');
+    $route = route('admin.create');
 } else {
     $route = route('register.location');
 }

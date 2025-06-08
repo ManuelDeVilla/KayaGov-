@@ -42,7 +42,7 @@ Route::controller(UserController::class)->group(function() {
     Route::post('/create/admin','createAccountAdmin')->name('admin.create');
 
     // Show User Location form - For Admin
-    Route::get('/create/admin/location','locationRegisterShow')->name('show.create.admin.location');
+    Route::get('/create/admin/location','locationRegisterShow')->name('show.admin.location');
     // Creates Admin, Government accounts - For Admin
     Route::post('/create/admin/location','register')->name('create.admin.location');
 
@@ -63,10 +63,6 @@ Route::controller(UserController::class)->group(function() {
 
     // Creating admin and staff account, only for ADMIN
     Route::prefix('admin')->group(function () {
-        // Showing register form for creating staff and admin
-        Route::get('/register','showAccountForm')->name('show.create-account');
-        // Showing register form for creating staff and admin
-        Route::post('/register','register')->name('create-account');
 
         // For Staff Verification
         Route::get('staff-verification', 'listStaffVerification')->name('list.staff-verification');
@@ -162,5 +158,5 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 
 // Route for Admin Controller
 Route::controller(AdminController::class)->group(function () {
-    Route::get('admin/staff/lists', 'staffLists')->name('staff-lists');
+    Route::get('admin/staff/lists', 'staffList')->name('staff-lists');
 });

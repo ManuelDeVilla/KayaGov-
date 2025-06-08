@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\ConcernPrioritiesController;
 use App\Http\Controllers\ConcernsCommentsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ConcernsController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\DashboardController;
 use App\Models\provinces;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
+use App\Models\concern_priorities;
 
 Route::get('/', function () {
     return view('home');
@@ -89,6 +91,11 @@ Route::controller(ConcernsController::class)->group(function () {
     Route::post('concerns/create', 'store')->name('store.create');
     Route::get('/concerns/search', 'search')->name('search.concerns');
     Route::get('/concerns/sort', 'sort')->name('sort.concerns');
+});
+
+// Adding Priority
+Route::controller(ConcernPrioritiesController::class)->group(function () {
+    Route::get('/concerns/priorities/add', 'addPriority')->name('add.priorities');
 });
 
 Route::controller(ConcernsCommentsController::class)->group(function  () {

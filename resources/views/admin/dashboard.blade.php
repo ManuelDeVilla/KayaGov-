@@ -30,7 +30,7 @@
                     <i class="fas fa-user-shield"></i>
                     <span>Pending Staff Verifications</span>
                 </div>
-               
+                <div class="stat-number">{{ $totalVerifications }}</div>
             </div>
             
             <div class="stat-card">

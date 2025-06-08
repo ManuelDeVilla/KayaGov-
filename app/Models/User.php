@@ -71,4 +71,8 @@ class User extends Authenticatable
     public function cities () {
         return $this->belongsTo(city::class, 'city_id');
     }
+
+    public function priority () {
+        return $this->hasMany(concern_priorities::class, 'user_id');
+    }
 }

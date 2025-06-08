@@ -150,11 +150,11 @@
     cursor: pointer;
 }
 
-.pending, .in-progress, .resolved {
+.pending, .in-progress, .resolved, .prioritize {
     display: none;
 }
 
-.pending.active, .in-progress.active, .resolved.active {
+.pending.active, .in-progress.active, .resolved.active, .prioritize.active {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -357,4 +357,33 @@
 .view a {
     color: #407BFF;
     text-decoration: none;
+}
+
+/* Copy Link Message */
+.message {
+    height: 70px;
+    width: 28%;
+    position: fixed;
+    right: 0;
+    left: 50%;
+    bottom: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    z-index: 100;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.5s ease-in-out;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.message.active {
+    opacity: 1;
 }

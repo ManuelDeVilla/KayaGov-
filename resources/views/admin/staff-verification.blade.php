@@ -11,12 +11,12 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @vite('resources/css/admin/staff-verification.css')
     @vite('resources/css/header.css')
-    @vite('resources/css/citizens/sidebar-styles.css')
+    @vite('resources/css/admin/admin-sidebar.css')
 </head>
 <body>
     <header>
         @include('includes.header')
-        @include('includes.sidebar')
+        @include('includes.admin-sidebar')
     </header>
     
     <div class="body">

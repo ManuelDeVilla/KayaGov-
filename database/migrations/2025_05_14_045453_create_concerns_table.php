@@ -18,7 +18,6 @@ return new class extends Migration
             $table->text('description');
             $table->foreignId('city_id')->constrained('cities', 'id')->onDelete('cascade');
             $table->string('category');
-            $table->integer('priority');
             $table->string('status');
             $table->timestamps();
         });

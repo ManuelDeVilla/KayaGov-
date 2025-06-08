@@ -30,6 +30,7 @@ const sort_by = document.querySelector('#sort-by')
 const pending = document.querySelector('#pending')
 const in_progress = document.querySelector('#in_progress')
 const resolved = document.querySelector('#resolved')
+const prioritize = document.querySelector('#prioritize')
 
 // Clear All Sorts button
 const clear_button = document.querySelector('#clear-all')
@@ -40,6 +41,7 @@ const sort_temp = {
         pending: false,
         in_progress: false,
         resolved: false,
+        prioritize: false
     },
     city: null,
     province: null
@@ -55,6 +57,7 @@ const sort = {
         pending: false,
         in_progress: false,
         resolved: false,
+        prioritize: false
     },
     city: null,
     province: null
@@ -143,6 +146,7 @@ sort_by.addEventListener('click', function () {
     pending.classList.toggle('active')
     in_progress.classList.toggle('active')
     resolved.classList.toggle('active')
+    prioritize.classList.toggle('active')
 })
 
 // Toggling on each sort-by
@@ -151,6 +155,7 @@ const sort_children_div = sort_by.querySelectorAll('div')
 const pending_icon = document.querySelector('#pending-icon')
 const in_progress_icon = document.querySelector('#in-progress-icon')
 const resolved_icon = document.querySelector('#resolved-icon')
+const prioritize_icon = document.querySelector('#prioritize-icon')
 
 sort_children_div.forEach((children_div) => {
 const id = children_div.id
@@ -176,6 +181,14 @@ const id = children_div.id
                         resolved_icon.classList.add('fa-regular', 'fa-square')
 
                         sort_temp.status.resolved = false
+                    }
+
+                    // If prioritize icon is checked uncheck it
+                    if (prioritize_icon.classList.contains('fa-square-check')) {
+                        prioritize_icon.classList.remove('fa-solid', 'fa-square-check')
+                        prioritize_icon.classList.add('fa-regular', 'fa-square')
+
+                        sort_temp.status.prioritize = false
                     }
 
                     // Toggle Part
@@ -221,6 +234,14 @@ const id = children_div.id
                         sort_temp.status.resolved = false
                     }
 
+                    // If prioritize icon is checked uncheck it
+                    if (prioritize_icon.classList.contains('fa-square-check')) {
+                        prioritize_icon.classList.remove('fa-solid', 'fa-square-check')
+                        prioritize_icon.classList.add('fa-regular', 'fa-square')
+
+                        sort_temp.status.prioritize = false
+                    }
+
                     // Toggle Part
                     in_progress_icon.classList.remove('fa-regular', 'fa-square')
                     in_progress_icon.classList.add('fa-solid', 'fa-square-check')
@@ -264,6 +285,14 @@ const id = children_div.id
                         sort_temp.status.pending = false
                     }
 
+                    // If prioritize icon is checked uncheck it
+                    if (prioritize_icon.classList.contains('fa-square-check')) {
+                        prioritize_icon.classList.remove('fa-solid', 'fa-square-check')
+                        prioritize_icon.classList.add('fa-regular', 'fa-square')
+
+                        sort_temp.status.prioritize = false
+                    }
+
                     // Toggle Part
                     resolved_icon.classList.remove('fa-regular', 'fa-square')
                     resolved_icon.classList.add('fa-solid', 'fa-square-check')
@@ -285,6 +314,57 @@ const id = children_div.id
                     sort_temp.status.resolved = false
                 }
                 break
+
+                case 'prioritize':
+                    event.stopPropagation()
+
+                    if (prioritize_icon.classList.contains('fa-square')) {
+
+                        // If in-progress icon is checked uncheck it
+                        if (in_progress_icon.classList.contains('fa-square-check')) {
+                            in_progress_icon.classList.remove('fa-solid', 'fa-square-check')
+                            in_progress_icon.classList.add('fa-regular', 'fa-square')
+
+                            sort_temp.status.in_progress = false
+                        }
+
+                        // If pending icon is checked uncheck it
+                        if (pending_icon.classList.contains('fa-square-check')) {
+                            pending_icon.classList.remove('fa-solid', 'fa-square-check')
+                            pending_icon.classList.add('fa-regular', 'fa-square')
+
+                            sort_temp.status.pending = false
+                        }
+
+                        // If resolved icon is checked uncheck it
+                        if (resolved_icon.classList.contains('fa-square-check')) {
+                            resolved_icon.classList.remove('fa-solid', 'fa-square-check')
+                            resolved_icon.classList.add('fa-regular', 'fa-square')
+
+                            sort_temp.status.resolved = false
+                        }
+
+                        // Toggle Part
+                        prioritize_icon.classList.remove('fa-regular', 'fa-square')
+                        prioritize_icon.classList.add('fa-solid', 'fa-square-check')
+
+                        sort_temp.status.prioritize = true
+
+                        // Display Current Filters
+                        apply_text_status.textContent = 'prioritize'
+                        apply_status.classList.add('active')
+
+                        // Toggle Part
+                    } else {
+                        prioritize_icon.classList.remove('fa-solid', 'fa-square-check')
+                        prioritize_icon.classList.add('fa-regular', 'fa-square')
+
+                        // Remove current Filter
+                        apply_status.classList.remove('active')
+
+                        sort_temp.status.prioritize = false
+                    }
+                    break
         }
     })
 })
@@ -648,7 +728,12 @@ apply_status.addEventListener('click', function () {
     } else if (in_progress_icon.classList.contains('fa-square-check')) {
         in_progress_icon.classList.remove('fa-solid', 'fa-square-check')
         in_progress_icon.classList.add('fa-regular', 'fa-square')
+
+    }  else if (prioritize_icon.classList.contains('fa-square-check')) {
+        prioritize_icon.classList.remove('fa-solid', 'fa-square-check')
+        prioritize_icon.classList.add('fa-regular', 'fa-square')
     }
+    console.log(1)
 })
 
 // Removes applied div for apply province and removes its temp values
@@ -919,9 +1004,13 @@ function createConcern (concern, city) {
     const priority_number = document.createElement('span')
     priority_number.textContent = " " + concern.priority
 
+    const priority_id = document.createElement('span')
+    priority_id.setAttribute('id', concern.id)
+
     priority.appendChild(priority_button)
     priority_button.appendChild(priority_icon)
     priority.appendChild(priority_number)
+    priority.appendChild(priority_id)
 
     card_footer.appendChild(priority)
 
@@ -947,6 +1036,7 @@ function createConcern (concern, city) {
     view.classList.add('view')
 
     const view_link = document.createElement('a')
+    view_link.classList.add('links')
     view_link.textContent = 'View Details'
 
     const view_icon = document.createElement('i')
@@ -968,6 +1058,7 @@ document.addEventListener('click', function() {
     pending.classList.remove('active')
     in_progress.classList.remove('active')
     resolved.classList.remove('active')
+    prioritize.classList.remove('active')
 
     // Remove Checked Statuses per status
     pending_icon.classList.remove('fa-solid', 'fa-square-check')
@@ -978,6 +1069,9 @@ document.addEventListener('click', function() {
 
     in_progress_icon.classList.remove('fa-solid', 'fa-square-check')
     in_progress_icon.classList.add('fa-regular', 'fa-square')
+
+    prioritize_icon.classList.remove('fa-solid', 'fa-square-check')
+    prioritize_icon.classList.add('fa-regular', 'fa-square')
 
     // Removing province active divs when closed
     province_div.classList.remove('active')

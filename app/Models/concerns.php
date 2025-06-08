@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class concerns extends Model
 {
     //
-    protected $fillable = ['title', 'description', 'category', 'city_id', 'priority', 'status', 'user_id'];
+    protected $fillable = ['title', 'description', 'category', 'city_id', 'status', 'user_id'];
 
         protected $casts = [
         'created_at' => 'datetime',
@@ -30,5 +30,9 @@ class concerns extends Model
 
     public function users () {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function priority () {
+        return $this->hasMany(concern_priorities::class, 'concern_id');
     }
 }

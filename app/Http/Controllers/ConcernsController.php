@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\city;
+use App\Models\concern_priorities;
 use App\Models\concerns;
 use App\Models\concerns_comments;
 use App\Models\concerns_image;
@@ -52,14 +53,16 @@ class ConcernsController extends Controller
             }
         }
 
-        $concerns = $query_concerns->get();
+        $concerns = $query_concerns->withCount('priority')->get();
         $city = city::all();
+        // $priority = concern_priorities::all();
 
         // If request came from ajax return json
         if (request()->ajax()) {
             return response()->json([
                 'concerns' => $concerns,
-                'cities' => $city
+                'cities' => $city,
+                // 'priority' => $priority
             ]);
 
             // Else if it came as an http request return the view

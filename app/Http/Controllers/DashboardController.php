@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\concerns;
 use App\Models\city;
 use App\Models\User;
+use App\Models\user_verification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -71,6 +72,7 @@ class DashboardController extends Controller
    public function adminDashboard()
    {
         // Get all statistics for admin (simplified without is_verified)
+        $totalVerifications = user_verification::count();
         $totalStaff = User::where('usertype', 'staff')->count();
         $totalCitizens = User::where('usertype', 'citizen')->count();
         $totalConcerns = concerns::count();
@@ -90,6 +92,7 @@ class DashboardController extends Controller
         }
 
         return view('admin.dashboard', compact(
+            'totalVerifications',
             'totalStaff',
             'totalCitizens',
             'totalConcerns',

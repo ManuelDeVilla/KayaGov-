@@ -151,7 +151,7 @@
 
                     <div class="card-footer">
                         <div class="date">
-                            <p><i class="fa-regular fa-clock"></i> {{ $concern->created_at->format('M d, Y') }}</p>
+                            <p><i class="fa-regular fa-clock"></i> {{ $concern->created_at->format('F d, Y') }}</p>
                         </div>
 
                         <div class="priority">

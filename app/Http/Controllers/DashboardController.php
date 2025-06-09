@@ -38,8 +38,19 @@ class DashboardController extends Controller
         foreach ($concerns as $concern) {
             $concern->city_name = $concern->city ? $concern->city->city : 'Unknown City';
         }
+         // Count each status type
+        $totalConcerns = concerns::count();
+        $pendingConcerns = concerns::where('status', 'pending')->count();
+        $inProgressConcerns = concerns::where('status', 'in progress')->count();
+        $resolvedConcerns = concerns::where('status', 'resolved')->count();
 
-        return view('citizens.dashboard', compact('concerns'));
+        return view('citizens.dashboard', compact(
+            'concerns', 
+            'totalConcerns', 
+            'pendingConcerns', 
+            'inProgressConcerns',
+            'resolvedConcerns'
+        ));
    }
 
    public function staffDashboard()
@@ -54,20 +65,20 @@ class DashboardController extends Controller
             $concern->city_name = $concern->city ? $concern->city->city : 'Unknown City';
         }
 
-        // Statistics for staff dashboard
-        $totalConcerns = concerns::count();
-        $pendingConcerns = concerns::where('status', 'pending')->count();
-        $inProgressConcerns = concerns::where('status', 'in_progress')->count();
-        $resolvedConcerns = concerns::where('status', 'resolved')->count();
+        // Count each status type
+    $totalConcerns = concerns::count();
+    $pendingConcerns = concerns::where('status', 'pending')->count();
+    $inProgressConcerns = concerns::where('status', 'in progress')->count();
+    $resolvedConcerns = concerns::where('status', 'resolved')->count();
 
-        return view('staffs.dashboard', compact(
-            'concerns', 
-            'totalConcerns', 
-            'pendingConcerns', 
-            'inProgressConcerns',
-            'resolvedConcerns'
-        ));
-   }
+    return view('staffs.dashboard', compact(
+        'concerns', 
+        'totalConcerns', 
+        'pendingConcerns', 
+        'inProgressConcerns',
+        'resolvedConcerns'
+    ));
+}
 
    public function adminDashboard()
    {

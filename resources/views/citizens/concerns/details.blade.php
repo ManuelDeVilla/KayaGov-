@@ -11,10 +11,18 @@
     @vite('resources/css/citizens/sidebar-styles.css')
     @vite('resources/js/sidebar.js')
     @vite('resources/css/citizens/concern-details.css')
+    
 </head>
 <body>
     @include('includes.header')
-    @include('includes.sidebar')
+
+    @if(Auth::user()->usertype == 'staff')
+        @include('includes.staff-sidebar')
+    @elseif (Auth::user()->usertype == 'admin')
+        @include('includes.admin-sidebar')
+    @else
+        @include('includes.sidebar')    
+    @endif
 <div class="app-container">
         <!-- Main Content -->
         <main class="main-content">
@@ -34,6 +42,41 @@
                                     <span class="status-badge in-progress">{{ $concerns->status }}</span>
                                     <span class="status-badge roads">{{ $concerns->category }}</span>
                                     <span class="date-submitted">{{ $concerns->created_at->format('M d, Y') }}</span>
+                                    @if(Auth::user()->usertype == 'staff')
+                                <div class="concern-actions">
+                                    @if($concerns->status === 'pending')
+                                        <form action="{{ route('concerns.updateStatus', $concerns->id) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            <input type="hidden" name="status" value="in progress">
+                                            <button type="submit" class="action-btn accept">Accept</button>
+                                        </form>
+
+                                        <form action="{{ route('concerns.updateStatus', $concerns->id) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            <input type="hidden" name="status" value="rejected">
+                                            <button type="submit" class="action-btn resolve">Reject</button>
+                                        </form>
+                                    @elseif($concerns->status === 'in progress')
+                                        <!-- Resolved Button -->
+                                        <form action="{{ route('concerns.updateStatus', $concerns->id) }}" method="POST" style="display: inline; margin-left: 10px;">
+                                            @csrf
+                                            <input type="hidden" name="status" value="resolved">
+                                            <button type="submit" class="action-btn resolve">Resolved</button>
+                                        </form>
+
+                                        <!-- Cancel Button (Optional, if you still want it) -->
+                                        <form action="{{ route('concerns.updateStatus', $concerns->id) }}" method="POST" style="display: inline; margin-left: 10px;">
+                                            @csrf
+                                            <input type="hidden" name="status" value="pending">
+                                            <button type="submit" class="action-btn cancel">Cancel</button>
+                                        </form>
+
+                                    @elseif($concerns->status === 'rejected')
+                                        <span class="status-label rejected">Rejected</span>
+                                    @endif
+                                </div>
+
+                                    @endif
                                 </div>
                                 <h1 class="concern-title">{{ $concerns->title }}</h1>
                                 <p class="concern-description">
@@ -83,40 +126,6 @@
                         </div>
 
 
-                    </div>
-                </div>
-                
-                <!-- Details Panel -->
-                <div class="details-panel">
-                    <h2 class="details-header">Details</h2>
-                    
-                    <div class="details-content">
-                        <div class="details-item">
-                            <span class="details-label">Reported by</span>
-                            <span class="details-value">Manuel De Vera</span>
-                        </div>
-                        
-                        <div class="details-item">
-                            <span class="details-label">Department</span>
-                            <span class="details-value">Roads</span>
-                        </div>
-                        
-                        <div class="details-item">
-                            <span class="details-label">Submitted on</span>
-                            <span class="details-value">May 1, 2023</span>
-                        </div>
-                        
-                        <div class="details-item">
-                            <span class="details-label">Last Updated</span>
-                            <span class="details-value">May 5, 2023</span>
-                        </div>
-                        
-                        <div class="details-item">
-                            <span class="details-label">Status</span>
-                            <span class="details-value">
-                                <span class="status-badge in-progress">In Progress</span>
-                            </span>
-                        </div>
                     </div>
                 </div>
             </div>

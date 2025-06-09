@@ -134,8 +134,11 @@ Route::get('/citizen/concern/details/{id}', [ConcernsController::class, 'show'])
 //comments 
 Route::post('/concerns/{concern}/comment', [ConcernsController::class, 'addComment'])->name('concerns.comment');
 
-//pendings concerns
-Route::get('/concerns/pending', [ConcernsController::class, 'pending'])->name('concerns.pending');
+Route::get('/concerns/in-progress', action: [ConcernsController::class, 'showInProgress'])->name('staffs.inprogress');
+Route::post('/concerns/{concern}/update-status', [ConcernsController::class, 'updateStatus'])->name('concerns.updateStatus');
+
+Route::get('/concerns/resolved', action: [ConcernsController::class, 'showResolved'])->name('staffs.resolved');
+
 
 
 // User Profile Routes

@@ -16,7 +16,11 @@
 <body> 
     <header>
         @include('includes.header')
-        @include('includes.sidebar')
+        @if(Auth::user()->usertype == 'staff')
+            @include('includes.staff-sidebar')
+        @elseif (Auth::user()->usertype == 'citizen')
+            @include('includes.sidebar')
+        @endif
     </header>
 
     <main class="main-content">
@@ -98,19 +102,27 @@
                     <label for="province">Province</label>
                     <select name="province" required>
                         @foreach($provinces as $province)
-                            <option value="{{ $province->id }}">{{ $province->province }}</option>
+                            <option value="{{ $province->id }}" 
+                                {{ $user->province_id == $province->id ? 'selected' : '' }}>
+                                {{ $province->province }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="city">City</label>
-                    <select name="city" required>
+                    <label for="city_id">City</label>
+                    <select name="city_id" required>
                         @foreach($cities as $city)
-                            <option value="{{ $city->id }}">{{ $city->city }}</option>
+                            <option value="{{ $city->id }}" 
+                                {{ $user->city_id == $city->id ? 'selected' : '' }}>
+                                {{ $city->city }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
+
+
             </div>
 
 

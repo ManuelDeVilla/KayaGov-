@@ -211,6 +211,7 @@ const id = children_div.id
                     apply_status.classList.remove('active')
 
                     sort_temp.status.pending = false
+                    sort.status.pending = false
                 }
                 break
 
@@ -261,6 +262,7 @@ const id = children_div.id
                     apply_status.classList.remove('active')
 
                     sort_temp.status.in_progress = false
+                    sort.status.in_progress = false
                 }
                 break
 
@@ -312,6 +314,7 @@ const id = children_div.id
                     apply_status.classList.remove('active')
 
                     sort_temp.status.resolved = false
+                    sort.status.resolved = false
                 }
                 break
 
@@ -363,6 +366,7 @@ const id = children_div.id
                         apply_status.classList.remove('active')
 
                         sort_temp.status.prioritize = false
+                        sort.status.prioritize = false
                     }
                     break
         }
@@ -802,6 +806,7 @@ apply_filter.addEventListener('click', function() {
             function (concerns) {
                 list_section.innerHTML = ''
                 concerns.concerns.forEach((concern) => {
+                    
                     const find_city = concerns.cities.find(city => city.id == concern.city_id)
                     createConcern (concern, find_city)
                 })
@@ -812,10 +817,10 @@ apply_filter.addEventListener('click', function() {
     } else {
         $.get(sort_concerns,
             {sort: sort},
-            function (concerns) {
+            function (response) {
                 list_section.innerHTML = ''
-                concerns.concerns.forEach((concern) => {
-                    const find_city = concerns.cities.find(city => city.id == concern.city_id)
+                response.concerns.forEach((concern) => {
+                    const find_city = response.cities.find(city => city.id == concern.city_id)
                     createConcern (concern, find_city)
                 })
             }
@@ -848,6 +853,19 @@ clear_button.addEventListener('click', function () {
     apply_city.classList.remove('active')
     apply_text_city.textContent = ''
 
+    // Remove Checked Statuses per status
+    pending_icon.classList.remove('fa-solid', 'fa-square-check')
+    pending_icon.classList.add('fa-regular', 'fa-square')
+
+    resolved_icon.classList.remove('fa-solid', 'fa-square-check')
+    resolved_icon.classList.add('fa-regular', 'fa-square')
+
+    in_progress_icon.classList.remove('fa-solid', 'fa-square-check')
+    in_progress_icon.classList.add('fa-regular', 'fa-square')
+
+    prioritize_icon.classList.remove('fa-solid', 'fa-square-check')
+    prioritize_icon.classList.add('fa-regular', 'fa-square')
+
     // If search input has value
     if (search_input.value.trim() != '') {
         const search_value = search_input.value.trim()
@@ -879,6 +897,7 @@ clear_button.addEventListener('click', function () {
 
 // Create Concern Cards
 function createConcern (concern, city) {
+    
     const card = document.createElement('div')
     card.classList.add('card')
 
@@ -933,7 +952,7 @@ function createConcern (concern, city) {
     category_p_progress.appendChild(category_icon_progress)
     category_icon_progress.appendChild(category_icon)
 
-    category_p_progress.textContent = concern.category
+    category_p_progress.append(concern.category)
 
     // Details-Location Section
     const location_wrapper = document.createElement('div')
@@ -955,7 +974,7 @@ function createConcern (concern, city) {
 
     card.appendChild(details)
 
-    p_location.textContent = city.city
+    p_location.append(city.city)
 
     // Description
     const description = document.createElement('div')
@@ -988,9 +1007,9 @@ function createConcern (concern, city) {
 
     // For True Date
     const concern_date = new Date(concern.created_at)
-    const format_date = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long', day: 'numeric'}).format(concern_date)
+    const format_date = new Intl.DateTimeFormat('en-US', {year: 'numeric', month: 'long', day: '2-digit'}).format(concern_date)
 
-    p_date.textContent = format_date
+    p_date.append(" " + format_date)
 
     // Priority-Card Footer
     const priority = document.createElement('div')

@@ -26,17 +26,10 @@ class ConcernsController extends Controller
             $sort = $request->input('sort');
 
             foreach ($sort['status'] as $key => $value) {
-                if ($value == 'true') {
+                if ($value == true) {
                     if ($key == 'prioritize') {
-                        $query_concerns->withCount('priority')->orderBy('priority_count', 'desc');
-                        $isPrioritize = true;
+                        $isPrioritize = 'true';
 
-                        $concerns = $query_concerns->get();
-                        $city = city::all();
-                        return response()->json([
-                            'concerns' => $concerns,
-                            'cities' => $city
-                        ]);
                     } else {
                         $query_concerns->where('status', $key);
                     }
@@ -44,49 +37,45 @@ class ConcernsController extends Controller
                 }
             }
 
-            // if ($sort['province'] != null) {
-            //     $get_city_id = city::where('province_id', $sort['province'])->pluck('id');
+            if ($sort['province'] != null) {
+                $get_city_id = city::where('province_id', $sort['province'])->pluck('id');
 
-            //     $query_concerns->whereIn('city_id', $get_city_id);
-            // }
+                $query_concerns->whereIn('city_id', $get_city_id);
+            }
 
-            // if ($sort['city'] != null) {
-            //     $query_concerns->where('city_id', $sort['city']);
-            // }
+            if ($sort['city'] != null) {
+                $query_concerns->where('city_id', $sort['city']);
+            }
         }
 
-        // if (Auth::check()) {
-        //     if (Auth::user()->usertype == 'staff') {
-        //         $user_city = Auth::user()->city_id;
-        //         $query_concerns->where('city_id', $user_city);
-
-        //     } else {
-        //         $user_city = Auth::user()->city_id;
-        //         $query_concerns->orderByRaw('city_id = ? DESC', [$user_city])->orderBy('id', 'desc');
-        //     }
-        // }
-
-        if ($isPrioritize) {
+        if ($isPrioritize == true) {
+            $query_concerns->withCount('priority')->orderBy('priority_count', 'desc');
             $concerns = $query_concerns->get();
         } else {
+
+            if (Auth::check()) {
+                if (Auth::user()->usertype == 'staff') {
+                    $user_city = Auth::user()->city_id;
+                    $query_concerns->where('city_id', $user_city);
+
+                } else {
+                    $user_city = Auth::user()->city_id;
+                    $query_concerns->orderByRaw('city_id = ? DESC', [$user_city])->orderBy('id', 'desc');
+                }
+            }
             $concerns = $query_concerns->withCount('priority')->get();
         }
 
-        // $city = city::all();
+        $city = city::all();
 
-        // // If request came from ajax return json
-        // if (request()->ajax()) {
-        //     return response()->json([
-        //         'concerns' => $concerns,
-        //         'cities' => $city
-        //     ]);
-
-        //     // Else if it came as an http request return the view
-        // } else {
-        //     return view('citizens.concerns.index', ['concerns' => $concerns]);
-        // }
-
-        if (!request()->ajax()) {
+        // If request came from ajax return json
+        if (request()->ajax()) {
+            return response()->json([
+                'concerns' => $concerns,
+                'cities' => $city,
+            ]);
+            // Else if it came as an http request return the view
+        } else {
             return view('citizens.concerns.index', ['concerns' => $concerns]);
         }
 
@@ -204,21 +193,20 @@ class ConcernsController extends Controller
     public function search (Request $request) {
         $search = $request->input('search');
         $query_concerns = concerns::query();
+        $isPrioritize = false;
 
-        if (Auth::check()) {
-            $city = Auth::user()->city;
-
-            $query_concerns->where('title', 'like', $search . '%')->orderByRaw('city_id = ? desc', [$city]);
-        } else {
-            $query_concerns->where('title', 'like', $search . '%');
-        }
-
+        
         if ($request->input('sort')) {
             $sort = $request->input('sort');
 
             foreach ($sort['status'] as $key => $value) {
                 if ($value == 'true') {
-                    $query_concerns->where('status', $key);
+                    if ($key == 'prioritize') {
+                        $isPrioritize = true;
+
+                    } else {
+                        $query_concerns->where('status', $key);
+                    }
                     break;
                 }
             }
@@ -234,8 +222,22 @@ class ConcernsController extends Controller
             }
         }
 
+        if (Auth::check()) {
+            $city = Auth::user()->city;
 
-        $concerns = $query_concerns->orderBy('id', 'desc')->get();
+            if ($isPrioritize == true) {
+                $query_concerns->where('title', 'like', $search . '%')->orderBy('priority_count', 'desc');;
+            } else {
+                $query_concerns->where('title', 'like', $search . '%')->orderByRaw('city_id = ? desc', [$city]);
+            }
+        } else {
+            $query_concerns->where('title', 'like', $search . '%');
+        }
+
+        if (!$isPrioritize == true) {
+            $concerns = $query_concerns->withCount('priority')->orderBy('id', 'desc')->get();
+        }
+
         $city = city::all();
 
         return response()->json([
@@ -248,6 +250,7 @@ class ConcernsController extends Controller
     public function sort (Request $request) {
         // Create an object of concerns model
         $query = concerns::query();
+        $isPrioritize = false;
 
         // Checks if sort key exists
         if ($request->input('sort')) {
@@ -255,7 +258,12 @@ class ConcernsController extends Controller
 
             foreach ($sort['status'] as $key => $value) {
                 if ($value == 'true') {
-                    $query->where('status', $key);
+                    if ($key == 'prioritize') {
+                        $isPrioritize = true;
+
+                    } else {
+                        $query->where('status', $key);
+                    }
                     break;
                 }
             }
@@ -277,13 +285,18 @@ class ConcernsController extends Controller
             $query->where('title', 'like', $search_value . '%');
         }
 
-        if (Auth::check()) {
-            $city_id = Auth::user()->city_id;
+        if ($isPrioritize == true) {
+            $query->withCount('priority')->orderBy('priority_count', 'desc');
+            $concerns = $query->get();
+        } else {
+            if (Auth::check()) {
+                $city_id = Auth::user()->city_id;
 
-            $query->orderByRaw('city_id = ? desc', [$city_id]);
+                $query->orderByRaw('city_id = ? desc', [$city_id]);
+            }
+
+            $concerns = $query->withCount('priority')->orderBy('id', 'desc')->get();
         }
-
-        $concerns = $query->orderBy('id', 'desc')->get();
         $city = city::all();
 
         return response()->json([

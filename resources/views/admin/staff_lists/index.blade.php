@@ -20,7 +20,6 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Gender</th>
-                        <th>Region</th>
                         <th>Province</th>
                         <th>City</th>
                         <th>Joined</th>
@@ -33,9 +32,8 @@
                             <td>{{ $staff->username }}</td>
                             <td>{{ $staff->email }}</td>
                             <td>{{ $staff->gender }}</td>
-                            <td>{{ $staff->region ?? '-' }}</td>
-                            <td>{{ $staff->province ?? '-' }}</td>
-                            <td>{{ $staff->city ?? '-' }}</td>
+                            <td>{{ $staff->province->province}}</td>
+                            <td>{{ $staff->city->city}}</td>
                             <td>{{ $staff->created_at ? $staff->created_at->format('M d, Y') : '-' }}</td>
                         </tr>
                     @empty

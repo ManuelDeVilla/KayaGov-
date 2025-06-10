@@ -1,14 +1,3 @@
-<?php
-
-use Illuminate\Support\Facades\Auth;
-
-if (Auth::check() && Auth::user()->usertype == 'admin') {
-    $route = route('create.admin.location');
-} else {
-    $route = route('register.location');
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,7 +27,7 @@ if (Auth::check() && Auth::user()->usertype == 'admin') {
                 <div class="form-header">
                     <p class="header">Please Input Your Location</p>
                 </div>
-                <form action="{{ $route }}" method="post" id="form">
+                <form action="{{ route('register.location') }}" method="post" id="form">
                     @csrf
                     
                     <div class="input">

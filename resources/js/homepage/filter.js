@@ -383,68 +383,71 @@ const province_search = document.querySelector('#search-province')
 let latest_province_input = 0
 
 // When province is click show province options & search div
-province_div.addEventListener('click', function() {
-    province_div.classList.toggle('active')
-    province_searchbar.classList.toggle('active')
-    province_options.classList.toggle('active')
+// Checks first if province_div exists, to prevent interruptions
+if (province_div) {
+    province_div.addEventListener('click', function() {
+        province_div.classList.toggle('active')
+        province_searchbar.classList.toggle('active')
+        province_options.classList.toggle('active')
 
-    if (province_search.value.trim() != '') {
-        province_search.value = ''
-    }
+        if (province_search.value.trim() != '') {
+            province_search.value = ''
+        }
 
-    // If There is a city selected show the province for that city
-    if (sort_temp.city != null) {
-        $.get(list_province,
-            {city: sort_temp.city},
-            function (provinces) {
-                showProvince (provinces)
-            }
-        )
-
-        province_search.addEventListener('input', function(event) {
-
-            const search_input = event.target.value.trim()
-            const current_province_input = ++latest_province_input
-
-            $.get(list_search_province,
-                {
-                    search: search_input,
-                    city: sort_temp.city
-                },
+        // If There is a city selected show the province for that city
+        if (sort_temp.city != null) {
+            $.get(list_province,
+                {city: sort_temp.city},
                 function (provinces) {
-                    if (current_province_input == latest_province_input) {
-                        showProvince (provinces)
-                    }
+                    showProvince (provinces)
                 }
             )
-        })
 
-        // If There is no city selected show all province
-    } else {
-        $.get(list_province,
-            function (provinces) {
-                showProvince (provinces)
-                apply_text_province.dispatchEvent(new Event('textChange'))
-            }
-        )
+            province_search.addEventListener('input', function(event) {
 
-        province_search.addEventListener('input', function(event) {
+                const search_input = event.target.value.trim()
+                const current_province_input = ++latest_province_input
 
-            const search_input = event.target.value.trim()
-            const current_province_input = ++latest_province_input
-
-            $.get(list_search_province,
-                {search: search_input},
-                function (provinces) {
-                    if (current_province_input == latest_province_input) {
-                        showProvince (provinces)
-                        apply_text_province.dispatchEvent(new Event('textChange'))
+                $.get(list_search_province,
+                    {
+                        search: search_input,
+                        city: sort_temp.city
+                    },
+                    function (provinces) {
+                        if (current_province_input == latest_province_input) {
+                            showProvince (provinces)
+                        }
                     }
+                )
+            })
+
+            // If There is no city selected show all province
+        } else {
+            $.get(list_province,
+                function (provinces) {
+                    showProvince (provinces)
+                    apply_text_province.dispatchEvent(new Event('textChange'))
                 }
             )
-        })
-    }
-})
+
+            province_search.addEventListener('input', function(event) {
+
+                const search_input = event.target.value.trim()
+                const current_province_input = ++latest_province_input
+
+                $.get(list_search_province,
+                    {search: search_input},
+                    function (provinces) {
+                        if (current_province_input == latest_province_input) {
+                            showProvince (provinces)
+                            apply_text_province.dispatchEvent(new Event('textChange'))
+                        }
+                    }
+                )
+            })
+        }
+    })
+}
 
 function showProvince (provinces) {
     province_options.innerHTML = ''
@@ -482,9 +485,11 @@ function showProvince (provinces) {
 }
 
 // So that it would not close when clicking province searchbar
-province_searchbar.addEventListener('click', function (event) {
-    event.stopPropagation()
-})
+if (province_div) {
+    province_searchbar.addEventListener('click', function (event) {
+        event.stopPropagation()
+    })
+}
 
 // Toggling City Divs
 // Getting City Elements
@@ -496,69 +501,72 @@ const city_search = document.querySelector('#search-city')
 let latest_city_input = 0
 
 // When province is click show city options & search div
-city_div.addEventListener('click', function() {
-    city_div.classList.toggle('active')
-    city_searchbar.classList.toggle('active')
-    city_options.classList.toggle('active')
+// Checks first if city_div exists, to prevent interruptions
+if (city_div) {
+    city_div.addEventListener('click', function() {
+        city_div.classList.toggle('active')
+        city_searchbar.classList.toggle('active')
+        city_options.classList.toggle('active')
 
-    if (city_search.value.trim() != '') {
-        city_search.value = ''
-    }
+        if (city_search.value.trim() != '') {
+            city_search.value = ''
+        }
 
-    // If there are input province then show only cities in that province
-    if (sort_temp.province != null) {
-        const selected_province = sort_temp.province
+        // If there are input province then show only cities in that province
+        if (sort_temp.province != null) {
+            const selected_province = sort_temp.province
 
-        $.get(list_city,
-            {province: selected_province},
-            function (cities) {
-                showCity (cities)
-            }
-        )
-
-        city_search.addEventListener('input', function (event) {
-            const search_value = event.target.value.trim()
-            const current_city_input = ++latest_city_input
-
-            $.get(list_search_city,
-                {
-                    search: search_value,
-                    province: selected_province
-                },
+            $.get(list_city,
+                {province: selected_province},
                 function (cities) {
-                    if (current_city_input == latest_city_input) {
-                        showCity (cities)
-                    }
+                    showCity (cities)
                 }
             )
-        })
 
-        // Else Show all cities
-    } else {
-        $.get(list_city,
-            function (cities) {
-                showCity (cities)
-                apply_text_city.dispatchEvent(new Event('textChange'))
-            }
-        )
+            city_search.addEventListener('input', function (event) {
+                const search_value = event.target.value.trim()
+                const current_city_input = ++latest_city_input
 
-        city_search.addEventListener('input', function (event) {
-            const search_value = event.target.value.trim()
-
-            const current_city_input = ++latest_city_input
-
-            $.get(list_search_city,
-                {search: search_value},
-                function (cities) {
-                    if (current_city_input == latest_city_input) {
-                        showCity (cities)
-                        apply_text_city.dispatchEvent(new Event('textChange'))
+                $.get(list_search_city,
+                    {
+                        search: search_value,
+                        province: selected_province
+                    },
+                    function (cities) {
+                        if (current_city_input == latest_city_input) {
+                            showCity (cities)
+                        }
                     }
+                )
+            })
+
+            // Else Show all cities
+        } else {
+            $.get(list_city,
+                function (cities) {
+                    showCity (cities)
+                    apply_text_city.dispatchEvent(new Event('textChange'))
                 }
             )
-        })
-    }
-})
+
+            city_search.addEventListener('input', function (event) {
+                const search_value = event.target.value.trim()
+
+                const current_city_input = ++latest_city_input
+
+                $.get(list_search_city,
+                    {search: search_value},
+                    function (cities) {
+                        if (current_city_input == latest_city_input) {
+                            showCity (cities)
+                            apply_text_city.dispatchEvent(new Event('textChange'))
+                        }
+                    }
+                )
+            })
+        }
+    })
+}
 
 // Show Cities in filter
 function showCity (cities) {
@@ -633,9 +641,11 @@ apply_text_province.addEventListener('textChange', function () {
 })
 
 // So that it would not close when clicking city searchbar
-city_searchbar.addEventListener('click', function (event) {
-    event.stopPropagation()
-})
+if (city_div) {
+    city_searchbar.addEventListener('click', function (event) {
+        event.stopPropagation()
+    })
+}
 
 // Sort and Search Section
 // For Search
@@ -1092,19 +1102,25 @@ document.addEventListener('click', function() {
     prioritize_icon.classList.add('fa-regular', 'fa-square')
 
     // Removing province active divs when closed
-    province_div.classList.remove('active')
-    province_searchbar.classList.remove('active')
-    province_options.classList.remove('active')
-    if (province_search.value.trim() != '') {
-        province_search.value = ''
+    // Checks if province_div exists first to prevent interruptions
+    if (province_div) {
+        province_div.classList.remove('active')
+        province_searchbar.classList.remove('active')
+        province_options.classList.remove('active')
+        if (province_search.value.trim() != '') {
+            province_search.value = ''
+        }
     }
 
     // Removing city active divs when closed
-    city_div.classList.remove('active')
-    city_searchbar.classList.remove('active')
-    city_options.classList.remove('active')
-    if (city_search.value.trim() != '') {
-        city_search.value = ''
+    // Checks if city_div exists first to prevent interruptions
+    if (city_div) {
+        city_div.classList.remove('active')
+        city_searchbar.classList.remove('active')
+        city_options.classList.remove('active')
+        if (city_search.value.trim() != '') {
+            city_search.value = ''
+        }
     }
 
     // Empties the values of the temp

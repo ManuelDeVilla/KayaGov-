@@ -33,7 +33,7 @@ Route::controller(UserController::class)->group(function() {
 
     // Show User Location form - For User
     Route::get('/register/location','locationRegisterShow')->name('show.register.location');
-    // Creates Admin, Government accounts - For Admin
+    // Processes Admin, Government, citizen accounts - For Admin and citizen
     Route::post('/register/location','register')->name('register.location');
 
     // Create Account Page for Admin
@@ -43,8 +43,6 @@ Route::controller(UserController::class)->group(function() {
 
     // Show User Location form - For Admin
     Route::get('/create/admin/location','locationRegisterShow')->name('show.admin.location');
-    // Creates Admin, Government accounts - For Admin
-    Route::post('/create/admin/location','register')->name('create.admin.location');
 
     // Creating Staff Accounts
     Route::get('/create/staff','showRegisterStaff')->name('show.staff.register');
@@ -148,11 +146,6 @@ Route::controller(SystemFeedbackController::class)->group(function () {
     Route::get('/feedback/create', 'create')->name('feedback.create');
     Route::post('/feedback', 'store')->name('feedback.store');
 });
-
-// Dashboard Routes
-// Route::get('/dashboard', function () {
-//     return view('dashboard'); 
-// })->name('dashboard');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 

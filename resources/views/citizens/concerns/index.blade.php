@@ -6,17 +6,17 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    @vite('resources/css/homepage.css')
     @vite('resources/css/header.css')
 
     @if(Auth::user()->usertype == 'staff')
-        @vite('resources/css/staff/staff-sidebar.css')
+        @vite('resources/css/staffs/staff-sidebar.css')
     @elseif (Auth::user()->usertype == 'admin')
         @vite('resources/css/admin/admin-sidebar.css')
     @else
         @vite('resources/css/citizens/sidebar-styles.css')
     @endif
 
+    @vite('resources/css/homepage.css')
     @vite('resources/css/citizens/sidebar-styles.css')
 </head>
 <body>

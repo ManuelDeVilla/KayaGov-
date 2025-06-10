@@ -48,22 +48,23 @@ class ConcernsController extends Controller
             }
         }
 
-        if ($isPrioritize == true) {
-            $query_concerns->withCount('priority')->orderBy('priority_count', 'desc');
-            $concerns = $query_concerns->get();
-        } else {
+        if (Auth::check()) {
+            if (Auth::user()->usertype == 'staff') {
+                $user_city = Auth::user()->city_id;
+                $query_concerns->where('city_id', $user_city);
 
-            if (Auth::check()) {
-                if (Auth::user()->usertype == 'staff') {
-                    $user_city = Auth::user()->city_id;
-                    $query_concerns->where('city_id', $user_city);
-
-                } else {
-                    $user_city = Auth::user()->city_id;
-                    $query_concerns->orderByRaw('city_id = ? DESC', [$user_city])->orderBy('id', 'desc');
-                }
+            } else {
+                $user_city = Auth::user()->city_id;
+                $query_concerns->orderByRaw('city_id = ? DESC', [$user_city])->orderBy('id', 'desc');
             }
-            $concerns = $query_concerns->withCount('priority')->get();
+
+            if ($isPrioritize == true) {
+                $query_concerns->withCount('priority')->orderBy('priority_count', 'desc');
+                $concerns = $query_concerns->get();
+
+            } else {
+                $concerns = $query_concerns->withCount('priority')->get();
+            }
         }
 
         $city = city::all();
@@ -225,11 +226,17 @@ class ConcernsController extends Controller
         if (Auth::check()) {
             $city = Auth::user()->city;
 
+            if (Auth::user()->usertype == 'staff') {
+                $user_city = Auth::user()->city_id;
+                $query_concerns->where('city_id', $user_city);
+            }
+
             if ($isPrioritize == true) {
                 $query_concerns->where('title', 'like', $search . '%')->orderBy('priority_count', 'desc');;
             } else {
                 $query_concerns->where('title', 'like', $search . '%')->orderByRaw('city_id = ? desc', [$city]);
             }
+
         } else {
             $query_concerns->where('title', 'like', $search . '%');
         }
@@ -285,18 +292,24 @@ class ConcernsController extends Controller
             $query->where('title', 'like', $search_value . '%');
         }
 
-        if ($isPrioritize == true) {
-            $query->withCount('priority')->orderBy('priority_count', 'desc');
-            $concerns = $query->get();
-        } else {
-            if (Auth::check()) {
-                $city_id = Auth::user()->city_id;
+        if (Auth::check()) {
+            $city_id = Auth::user()->city_id;
 
-                $query->orderByRaw('city_id = ? desc', [$city_id]);
+            if (Auth::user()->usertype == 'staff') {
+                $user_city = Auth::user()->city_id;
+                $query->where('city_id', $user_city);
             }
 
-            $concerns = $query->withCount('priority')->orderBy('id', 'desc')->get();
+            $query->orderByRaw('city_id = ? desc', [$city_id]);
+
+            if ($isPrioritize == true) {
+                $query->withCount('priority')->orderBy('priority_count', 'desc');
+                $concerns = $query->get();
+            }
         }
+
+        $concerns = $query->withCount('priority')->orderBy('id', 'desc')->get();
+        
         $city = city::all();
 
         return response()->json([

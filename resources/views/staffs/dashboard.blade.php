@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     @vite('resources/css/staffs/staff-dashboard.css')
-    @vite('resources/css/header.css')
+    @vite('resources/css/dashboard.css')
+    @vite(entrypoints: 'resources/css/header.css')
     @vite('resources/css/staffs/staff-sidebar.css')
+    @vite('resources/css/citizens/sidebar-styles.css')
     @vite('resources/css/footer.css')
     @vite('resources/js/sidebar.js')
 </head>
@@ -58,24 +60,45 @@
                 <div class="stat-number">{{ $resolvedConcerns }}</div>
             </div>
         </div>
+        
 
         <!-- Recent Activity Section -->
-        <div class="recent-activity">
+        <section class="concerns-list">
             <h2>Recent Activity</h2>
-        </div>
-            <!-- Search Bar
-            <div class="search-bar">
-                <div class="search-input">
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search your concerns..">
+            @if($concerns->count() > 0)
+                @foreach($concerns as $concern)
+                    <div class="concern-item">
+                        <div class="concern-status {{ strtolower(str_replace(' ', '-', $concern->status)) }}">
+                            <i class="fas fa-circle"></i>
+                        </div>
+                        <div class="concern-info">
+                            <h3>{{ $concern->title }}</h3>
+                            <p class="concern-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> {{ $concern->city_name }}</span>
+                                <span><i class="fas fa-calendar"></i> {{ $concern->created_at ? $concern->created_at->format('M d, Y') : 'No date' }}</span>
+                                <span><i class="fas fa-tag"></i> {{ ucfirst($concern->category) }}</span>
+                            </p>
+                            <p class="concern-description">{{ Str::limit($concern->description, 100) }}</p>
+                        </div>
+                        <div class="concern-actions">
+                            <span class="status-badge {{ strtolower(str_replace(' ', '-', $concern->status)) }}">
+                                {{ ucfirst($concern->status) }}
+                            </span>
+                            <a href="{{ route('citizens.concerns.details', ['id' => $concern->id]) }}" class="btn-view">
+                                View Details
+                            </a>
+                        </div>
+                    </div>
+                @endforeach
+            @else
+                <div class="no-concerns">
+                    <i class="fas fa-inbox"></i>
+                    <p>You haven't submitted any concerns yet.</p>
+                    <a href="{{ route('create.concerns') }}" class="btn-primary">Submit Your First Concern</a>
                 </div>
-                <button class="filter-btn">
-                    <i class="fas fa-filter"></i>
-                    Filter
-                </button>
-            </div>
-        -->
-
+            @endif
+        </section>
+        
             <!-- Concerns List
             @if($concerns->count() > 0)
                 <div class="concerns-list">

@@ -18,6 +18,8 @@
 
     @vite('resources/css/homepage.css')
     @vite('resources/css/citizens/sidebar-styles.css')
+    @vite('resources/css/homepage.css')
+
 </head>
 <body>
     <header>

@@ -29,12 +29,6 @@
                             <span>Submit Concern</span>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="fas fa-list"></i>
-                            <span>My Concerns</span>
-                        </a>
-                    </li>
                     @auth
                         @if (Auth::user()->usertype == 'admin')
                             <li class="nav-item">

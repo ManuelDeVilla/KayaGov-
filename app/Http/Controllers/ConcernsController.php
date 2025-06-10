@@ -317,4 +317,66 @@ class ConcernsController extends Controller
             'cities' => $city
         ]);
     }
+
+    public function updateStatus(Request $request, concerns $concern)
+{
+    $request->validate([
+        'status' => 'required|in:pending,in progress,resolved,rejected',
+    ]);
+
+    $concern->status = $request->input('status');
+    $concern->save();
+
+    // Recalculate counts after status update
+    $inProgressConcerns = concerns::where('status', 'in progress')->count();
+    $resolvedConcerns = concerns::where('status', 'resolved')->count();
+
+    if ($concern->status === 'in progress') {
+    return redirect()
+        ->route('staffs.inprogress')
+        ->with([
+            'success' => 'Concern accepted and now in progress!',
+            'inProgressConcerns' => $inProgressConcerns,
+            'resolvedConcerns' => $resolvedConcerns,
+        ]);
+            } elseif ($concern->status === 'resolved') {
+                return redirect()
+                    ->route('concern-list') // optional: create this route if needed
+                    ->with([
+                        'success' => 'Concern marked as resolved!',
+                        'inProgressConcerns' => $inProgressConcerns,
+                        'resolvedConcerns' => $resolvedConcerns,
+                    ]);
+            } elseif ($concern->status === 'rejected') {
+                return redirect()
+                    ->route('concern-list') // if you have a pending route
+                    ->with([
+                        'success' => 'Concern has been rejected.',
+                    ]);
+            }  
+            else {
+                return redirect()->back()->with('error', 'Unknown status update.');
+            }
+
+    
+}
+
+
+    public function showInProgress()
+    {
+        // Get concerns where status is 'in progress'
+    $inProgressConcerns = concerns::where('status', operator: 'in progress')->get();
+
+    // Return the view and pass the data
+    return view('staffs.inprogress', compact('inProgressConcerns'));
+    }
+
+    public function showResolved()
+    {
+        // Get concerns where status is 'resolved'
+        $resolvedConcerns = concerns::where('status', 'resolved')->get();
+
+        // Return the view and pass the data
+        return view('staffs.resolved', compact('resolvedConcerns'));
+    }
 }

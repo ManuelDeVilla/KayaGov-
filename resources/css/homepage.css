@@ -11,8 +11,9 @@
 
 .list-section {
     display: grid;
-    gap: 30px;
-    grid-template-columns: 48% 48%;
+    column-gap: 80px;
+    row-gap: 15px;
+    grid-template-columns: 38% 38%;
 }
 
 .body-header {
@@ -24,7 +25,7 @@
 }
 
 .body-header * {
-    width: 65%;
+    width: 80%;
     margin-right: 30px;
 }
 
@@ -36,7 +37,7 @@
 }
 
 .search-wrapper {
-    width: 60%;
+    width: 75%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -47,7 +48,7 @@
     transform: translateX(35px);
 }
 .search-wrapper input {
-    width: 95%;
+    width: 100%;
     font-size: 15px;
     padding: 10px 20px 10px 40px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
@@ -259,12 +260,14 @@
 
 /* Card CSS */
 .card {
-    height: 300px;
-    width: 100%;
+    height: 160px;
+    width: 90%;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
-    padding: 20px 50px 20px 50px;
+    justify-content: space-between;
+    margin-left: 90px;
+    margin-top: 15px;
+    padding: 20px 40px;
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
 
@@ -277,8 +280,17 @@
 }
 
 .card-header .header {
-    font-size: 25px;
+    font-size: 18px; /* Reduced from 20px */
     font-weight: 700;
+    line-height: 1.2;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 70%; /* Ensure space for status */
+    word-wrap: break-word;
+    hyphens: auto;
 }
 
 .icon {
@@ -290,15 +302,52 @@
     color: #9B7606;
 }
 
+.icon.pending, .pending{
+    color: #FFB800;
+}
+
+.icon.resolved, .resolved{
+    color: #00B74A;
+}
+.status {
+    padding: 8px 20px;
+    border-radius: 15px;
+    font-size: 12px;
+    font-weight: 500;
+    min-width: 80px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0; /* Prevent status from shrinking */
+}
+
+/* Enhanced Pending Status */
+.status.pending, .category-wrapper.pending {
+    padding: 8px 20px;
+    background-color: #FFF2D1;
+    border-radius: 15px;
+    border: 2px solid #FFB800;
+    position: relative;
+}
+
 /* Color of each status should change based on status */
 .status.progress, .category-wrapper.progress{
-    padding: 8px 20px 8px 20px;
+    padding: 10px 25px;
     background-color: #FAEFB1;
+    border-radius: 20px;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+.status.resolved, .category-wrapper.resolved {
+    padding: 10px 25px;
+    background-color: #DFF2E1;
     border-radius: 20px;
 }
 
 .status.progress p, .details p {
-    font-size: 15px;
+    font-size: 12px;
 }
 
 .details {
@@ -312,11 +361,14 @@
 
 .location, .icon.location {
     color: #808080;
+
 }
+
+
 
 .description {
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2; /* Limit to 2 lines */   
     line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -327,6 +379,7 @@
 .card-footer{
     display: flex;
     align-items: center;
+    margin-top: 20px;
 }
 
 .card-footer *{
@@ -350,8 +403,8 @@
 }
 
 .view {
-    width: 230px;
-    margin-left: 200px;
+    width: 190px;
+    margin-left: 100px;
 }
 
 .view a {
@@ -387,3 +440,4 @@
 .message.active {
     opacity: 1;
 }
+

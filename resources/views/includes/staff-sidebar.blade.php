@@ -19,8 +19,20 @@
                     
                     <li class="nav-item">
                         <a href="{{ route('concern-list')}}" class="nav-link">
-                            <i class="fas fa-exclamation-circle"></i>
+                            <i class="fas fa-bullhorn"></i>
                             <span>Concerns</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('staffs.inprogress')}}" class="nav-link">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>In Progress Concerns</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{{ route('staffs.resolved')}}" class="nav-link">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <span>Resolved Concerns</span>
                         </a>
                     </li>
                 </ul>
@@ -45,7 +57,7 @@
                 @endguest
 
                 @auth
-                <li class="nav-item">
+                    <li class="nav-item">
                         <a href="{{ route('profile') }}" class="nav-link">
                             <i class="fas fa-user"></i>
                             <span>User Profile</span>

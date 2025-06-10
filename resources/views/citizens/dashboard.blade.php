@@ -33,8 +33,8 @@
                 </div>
                 <div class="summary-info">
                     <h3>Pending</h3>
-                    <p>{{ $concerns->where('status', 'pending')->count() }}</p>
-                </div>
+                <p class="stat-number">{{ $pendingConcerns }}</p>                
+            </div>
             </div>
             <div class="summary-card">
                 <div class="summary-icon in-progress">
@@ -42,7 +42,7 @@
                 </div>
                 <div class="summary-info">
                     <h3>In Progress</h3>
-                    <p>{{ $concerns->where('status', 'in_progress')->count() }}</p>
+                    <p class="stat-number">{{ $inProgressConcerns }}</p>
                 </div>
             </div>
             <div class="summary-card">
@@ -51,7 +51,7 @@
                 </div>
                 <div class="summary-info">
                     <h3>Resolved</h3>
-                    <p>{{ $concerns->where('status', 'resolved')->count() }}</p>
+                    <p class="stat-number">{{ $resolvedConcerns }}</p>
                 </div>
             </div>
         </section>

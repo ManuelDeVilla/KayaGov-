@@ -42,7 +42,7 @@
 
                     <div id="upload-div" class="input">
                         <input class="file" type="file" name="file" id="file">
-                        <p>Upload a file (PNG, JPG up to 10MB)</p>
+                        <p>Upload a file (PDF to 10MB)</p>
                     </div>
 
                     <div class="uploaded-files-wrapper">

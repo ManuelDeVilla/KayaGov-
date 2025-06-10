@@ -148,6 +148,7 @@ Route::controller(SystemFeedbackController::class)->group(function () {
     // for feedback creation
     Route::get('/feedback/create', 'create')->name('feedback.create');
     Route::post('/feedback', 'store')->name('feedback.store');
+    Route::post('/feedback/update-status/{feedback}', 'updateStatus')->name('feedback.update-status');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

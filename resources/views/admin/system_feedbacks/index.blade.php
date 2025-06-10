@@ -1,4 +1,3 @@
-@extends('layouts.app')
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Feedbacks - Admin</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    @vite('resources/css/admin/admin-sidebar.css')
     @vite('resources/css/admin/system-feedbacks.css')
     @vite('resources/css/header.css')
-    @vite('resources/css/admin/admin-sidebar.css')
 </head>
 <body>
     <header>
@@ -59,7 +58,7 @@
 
         <!-- Filters -->
 <div class="filters-section">
-    <form method="GET" action="{{ route('admin.system-feedbacks.index') }}" class="filters-form">
+    <form method="GET" action="{{ route('feedback') }}" class="filters-form">
         <div class="filter-group">
             <label for="filter">Source:</label>
             <select name="filter" id="filter">
@@ -108,7 +107,7 @@
                 Apply Filters
             </button>
             
-            <a href="{{ route('admin.system-feedbacks.index') }}" class="filter-btn reset-btn">
+            <a href="{{ route('feedback') }}" class="filter-btn reset-btn">
                 <i class="fas fa-times"></i>
                 Reset
             </a>
@@ -206,7 +205,7 @@
                     
                     @if($feedback->status)
                         <div class="feedback-actions">
-                            <form method="POST" action="{{ route('admin.system-feedbacks.update-status', $feedback) }}" class="status-form">
+                            <form method="POST" action="{{ route('feedback.update-status', $feedback) }}" class="status-form">
                                 @csrf
                                 @method('PATCH')
                                 <select name="status" onchange="this.form.submit()">

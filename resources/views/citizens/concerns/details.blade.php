@@ -11,6 +11,7 @@
     @vite('resources/css/citizens/sidebar-styles.css')
     @vite('resources/js/sidebar.js')
     @vite('resources/css/citizens/concern-details.css')
+    @vite('resources/js/carousel.js')
     
 </head>
 <body>
@@ -79,6 +80,27 @@
                                     @endif
                                 </div>
                                 <h1 class="concern-title">{{ $concerns->title }}</h1>
+                                @if(optional($concerns->images)->count() > 0)
+                                        <div class="carousel-container">
+                                            <div class="carousel-track" id="carouselTrack">
+                                                @foreach($concerns->images as $image)
+                                                    <div class="carousel-slide">
+                                                        <img src="{{ asset('storage/' . $image->image_path) }}" alt="Concern Image" style="width: 100%; max-height: 300px; object-fit: cover;">
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                            <div class="carousel-controls">
+                                               <button onclick="moveSlide(-1)" class="carousel-arrow left">
+                                                    <i class="fas fa-chevron-left"></i>
+                                                </button>
+                                                <button onclick="moveSlide(1)" class="carousel-arrow right">
+                                                    <i class="fas fa-chevron-right"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    @else
+                                        <p>No image uploaded for this concern.</p>
+                                    @endif
                                 <p class="concern-description">
                                     {{ $concerns->description }}
                                 </p>
@@ -131,5 +153,6 @@
             </div>
         </main>
     </div>
+    
 </body>
 </html>

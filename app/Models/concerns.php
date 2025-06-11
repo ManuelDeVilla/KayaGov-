@@ -24,8 +24,9 @@ class concerns extends Model
         return $this->hasMany(concerns_comments::class, 'concerns_id');
     }
 
-    public function concern_images () {
-        return $this->hasMany(concerns_image::class, 'concerns_id');
+    public function images()
+    {
+        return $this->hasMany(concerns_image::class); // adjust model name if needed
     }
 
     public function users () {

@@ -8,7 +8,8 @@ class concerns_image extends Model
 {
     protected $fillable = ['concerns_id', 'image_path'];
     //
-    public function concern () {
-        return $this->belongsTo(concerns::class, 'concerns_id');
+    public function concern()
+    {
+        return $this->belongsTo(concerns::class);
     }
 }

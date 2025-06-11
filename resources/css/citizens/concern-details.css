@@ -126,6 +126,8 @@ ul {
     color: var(--neutral-600);
     margin-bottom: 1rem;
     line-height: 1.6;
+    word-break: break-word; 
+    
 }
 
 .concern-location {
@@ -311,4 +313,58 @@ ul {
 
 .comment-submit:hover::after {
     transform: translate(-50%, -50%) scale(2.5);
+}
+
+.carousel-container {
+    position: relative;
+    width: 300px;
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.carousel-track {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+}
+
+.carousel-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+
+.carousel-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+}
+
+.carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: #fff;
+    border: none;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    color: #333;
+    transition: background 0.3s ease;
+}
+
+.carousel-arrow:hover {
+    background: #f0f0f0;
+}
+
+.carousel-arrow.left {
+    left: 10px;
+}
+
+.carousel-arrow.right {
+    right: 10px;
 }

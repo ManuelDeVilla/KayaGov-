@@ -160,6 +160,7 @@ class UserController extends Controller
     public function locationRegisterShow () {
         return view('auth.save-location');
     }
+    
 
     // Create Account Page for Admin
     public function showCreateAccountAdmin () {
@@ -173,7 +174,7 @@ class UserController extends Controller
             'username' => 'required|string|min:3|max:16|unique:users,username',
             'email' => 'required|email|unique:users,email',
             'gender' => 'required|in:Male,Female',
-            'usertype' => 'required',
+            'usertype' => 'required|in:citizen,admin',
             'password' => 'required|min:6|max:20|confirmed'
             ]);
 
@@ -185,14 +186,14 @@ class UserController extends Controller
             $validated['image_path'] = $image_path;
 
             session(['registering_user' => $validated]);
-            return redirect()->route('show.admin.location');
+            return redirect()->route('show.register.location');
 
             // else if the routename is register.location, process its contents
         } else if (request()->routeIs('create.admin.location')) {
             $registering_user = session()->pull('registering_user');
             
             if ($registering_user) {
-                $regestering_user_username = $registering_user['username'];
+                    $regestering_user_username= $registering_user['username'];
 
                 // If usertype is government then make their username government + province + city
                 if ($registering_user['usertype'] == 'government') {

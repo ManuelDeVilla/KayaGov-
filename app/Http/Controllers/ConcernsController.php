@@ -147,8 +147,9 @@ class ConcernsController extends Controller
      */
     public function show($id)
     {
-        $concerns = concerns::findOrFail($id);
-        return view('citizens.concerns.details', ['concerns' => $concerns]);          
+        $concerns = concerns::with('images')->findOrFail($id);
+        return view('citizens.concerns.details', ['concerns' => $concerns]);  
+
     }
         
 

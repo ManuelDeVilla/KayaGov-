@@ -24,7 +24,8 @@ class concerns extends Model
         return $this->hasMany(concerns_comments::class, 'concerns_id');
     }
 
-    public function concern_images () {
+    public function concern_images()
+    {
         return $this->hasMany(concerns_image::class, 'concerns_id');
     }
 

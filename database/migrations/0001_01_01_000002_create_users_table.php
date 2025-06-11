@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->string('gender');
-            $table->foreignId('province_id')->constrained('provinces', 'id')->nullable();
-            $table->foreignId('city_id')->constrained('cities', 'id')->nullable();
+            $table->unsignedBigInteger('province_id')->nullable();
+            $table->unsignedBigInteger('city_id')->nullable();
             $table->string('usertype');
             $table->string('image_path');
             $table->timestamps();

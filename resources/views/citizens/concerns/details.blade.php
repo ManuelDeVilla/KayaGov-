@@ -42,8 +42,8 @@
                                     <span class="status-badge in-progress">{{ $concerns->status }}</span>
                                     <span class="status-badge roads">{{ $concerns->category }}</span>
                                     <span class="date-submitted">{{ $concerns->created_at->format('M d, Y') }}</span>
-                                    @if(Auth::user()->usertype == 'staff')
                                 <div class="concern-actions">
+                                    @if(Auth::user()->usertype == 'staff')
                                     @if($concerns->status === 'pending')
                                         <form action="{{ route('concerns.updateStatus', $concerns->id) }}" method="POST" style="display: inline;">
                                             @csrf
@@ -74,9 +74,14 @@
                                     @elseif($concerns->status === 'rejected')
                                         <span class="status-label rejected">Rejected</span>
                                     @endif
-                                </div>
-
+                                    @elseif (Auth::user()->usertype == 'admin')
+                                        <form action="{{ route('concerns.delete', $concerns->id) }}" method="POST" style="display: inline;">
+                                            @csrf
+                                            <button type="submit" class="action-btn accept">Delete</button>
+                                        </form>
                                     @endif
+                                </div>
+                                    
                                 </div>
                                 <h1 class="concern-title">{{ $concerns->title }}</h1>
                                 <p class="concern-description">

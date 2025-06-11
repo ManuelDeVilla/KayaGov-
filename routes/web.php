@@ -85,6 +85,7 @@ Route::controller(ConcernsController::class)->group(function () {
     Route::post('concerns/create', 'store')->name('store.create');
     Route::get('/concerns/search', 'search')->name('search.concerns');
     Route::get('/concerns/sort', 'sort')->name('sort.concerns');
+    Route::post('concerns/delete/{id}', 'deleteConcern')->name('concerns.delete');
 });
 
 // Adding Priority

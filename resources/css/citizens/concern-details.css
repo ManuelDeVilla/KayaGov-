@@ -126,6 +126,7 @@ ul {
     color: var(--neutral-600);
     margin-bottom: 1rem;
     line-height: 1.6;
+    word-break: break-word; 
 }
 
 .concern-location {

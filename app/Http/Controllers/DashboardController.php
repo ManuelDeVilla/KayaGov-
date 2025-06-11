@@ -39,10 +39,10 @@ class DashboardController extends Controller
             $concern->city_name = $concern->city ? $concern->city->city : 'Unknown City';
         }
          // Count each status type
-        $totalConcerns = concerns::count();
-        $pendingConcerns = concerns::where('status', 'pending')->count();
-        $inProgressConcerns = concerns::where('status', 'in progress')->count();
-        $resolvedConcerns = concerns::where('status', 'resolved')->count();
+        $totalConcerns = concerns::where('user_id', Auth::id())->count();
+        $pendingConcerns = concerns::where('status', 'pending')->where('user_id', Auth::id())->count();
+        $inProgressConcerns = concerns::where('status', 'in progress')->where('user_id', Auth::id())->count();
+        $resolvedConcerns = concerns::where('status', 'resolved')->where('user_id', Auth::id())->count();
 
         return view('citizens.dashboard', compact(
             'concerns', 
@@ -55,8 +55,11 @@ class DashboardController extends Controller
 
    public function staffDashboard()
    {
+        $user_city = Auth::user()->city_id;
+
         // Fetch data relevant for staff dashboard - all concerns
         $concerns = concerns::with(['concern_reports', 'comments', 'concern_images', 'users', 'city'])
+            ->where('city_id', $user_city)
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -66,18 +69,18 @@ class DashboardController extends Controller
         }
 
         // Count each status type
-    $totalConcerns = concerns::count();
-    $pendingConcerns = concerns::where('status', 'pending')->count();
-    $inProgressConcerns = concerns::where('status', 'in progress')->count();
-    $resolvedConcerns = concerns::where('status', 'resolved')->count();
+        $totalConcerns = concerns::where('city_id', $user_city)->count();
+        $pendingConcerns = concerns::where('status', 'pending')->where('city_id', $user_city)->count();
+        $inProgressConcerns = concerns::where('status', 'in progress')->where('city_id', $user_city)->count();
+        $resolvedConcerns = concerns::where('status', 'resolved')->where('city_id', $user_city)->count();
 
-    return view('staffs.dashboard', compact(
-        'concerns', 
-        'totalConcerns', 
-        'pendingConcerns', 
-        'inProgressConcerns',
-        'resolvedConcerns'
-    ));
+        return view('staffs.dashboard', compact(
+            'concerns', 
+            'totalConcerns', 
+            'pendingConcerns', 
+            'inProgressConcerns',
+            'resolvedConcerns'
+        ));
 }
 
    public function adminDashboard()

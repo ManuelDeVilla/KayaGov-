@@ -379,4 +379,11 @@ class ConcernsController extends Controller
         // Return the view and pass the data
         return view('staffs.resolved', compact('resolvedConcerns'));
     }
+
+    // Delete concern for admin
+    public function deleteConcern ($id) {
+        concerns::destroy($id);
+
+        return redirect()->route('concern-list');
+    }
 }

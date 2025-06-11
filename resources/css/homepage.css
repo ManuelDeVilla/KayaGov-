@@ -11,8 +11,9 @@
 
 .list-section {
     display: grid;
-    row-gap: 15px;
-    grid-template-columns: 48% 48%;
+    column-gap: 50px;
+    row-gap: 20px;
+    grid-template-columns: 43% 43%;
 }
 
 .body-header {
@@ -413,13 +414,13 @@
 
 /* Copy Link Message */
 .message {
+    display: flex;
     height: 70px;
     width: 28%;
     position: fixed;
     right: 0;
     left: 50%;
     bottom: 10%;
-    display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: white;
@@ -429,6 +430,7 @@
     z-index: 100;
     font-weight: 600;
     opacity: 0;
+    pointer-events: none;
     transition: all 0.5s ease-in-out;
 }
 

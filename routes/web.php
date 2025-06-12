@@ -80,7 +80,7 @@ Route::controller(UserController::class)->group(function() {
 });
 
 Route::controller(ConcernsController::class)->group(function () {
-    Route::get('/concern', 'index')->name(name: 'concern-list');
+    Route::get('/concern', 'index')->name( 'concern-list');
     Route::get('/concerns/create', 'create')->name('create.concerns');
     Route::post('concerns/create', 'store')->name('store.create');
     Route::get('/concerns/search', 'search')->name('search.concerns');
@@ -120,8 +120,14 @@ Route::controller(ProvincesController::class)->group(function () {
 //user profile
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/citizens/profile', [ProfileController::class, 'showProfile'])->name('profile');
+    Route::get('/citizens/profile', [ProfileController::class, 'showProfile'])->name('citizen.profile');
     Route::put('/citizens/profile', [ProfileController::class, 'update'])->name('citizen.profile.update');
+
+    // For Staff
+    Route::get('/staff/profile', [ProfileController::class, 'showProfile'])->name('staff.profile');
+
+    // For Admin
+    Route::get('/admin/profile', [ProfileController::class, 'showProfile'])->name('admin.profile');
 });
 
 
@@ -149,7 +155,7 @@ Route::controller(SystemFeedbackController::class)->group(function () {
     // for feedback creation
     Route::get('/feedback/create', 'create')->name('feedback.create');
     Route::post('/feedback', 'store')->name('feedback.store');
-    Route::post('/feedback/update-status/{feedback}', 'updateStatus')->name('feedback.update-status');
+    Route::patch('/feedback/update-status/{feedback}', 'updateStatus')->name('feedback.update-status');
 });
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

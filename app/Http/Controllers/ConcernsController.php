@@ -120,7 +120,8 @@ class ConcernsController extends Controller
             'title' => 'string|required',
             'description' => 'required',
             'category' => 'required',
-            'city_id' => 'required'
+            'city_id' => 'required',
+            'file.*' => 'image'
         ]);
 
         $validate_concern['user_id'] = Auth::id();
@@ -147,7 +148,7 @@ class ConcernsController extends Controller
      */
     public function show($id)
     {
-        $concerns = concerns::with('images')->findOrFail($id);
+        $concerns = concerns::with('concern_images')->findOrFail($id);
         return view('citizens.concerns.details', ['concerns' => $concerns]);  
 
     }

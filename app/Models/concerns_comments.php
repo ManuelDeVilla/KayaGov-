@@ -10,7 +10,7 @@ class concerns_comments extends Model
 
     protected $table = 'concerns_comments';
 
-    protected $fillable = ['comment', 'concerns_id', 'user_id'];
+    protected $fillable = ['comments', 'concerns_id', 'user_id'];
     //
     public function concern () {
         return $this->belongsTo(concerns::class, 'concerns_id');

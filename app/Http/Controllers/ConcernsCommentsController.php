@@ -24,7 +24,7 @@ class ConcernsCommentsController extends Controller
         // Use the Concern model instance to create comment
         $concern->comments()->create([
             'user_id' => Auth::id(),
-            'comment' => $request->input('comment'),
+            'comments' => $request->input('comment'),
         ]);
 
         return redirect()->back()->with('success', 'Comment added!');

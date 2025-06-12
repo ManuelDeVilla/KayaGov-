@@ -88,7 +88,7 @@
                                 @if(optional($concerns->concern_images)->count() > 0)
                                         <div class="carousel-container">
                                             <div class="carousel-track" id="carouselTrack">
-                                                @foreach($concerns->images as $image)
+                                                @foreach($concerns->concern_images as $image)
                                                     <div class="carousel-slide">
                                                         <img src="{{ asset('storage/' . $image->image_path) }}" alt="Concern Image" style="width: 100%; max-height: 300px; object-fit: cover;">
                                                     </div>
@@ -136,7 +136,7 @@
                                             <span class="comment-date">{{ $comment->created_at->format('M d, Y') }}</span>
                                         </div>
                                     </div>
-                                    <p class="comment-text">{{ $comment->comment }}</p>
+                                    <p class="comment-text">{{ $comment->comments }}</p>
                                 </div>
                             @endforeach
 
@@ -146,7 +146,7 @@
                                     @csrf
                                     <div class="comment-input-container">
                                     <input type="text" class="comment-input" name="comment" required placeholder="Add your comment...">
-                                    <button class="comment-submit">Add Comment</button>
+                                    <button type="submit" class="comment-submit">Add Comment</button>
                                     </div>
                                 </form>
                             @endif

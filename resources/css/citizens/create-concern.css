@@ -184,6 +184,14 @@ textarea {
     border: none;
 }
 
+.form-handler-wrapper {
+    background-color: #dc3545;
+    border-radius: 15px;
+    padding: 20px;
+    color: white;
+    margin-bottom: 20px;
+}
+
 /* Responsive Design */
 @media (max-width: 1024px) {
     .body {

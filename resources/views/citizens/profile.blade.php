@@ -12,6 +12,13 @@
         'resources/css/citizens/sidebar-styles.css',
         'resources/css/citizens/user-profile.css'
     ])
+    @if(Auth::user()->usertype == 'staff')
+        @vite('resources/css/staffs/staff-sidebar.css')
+    @elseif (Auth::user()->usertype == 'admin')
+        @vite('resources/css/admin/admin-sidebar.css')
+    @else
+        @vite('resources/css/citizens/sidebar-styles.css')
+    @endif
 </head> 
 <body> 
     <header>
@@ -20,6 +27,8 @@
             @include('includes.staff-sidebar')
         @elseif (Auth::user()->usertype == 'citizen')
             @include('includes.sidebar')
+        @elseif (Auth::user()->usertype == 'admin')
+            @include('includes.admin-sidebar')
         @endif
     </header>
 

@@ -164,3 +164,8 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 Route::controller(AdminController::class)->group(function () {
     Route::get('admin/staff/lists', 'staffList')->name('staff-lists');
 });
+
+// Route for Fallback page
+Route::fallback(function () {
+    return response()->view('errors.404', [], 404);
+});

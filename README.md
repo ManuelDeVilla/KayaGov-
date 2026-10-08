@@ -1,21 +1,19 @@
 <h1>KayaGov</h1>
 
----
-
 KayaGov is a community-driven platform designed to help citizens report local concerns, allow government offices to manage and resolve those concerns, and provide administrators with tools for monitoring and content moderation.
 
 The platform connects Citizens, Government users, and Administrators in one system where community concerns can be submitted, prioritized, managed, and resolved.
 
 ---
 
-- <h2>Tech Stack Used</h2>
-  - PHP
-  - Laravel
-  - MySQL
-  - JavaScript
-  - HTML
-  - CSS
-  - Bootstrap
+- Tech Stack Used
+- PHP
+- Laravel
+- MySQL
+- JavaScript
+- HTML
+- CSS
+- Bootstrap
 
 <h2>Features</h2>
 <h3>User Roles</h3>

@@ -6,7 +6,8 @@ The platform connects Citizens, Government users, and Administrators in one syst
 
 ---
 
-- Tech Stack Used
+## Tech Stack Used
+
 - PHP
 - Laravel
 - MySQL
@@ -15,7 +16,8 @@ The platform connects Citizens, Government users, and Administrators in one syst
 - CSS
 - Bootstrap
 
-<h2>Features</h2>
+---
+
 <h3>User Roles</h3>
 
 KayaGov supports three types of users:

@@ -20,16 +20,17 @@ input {
     border-radius: 10px;
     background-color: #fafbfa;
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-    overflow-y: scroll;
+    overflow-y: auto;
     overflow-x: hidden;
     z-index: 1;
 }
 
-.options.active .search-input {
+/* .options.active {
     width: 85%;
     padding: 3% 10% 3% 2%;
     border: 1px solid;
-}
+    display: flex;
+} */
 
 .options.active .selector-inputs:hover {
     background-color: #b3b4b4;
@@ -37,20 +38,28 @@ input {
 }
 
 .search-wrapper {
-    width: 100%;
-    padding: 10px;
+    position: relative;
+    flex: 0 100%;
+    padding: 0.5rem 1rem;
     border-radius: 5px;
+    display: flex;
+    justify-content: center;
 }
 
 .search-input {
-    border-radius: 10px;
+    width: 100% !important;
+    border-radius: 0.5rem;
+    padding: 0.5rem 2rem !important;
+    font-size: 1rem !important;
+    margin-top: 0 !important;
+    border: 1px solid black;
 }
 
 .search-wrapper i {
     position: absolute;
-    right: 30px;
-    top: 30%;
-    transform: translateY(-15px);
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 18px;
     pointer-events: none;
 }

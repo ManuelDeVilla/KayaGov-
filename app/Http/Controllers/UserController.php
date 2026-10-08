@@ -111,15 +111,18 @@ class UserController extends Controller
             $validated = $request->validate([
             'username' => 'required|string|min:3|max:16|unique:users,username',
             'email' => 'required|email|unique:users,email',
-            'gender' => 'required|in:Male,Female',
+            'gender' => 'required|in:Male,Female,Others',
             'password' => 'required|min:6|max:20|confirmed'
             ]);
 
             if ($validated['gender'] == 'Male') {
-                $image_path = '/storage/public/default-male.png';
+                $image_path = '/storage/profile/default-male.svg';
+            } else if($validated['gender'] == 'Female') {
+                $image_path = '/storage/profile/default-female.svg';
             } else {
-                $image_path = '/storage/public/default-female.png';
+                $image_path = '/storage/profile/default-other.svg';
             }
+
             $validated['usertype'] = 'citizen';
             $validated['image_path'] = $image_path;
 
@@ -173,16 +176,19 @@ class UserController extends Controller
             $validated = $request->validate([
             'username' => 'required|string|min:3|max:16|unique:users,username',
             'email' => 'required|email|unique:users,email',
-            'gender' => 'required|in:Male,Female',
-            'usertype' => 'required|in:citizen,admin',
+            'gender' => 'required|in:Male,Female,Others',
+            'usertype' => 'required|in:staff,admin',
             'password' => 'required|min:6|max:20|confirmed'
             ]);
 
             if ($validated['gender'] == 'Male') {
-                $image_path = '/storage/public/default-male.png';
+                $image_path = '/storage/profile/default-male.svg';
+            } else if($validated['gender'] == 'Female') {
+                $image_path = '/storage/profile/default-female.svg';
             } else {
-                $image_path = '/storage/public/default-female.png';
+                $image_path = '/storage/profile/default-other.svg';
             }
+
             $validated['image_path'] = $image_path;
 
             session(['registering_user' => $validated]);
@@ -196,7 +202,7 @@ class UserController extends Controller
                     $regestering_user_username= $registering_user['username'];
 
                 // If usertype is government then make their username government + province + city
-                if ($registering_user['usertype'] == 'government') {
+                if ($registering_user['usertype'] == 'staff') {
                     $province_row = provinces::find($request->input('province'));
                     $province_name = $province_row->province;
 
@@ -241,15 +247,18 @@ class UserController extends Controller
             $validated = $request->validate([
             'username' => 'required|string|min:3|max:16|unique:users,username',
             'email' => 'required|email|unique:users,email',
-            'gender' => 'required|in:Male,Female',
+            'gender' => 'required|in:Male,Female,Others',
             'password' => 'required|min:6|max:20|confirmed'
             ]);
 
             if ($validated['gender'] == 'Male') {
-                $image_path = '/storage/public/default-male.png';
+                $image_path = '/storage/profile/default-male.svg';
+            } else if($validated['gender'] == 'Female') {
+                $image_path = '/storage/profile/default-female.svg';
             } else {
-                $image_path = '/storage/public/default-female.png';
+                $image_path = '/storage/profile/default-other.svg';
             }
+            
             $validated['image_path'] = $image_path;
             $validated['usertype'] = 'user';
 
@@ -311,13 +320,21 @@ class UserController extends Controller
 
     // Shows the list of all the user to be verified as a staff
     public function listStaffVerification (Request $request) {
-        $to_verify = User::has('verification')->get();
-        $verify_details = user_verification::all();
+        $search = $request->input('search');
+
+        $query = User::has('verification');
+
+        if ($search) {
+            $query->where('username', 'like', $search . '%');
+        }
+
+        $to_verify = $query->get();
+        $verify_details = user_verification::whereIn('user_id', $to_verify->pluck('id'))->get();
         $count_verify = user_verification::count();
 
         if ($request->ajax()) {
-             return response()->json(['to_verify' => $to_verify, 'verify_details' => $verify_details]);
-             
+            return response()->json(['to_verify' => $to_verify, 'verify_details' => $verify_details]);
+            
         } else {
             return view('admin.staff-verification', ['count_verify' => $count_verify]);
         }
@@ -351,7 +368,7 @@ class UserController extends Controller
             return redirect()->route('dashboard')->with('success', 'Welcome back, ' . Auth::user()->username . '!');
         } else {
             throw ValidationException::withMessages([
-                'error' => 'Sorry, Incorrect Email or Password. Please Try Again. Nigg@'
+                'error' => 'Sorry, Incorrect Email or Password. Please Try Again!'
             ]);
         }
     }

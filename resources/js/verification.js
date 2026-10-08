@@ -1,18 +1,53 @@
 // content holder
 const content_div = document.querySelector('.user-content')
+const search_input = document.querySelector('#search-input')
 
 // csrf token
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content')
 
 // gets the project url
 const project_url = window.location.origin
-console.log(project_url)
+
+let latest_search_id = 0
+let search_timeout_id = null
 
 // Get all the staff verification
 $.get(get_verification,
     function (values) {
         createUserVerification (values)
 })
+
+// Search listener
+if (search_input) {
+    search_input.addEventListener('input', function (event) {
+        clearTimeout(search_timeout_id)
+        const current_search_id = ++latest_search_id
+        const search_value = event.target.value.trim()
+
+        search_timeout_id = setTimeout(() => {
+            $.get(get_verification, { search: search_value }, function (values) {
+                if (current_search_id === latest_search_id) {
+                    content_div.innerHTML = ''
+                    if (values.to_verify.length !== 0) {
+                        createUserVerification(values)
+                    } else {
+                        verificationFallback()
+                    }
+                }
+            })
+        }, 300)
+    })
+}
+
+// Fallback for no results
+function verificationFallback () {
+    content_div.innerHTML = `
+        <div class="fallback-container">
+            <img src="/images/svg/user-not-found.svg" alt="Not Found Illustration">
+            <span class="fallback-text">No context found.</span>
+        </div>
+    `
+}
 
 function createUserVerification (values) {
     values.to_verify.forEach((value) => {
@@ -38,7 +73,7 @@ function createUserVerification (values) {
 
         // When button is clicked, open the coe in new tab
         coe_button.addEventListener('click', function () {
-            window.open(('/KayaGov/public/storage/' + coe_path.coe_path), '_blank')
+            window.open((`${storage_url}/${coe_path.coe_path}`), '_blank')
         })
 
         // action section of div

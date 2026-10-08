@@ -19,12 +19,14 @@ class ConcernsCommentsController extends Controller
     {
         $request->validate([
             'comment' => 'required|string',
+            'parent_id' => 'nullable|exists:concerns_comments,id',
         ]);
 
         // Use the Concern model instance to create comment
         $concern->comments()->create([
             'user_id' => Auth::id(),
-            'comments' => $request->input('comment'),
+            'comment' => $request->input('comment'),
+            'parent_id' => $request->input('parent_id')
         ]);
 
         return redirect()->back()->with('success', 'Comment added!');

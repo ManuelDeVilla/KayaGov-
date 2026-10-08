@@ -4,6 +4,8 @@ const search_region = document.querySelector('.search-input')
 const selectorArrow = document.querySelector('#arrow')
 
 let latest_ajax_request = 0
+let debounce_timeout_id = null
+let searchValue = null
 
 selector.addEventListener('click', function () {
     options.classList.toggle('active')
@@ -14,42 +16,13 @@ selector.addEventListener('click', function () {
         search_region.value = ''
     }
 
-    search_region.addEventListener('click', function (event) {
-        event.stopPropagation()
-    })
-
-    // Hides the options div if clicked somewhere in the document
-    document.addEventListener('click', function (event) {
-        if (!selector.contains(event.target) && options.classList.contains('active')) {
-            options.classList.toggle('active');
-            selectorArrow.classList.remove('fa-angle-up')
-            selectorArrow.classList.add('fa-angle-down')
-
-            // Resets the search region if clicked outside the wrapper
-            if (search_region.value.trim() != '') {
-                search_region.value = ''
-            }
-        }
-    })
-
     // Hides and shows option div
+    // Creates the options
+
     if (optionIsActive) {
         selectorArrow.classList.remove('fa-angle-down')
         selectorArrow.classList.add('fa-angle-up')
-
-        // Creates the options
-        let searchValue = null
-        var get_type = 'show'
-        requestType(searchValue, get_type, null)
-
-        search_region.addEventListener('input', function (event) {
-            let searchValue = event.target.value
-            get_type = 'search'
-
-            const current_ajax = ++latest_ajax_request
-
-            requestType(searchValue, get_type, current_ajax)
-        })
+        requestType()
 
     } else {
         selectorArrow.classList.remove('fa-angle-up')
@@ -57,29 +30,71 @@ selector.addEventListener('click', function () {
     }
 })
 
-function requestType (searchValue, get_type, request_id) {
+// Hides the options div if clicked somewhere in the document
+document.addEventListener('click', function (event) {
+    if (!selector.contains(event.target) && options.classList.contains('active')) {
+        options.classList.toggle('active');
+        selectorArrow.classList.remove('fa-angle-up')
+        selectorArrow.classList.add('fa-angle-down')
+
+        // Resets the search region if clicked outside the wrapper
+        if (search_region.value.trim() != '') {
+            search_region.value = ''
+        }
+    }
+})
+
+search_region.addEventListener('click', function (event) {
+    event.stopPropagation()
+})
+
+search_region.addEventListener('input', function (event) {
+    let searchValue = event.target.value
+    clearTimeout(debounce_timeout_id)
+
+    debounce_timeout_id = setTimeout(() => {
+        const current_ajax = ++latest_ajax_request
+        requestType(searchValue, 'search', current_ajax)
+    }, 300);
+})
+
+function requestType (
+    searchValue = null,
+    get_type = 'show',
+    request_id = null
+) {
 
     const selector_inputs = document.querySelectorAll('.selector-inputs')
+    const fallback_text = document.querySelector('#location-fallback-element')
 
     // Removes existing selectors
-    if (selector_inputs) {
-        selector_inputs.forEach(selector_input => {
+    if (selector_inputs || fallback_text) {
+        selector_inputs?.forEach(selector_input => {
             selector_input.remove()
         })
+
+        fallback_text?.remove()
     }
+
     
     switch (get_type) {
         case 'show':
             $.get(show_city, function (cities) {
-                cities.city.forEach((city) => {
-                    const province_initial = cities.province.find(array => city.province_id == array.id)
-                    const province_array = province_initial
-                    createOptions(city, province_array)
-                })
+                console.log(cities)
+                if (cities?.city.length !== 0) {
+                    cities.city.forEach((city) => {
+                        const province_initial = cities.province.find(array => city.province_id == array.id)
+                        const province_array = province_initial
+                        createOptions(city, province_array)
+                    })
+                } else {
+                    createFallbackOption('Cities')
+                }
             })
-            break
+            break;
 
         case 'search':
+            // console.log('asdasdasda')
             $.get(search_city, {search: searchValue}, function (cities) {
                 const selector_inputs = document.querySelectorAll('.selector-inputs')
 
@@ -94,12 +109,15 @@ function requestType (searchValue, get_type, request_id) {
                     return false
                 }
 
-                cities.city.forEach((city) => {
-
+                if (cities?.city.length !== 0) {
+                    cities.city.forEach((city) => {
                     const province_initial = cities.province.find(array => city.province_id == array.id)
                     const province_array = province_initial
                     createOptions(city, province_array)
                 })
+                } else {
+                    createFallbackOption(`City named ${searchValue}`)
+                }
             })
             break
     }
@@ -125,4 +143,14 @@ function createOptions (city, province_array) {
     })
 
     options.appendChild(inputs)
+}
+
+function createFallbackOption (type = null) {
+    console.log('asdasd')
+    const fallbackElement = document.createElement('p')
+    fallbackElement.className = 'location-fallback'
+    fallbackElement.textContent =  `No ${type} found`
+    fallbackElement.id = 'location-fallback-element'
+
+    options.appendChild(fallbackElement);
 }

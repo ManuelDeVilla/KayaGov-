@@ -1,5 +1,5 @@
 body, .staff-list-container, .staff-list-table {
-    font-family: 'Segoe UI', 'Roboto', Arial, 'Helvetica Neue', sans-serif;
+    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
     font-size: 1rem;
     color: #222;
     background: none;
@@ -9,13 +9,14 @@ body, .staff-list-container, .staff-list-table {
     border-radius: 12px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.07);
     padding: 2.5rem 2rem 2rem 2rem;
-    margin-left: 380px;
+    margin-left: 19rem;
     margin-top: auto;
-    max-width: 1100px;
-    font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+    max-width: 1050px;
+    
+    /* font-family: "Montserrat", "sans-serif"; */
 }
 .staff-list-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 600;
     color: #1a237e;
     margin-bottom: 1.5rem;
@@ -67,6 +68,53 @@ body, .staff-list-container, .staff-list-table {
     padding: 2rem 0;
     font-size: 1.1rem;
 }
+
+.staff-list-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.search-bar {
+    position: relative;
+    display: flex;
+}
+
+.search-bar i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0.5rem;
+}
+
+.search-bar input {
+    flex: 1;
+    font-size: 1rem;
+    padding: 0.2rem 2rem;
+    border-radius: 0.5rem;
+    border: 1px solid black;
+}
+
+.staff-list-filter {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.staff-list-filter select,
+td button {
+    cursor: pointer;
+}
+
+td button {
+    padding: 0.2rem 0.5rem;
+    border-radius: 0.5rem;
+}
+
+td button:hover {
+    color: white;
+    background-color: rgb(250, 56, 56);
+}
+
 @media (max-width: 800px) {
     .staff-list-container {
         padding: 1.2rem 0.5rem;

@@ -1,4 +1,5 @@
  @vite(['resources/css/app.css', 'resources/js/app.js'])
+ 
     <aside class="sidebar">
             <div class="sidebar-section">
                 <div class="logo">

@@ -97,7 +97,7 @@ select {
 .options.active {
     width: 50%;
     margin-top: 20px;
-    overflow: scroll;
+    overflow-y: auto;
 }
 
 textarea {

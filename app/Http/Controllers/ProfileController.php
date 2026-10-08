@@ -26,14 +26,33 @@ class ProfileController extends Controller
     {
         $user = User::find(Auth::id());
 
-
         $request->validate([
-            'username'    => 'required|string|max:255|unique:users,username,' . $user->id,
-            'email'       => 'email|unique:users,email,' . $user->id,
-            'password'    => 'nullable|min:8|confirmed',
-            'province'    => 'required|exists:provinces,id',
-            'city_id'     => 'required|exists:cities,id',
+            'username'          => 'required|string|max:255|unique:users,username,' . $user->id,
+            'email'             => 'email|unique:users,email,' . $user->id,
+            'current_password'  => 'required_with:password|nullable',
+            'password'          => 'nullable|min:8|confirmed',
+            'province'          => 'required|exists:provinces,id',
+            'city_id'           => 'required|exists:cities,id',
+            'avatar'            => 'nullable|image|max:2048'
         ]);
+
+        $user = Auth::user();
+
+        // If the user is trying to set a new password, verify the current one first
+        if ($request->filled('password')) {
+            if (!Hash::check($request->current_password, $user->password)) {
+                return redirect()->back()
+                    ->withErrors(['current_password' => 'Your current password is incorrect.'])
+                    ->withInput();
+            }
+
+            $user->password = Hash::make($request->password);
+        }
+
+        if ($request->hasFile('avatar')) {
+            $image_path = $request->file('avatar')->store('profile', 'public');
+            $user->image_path = '/storage/' . $image_path;
+        }
 
         $province = Provinces::find($request->province);
         $city = City::find($request->city_id);
@@ -42,10 +61,6 @@ class ProfileController extends Controller
         $user->email = $request->email;
         $user->province_id = $province ? $province->id : null;
         $user->city_id = $city ? $city->id : null;
-
-        if ($request->password) {
-            $user->password = Hash::make($request->password);
-        }
 
         $user->save();
 

@@ -9,7 +9,7 @@
 }
 
 .header {
-    margin-bottom: 40px;
+    margin-bottom: 1rem;
 }
 
 .search-bar {
@@ -20,10 +20,10 @@
 }
 
 .search-bar input {
-    width: 60%;
+    flex: 0 0 80%;
     border: 1px grey solid;
     border-radius: 10px;
-    padding: 10px 35px;
+    padding: 0.2rem 2rem;
 }
 
 .search-bar i {
@@ -47,13 +47,13 @@
 }
 
 .user-header p {
-    font-size: 25px;
+    font-size: 2rem;
+    color: #1a237e;
     font-weight: 600;
 }
 
 .user-content {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 1.5rem;
 }
 
 .user-verification {
@@ -65,11 +65,18 @@
 }
 
 .details-section {
-    width: 30%;
+    display: flex;
+    gap: 0.5rem;
 }
 
-.action-section {
-    width: 25%;
+.details-section > p{
+    font-size: 1rem;
+}
+
+.action-section >
+form {
+    display: flex;
+    gap: 0.5rem;
 }
 
 .details-section, .action-section form {
@@ -79,7 +86,7 @@
 }
 
 button {
-    padding: 8px 20px;
+    padding: 0.2rem 1rem;
     color: #407BFF;
     background: none;
     font-weight: 600;
@@ -93,4 +100,38 @@ button {
 button:hover {
     color: white;
     background: #407BFF;
+}
+
+.fallback-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.fallback-container >
+img {
+    width: 20%;
+    height: 20vh;
+}
+
+.fallback-container >
+span {
+    font-size: 1rem
+}
+
+.empty-staff-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.empty-staff-container > img {
+    height: 45vh;
+}
+
+.empty-staff-container > span {
+    font-size: 1.2rem;
 }

@@ -30,17 +30,23 @@
         <section class="user-wrapper">
             <div class="user-list">
                 <div class="user-header">
-                    <p>Staff Registered (<span>{{ $count_verify }}</span>)</p>
+                    <p>Staff to be Registered (<span>{{ $count_verify }}</span>)</p>
                 </div>
 
                 <div class="user-content">
-                    
+                    @if($count_verify < 1)
+                        <div class="empty-staff-container">
+                            <img src="{{ asset('images/empty-staff.jpg') }}" alt="">
+                            <span>No Staff Accounts to be verified yet.</span>
+                        </div>
+                    @endif
                 </div>
             </div>
         </section>
     </div>
 
     <script>
+        const storage_url = "{{ asset('storage') }}"
         const get_verification = "{{ route('list.staff-verification') }}"
         const submit_form = "{{ route('submit.verification') }}"
     </script>

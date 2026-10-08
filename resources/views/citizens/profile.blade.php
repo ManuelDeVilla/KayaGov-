@@ -37,18 +37,24 @@
             <div class="profile-container">
                 <div class="profile-header">
                     <div class="profile-avatar">
-                        <div class="avatar-image">
-                            <svg class="avatar-placeholder" viewBox="0 0 24 24">
-                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"></path>
-                            </svg>
+                        <div class="avatar-image" id="avatar-image-wrapper">
+                            <img
+                                src="{{ $user->image_path }}"
+                                alt="Profile Avatar"
+                                id="avatar-preview"
+                                class="avatar-img"
+                            >
                         </div>
+                        <input type="file" name="avatar" id="avatar-input" accept="image/*" class="hidden" disabled  form="profile-form">
+                        <p id="avatar-error" class="error-handler hidden"></p>
+
                         <div class="profile-status">
-                            <span class="role-badge">Citizen</span>
+                            <span class="role-badge">{{ Auth::user()->usertype }}</span>
                         </div>
                     </div>
-                        <h1 class="profile-title">
-                            {{ $profile->username ?? Auth::user()->username }}'s Profile
-                        </h1>
+                    <h1 class="profile-title">
+                        {{ $profile->username ?? Auth::user()->username }}'s Profile
+                    </h1>
                 </div>
 
                 <div class="profile-content"> 
@@ -68,7 +74,7 @@
                 </div>
             @endif
 
-            <form id="profile-form" action="{{ route('citizen.profile.update') }}" method="POST">
+            <form id="profile-form" action="{{ route('citizen.profile.update') }}" method="POST"  enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
                 
@@ -89,8 +95,8 @@
                     <div class="form-row">
                         <div class="form-group" style="position: relative; max-width: 600px;">
                             <label for="password">Current Password:</label>
-                            <input type="password" id="password" name="password" class="form-control" style="padding-right: 40px; padding: 12px; width: 100%; box-sizing: border-box; border-radius: 5px;"
-                                placeholder="Enter current password" readonly>
+                            <input type="password" id="current_password" name="current_password" class="form-control"
+                            style="padding-right: 40px; padding: 12px; width: 100%; box-sizing: border-box; border-radius: 5px;" placeholder="Enter current password" readonly>
                         </div>
                     </div>
 
@@ -107,30 +113,31 @@
                 </div>
 
                 <div class="form-row">
-                <div class="form-group">
-                    <label for="province">Province</label>
-                    <select name="province" required>
-                        @foreach($provinces as $province)
-                            <option value="{{ $province->id }}" 
-                                {{ $user->province_id == $province->id ? 'selected' : '' }}>
-                                {{ $province->province }}
-                            </option>
-                        @endforeach
-                    </select>
-                </div>
+                    <div class="form-group">
+                        <label for="province-select">Province</label>
+                        <select name="province" id="province-select" required>
+                            @foreach($provinces as $province)
+                                <option value="{{ $province->id }}"
+                                    {{ $user->province_id == $province->id ? 'selected' : '' }}>
+                                    {{ $province->province }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                <div class="form-group">
-                    <label for="city_id">City</label>
-                    <select name="city_id" required>
-                        @foreach($cities as $city)
-                            <option value="{{ $city->id }}" 
-                                {{ $user->city_id == $city->id ? 'selected' : '' }}>
-                                {{ $city->city }}
-                            </option>
-                        @endforeach
-                    </select>
+                    <div class="form-group">
+                        <label for="city-select">City</label>
+                        <select name="city_id" id="city-select" required>
+                            @foreach($cities as $city)
+                                <option value="{{ $city->id }}"
+                                    data-province="{{ $city->province_id }}"
+                                    {{ $user->city_id == $city->id ? 'selected' : '' }}>
+                                    {{ $city->city }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
                 </div>
-
 
             </div>
 
@@ -151,131 +158,161 @@
             $('#profile-form input').removeAttr('readonly');
             $('#save-button').removeAttr('disabled');
         });
+        const list_city_by_province = "{{ route('show.create-concern') }}"
     </script>
 
     <script src="{{ asset('js/main.js') }}"></script>
     <script src="{{ asset('js/profile.js') }}"></script>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-    const editButton = document.getElementById('edit-button');
-    const saveButton = document.getElementById('save-button');
-    const cancelButton = document.getElementById('cancel-button');
-    const formInputs = document.querySelectorAll('#profile-form input, #profile-form select');
-    const originalValues = {};
+        document.addEventListener('DOMContentLoaded', function () {
+        const editButton = document.getElementById('edit-button')
+        const saveButton = document.getElementById('save-button')
+        const cancelButton = document.getElementById('cancel-button')
 
-    // Store original values
-    formInputs.forEach(input => {
-        originalValues[input.name] = input.value;
-    });
+        // Split into two groups, since selects and inputs need different locking mechanisms
+        const textInputs = document.querySelectorAll('#profile-form input')
+        const selectInputs = document.querySelectorAll('#profile-form select')
 
-    editButton.addEventListener('click', function() {
-        // Enable form inputs
-        formInputs.forEach(input => {
-            input.removeAttribute('readonly');
-            input.removeAttribute('disabled');
-        });
+        const avatarWrapper = document.getElementById('avatar-image-wrapper')
+        const avatarInput = document.getElementById('avatar-input')
+        const avatarPreview = document.getElementById('avatar-preview')
+        const avatarError = document.getElementById('avatar-error')
 
-        // Toggle buttons
-        editButton.style.display = 'none';
-        saveButton.disabled = false;
-        cancelButton.style.display = 'inline-block';
-    });
+        const originalValues = {}
+        let originalAvatarSrc = avatarPreview.src
 
-    cancelButton.addEventListener('click', function() {
-        // Restore original values
-        formInputs.forEach(input => {
-            input.value = originalValues[input.name] || '';
-        });
+        // Store original values for cancel/revert (covers both inputs and selects)
+        textInputs.forEach(input => { originalValues[input.name] = input.value })
+        selectInputs.forEach(select => { originalValues[select.name] = select.value })
 
-        // Disable form inputs
-        formInputs.forEach(input => {
-            input.setAttribute('readonly', true);
-            if (input.tagName === 'SELECT') {
-                input.setAttribute('disabled', true);
-            }
-        });
+        function enterEditMode () {
+            textInputs.forEach(input => {
+                input.removeAttribute('readonly')
+            })
 
-        // Toggle buttons
-        editButton.style.display = 'inline-block';
-        saveButton.disabled = true;
-        cancelButton.style.display = 'none';
-    });
-});
-</script>
+            selectInputs.forEach(select => {
+                select.removeAttribute('disabled')
+            })
 
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    const editButton = document.getElementById('edit-button');
-    const saveButton = document.getElementById('save-button');
-    const cancelButton = document.getElementById('cancel-button');
-    const formInputs = document.querySelectorAll('#profile-form input, #profile-form select');
-    const provinceSelect = document.getElementById('province');
-    const citySelect = document.getElementById('city');
-    const originalValues = {};
+            avatarInput.removeAttribute('disabled')
+            avatarWrapper.classList.add('editable')
 
-    // Store original values
-    formInputs.forEach(input => {
-        originalValues[input.name] = input.value;
-    });
+            editButton.style.display = 'none'
+            saveButton.disabled = false
+            cancelButton.style.display = 'inline-block'
+        }
 
-    // Make selects readonly by disabling pointer events initially
-    provinceSelect.style.pointerEvents = 'none';
-    provinceSelect.style.backgroundColor = '#e9ecef';
-    provinceSelect.tabIndex = -1;
+        const provinceSelect = document.getElementById('province-select')
+        const citySelect = document.getElementById('city-select')
 
-    citySelect.style.pointerEvents = 'none';
-    citySelect.style.backgroundColor = '#e9ecef';
-    citySelect.tabIndex = -1;
+        let lastProvinceValue = provinceSelect.value // track so we know if it actually changed
 
-    editButton.addEventListener('click', function() {
-        // Enable inputs and selects
-        formInputs.forEach(input => {
-            input.removeAttribute('readonly');
-            input.removeAttribute('disabled');
-        });
+        provinceSelect.addEventListener('change', function () {
+            const newProvinceId = provinceSelect.value
 
-        // Enable pointer events and reset styles on selects
-        provinceSelect.style.pointerEvents = '';
-        provinceSelect.style.backgroundColor = '';
-        provinceSelect.tabIndex = 0;
+            // Only reset/refetch if the province actually changed to a different value
+            if (newProvinceId === lastProvinceValue) return
+            lastProvinceValue = newProvinceId
 
-        citySelect.style.pointerEvents = '';
-        citySelect.style.backgroundColor = '';
-        citySelect.tabIndex = 0;
+            $.get(list_city_by_province, { province: newProvinceId }, function (values) {
+                citySelect.innerHTML = ''
 
-        // Toggle buttons
-        editButton.style.display = 'none';
-        saveButton.disabled = false;
-        cancelButton.style.display = 'inline-block';
-    });
+                values.city.forEach((city) => {
+                    const option = document.createElement('option')
+                    option.value = city.id
+                    option.textContent = city.city
+                    citySelect.appendChild(option)
+                })
 
-    cancelButton.addEventListener('click', function() {
-        // Restore original values
-        formInputs.forEach(input => {
-            input.value = originalValues[input.name] || '';
-        });
+                // Force the user to pick a city again, since the old selection
+                // may no longer belong to the newly selected province
+                citySelect.value = ''
+            })
+        })
 
-        // Disable inputs again
-        formInputs.forEach(input => {
-            input.setAttribute('readonly', true);
-            if (input.tagName === 'SELECT') {
-                // Disable pointer events again on selects
-                input.style.pointerEvents = 'none';
-                input.style.backgroundColor = '#e9ecef';
-                input.tabIndex = -1;
-            }
-        });
+        function exitEditMode () {
+        // Restore text inputs
+        textInputs.forEach(input => {
+            input.value = originalValues[input.name] || ''
+            input.setAttribute('readonly', true)
+        })
 
-        // Toggle buttons
-        editButton.style.display = 'inline-block';
-        saveButton.disabled = true;
-        cancelButton.style.display = 'none';
-    });
-});
+        // Restore province immediately
+        provinceSelect.value = originalValues['province'] || ''
+        provinceSelect.setAttribute('disabled', true)
+        lastProvinceValue = provinceSelect.value
+
+        // gets the current value of the city if the change is not saved.
+        $.get(list_city_by_province, { province: originalValues['province'] }, function (values) {
+            citySelect.innerHTML = ''
+
+            values.city.forEach((city) => {
+                const option = document.createElement('option')
+                option.value = city.id
+                option.textContent = city.city
+                citySelect.appendChild(option)
+            })
+
+            citySelect.value = originalValues['city_id'] || ''
+            citySelect.setAttribute('disabled', true)
+        })
+
+        // Revert avatar preview + clear any selected file
+        avatarPreview.src = originalAvatarSrc
+        avatarInput.value = ''
+        avatarInput.setAttribute('disabled', true)
+        avatarWrapper.classList.remove('editable')
+
+        avatarError.textContent = ''
+        avatarError.classList.add('hidden')
+
+        editButton.style.display = 'inline-block'
+        saveButton.disabled = true
+        cancelButton.style.display = 'none'
+    }
+
+        // Start in locked state on page load
+        selectInputs.forEach(select => select.setAttribute('disabled', true))
+
+        editButton.addEventListener('click', enterEditMode)
+        cancelButton.addEventListener('click', exitEditMode)
+
+            // Clicking the avatar image (only while editable) opens the file picker
+            avatarWrapper.addEventListener('click', function () {
+                if (!avatarInput.disabled) {
+                    avatarInput.click()
+                }
+            })
+
+            // Validate + preview the chosen file
+            avatarInput.addEventListener('change', function (event) {
+                const file = event.target.files[0]
+
+                if (!file) return
+
+                if (!file.type.startsWith('image/')) {
+                    avatarError.textContent = 'Please select a valid image file.'
+                    avatarError.classList.remove('hidden')
+
+                    // Reset the file input and preview, since the selection was invalid
+                    avatarInput.value = ''
+                    avatarPreview.src = originalAvatarSrc
+                    return
+                }
+
+                // Valid image — clear any previous error and preview it
+                avatarError.textContent = ''
+                avatarError.classList.add('hidden')
+
+                const reader = new FileReader()
+                reader.onload = function (e) {
+                    avatarPreview.src = e.target.result
+                }
+                reader.readAsDataURL(file)
+            })
+        })
     </script>
-
-
 
 </body>
 </html>

@@ -1,3 +1,4 @@
+ @vite(['resources/css/app.css', 'resources/js/app.js'])
 
 <aside class="sidebar">
     <div class="sidebar-section">
@@ -23,11 +24,9 @@
 
             <li>
                 <a href="{{ route('staff-lists') }}" class="nav-link">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span>Government Staffs</span>
+                    <i class="fa-regular fa-address-book"></i>
+                    <span>User List</span>
                 </a>
-            </li>
-
             </li>
 
             <!-- Create Account -->

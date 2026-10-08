@@ -17,8 +17,8 @@
     @endif
 
     @vite('resources/css/homepage.css')
-    @vite('resources/css/citizens/sidebar-styles.css')
-    @vite('resources/css/homepage.css')
+    <!-- @vite('resources/css/citizens/sidebar-styles.css') -->
+    <!-- @vite('resources/css/homepage.css') -->
 
 </head>
 <body>
@@ -68,23 +68,25 @@
                         <button id="applied_city" class="applied-filters-city"><i class="fa-solid fa-xmark"></i><span class="text-content"  id="apply_text_city"></span></button>
                     </div>
 
-                <div id="sort-by" class="sort-by">
-                        <div id="sort-header" class="sort-by-header">
-                            <p>Sort By</p>
-                            <i class="fa-solid fa-angle-up"></i>
-                        </div>
-                        <div id="pending" class="pending">
-                            <p>Pending</p>
-                            <i id="pending-icon" class="fa-regular fa-square"></i>
-                        </div>
-                        <div id="in_progress" class="in-progress">
-                            <p>In Progress</p>
-                            <i id="in-progress-icon" class="fa-regular fa-square"></i>
-                        </div>
-                        <div id="resolved" class="resolved">
-                            <p>Resolved</p>
-                            <i id="resolved-icon" class="fa-regular fa-square"></i>
-                        </div>
+                    <div id="sort-by" class="sort-by">
+                            <div id="sort-header" class="sort-by-header">
+                                <p>Sort By</p>
+                                <i class="fa-solid fa-angle-up"></i>
+                            </div>
+                            @if (Auth::user()->usertype != 'staff')
+                                <div id="pending" class="pending">
+                                    <p>Pending</p>
+                                    <i id="pending-icon" class="fa-regular fa-square"></i>
+                                </div>
+                                <div id="in_progress" class="in-progress">
+                                    <p>In Progress</p>
+                                    <i id="in-progress-icon" class="fa-regular fa-square"></i>
+                                </div>
+                                <div id="resolved" class="resolved">
+                                    <p>Resolved</p>
+                                    <i id="resolved-icon" class="fa-regular fa-square"></i>
+                                </div>
+                            @endif
                         <div id="prioritize" class="prioritize">
                             <p>Prioritize</p>
                             <i id="prioritize-icon" class="fa-regular fa-square"></i>
@@ -127,52 +129,109 @@
             </div>
         </section>
            
-        <section class="list-section">
-            @foreach ($concerns as $concern)
-                <div class="card">
-                    <div class="card-header">
-                        <p class="header">{{ $concern->title }}</p>
-                        <div class="status progress">
-                            <p class="progress"><span class="icon progress"><i class="fa-solid fa-circle-exclamation"></i></span>{{ $concern->status }}</p>
+        <section class="list-section {{ !$concerns_count > 0 ? 'empty' : ''}}">
+            @if ($concerns_count > 0)
+                @foreach ($concerns as $concern)
+                    <div class="card">
+                        <div class="card-header">
+                            <p class="header">{{ $concern->title }}</p>
+                            <div class="status {{ $concern->status === 'in progress' ? 'in-progress' : $concern->status }}">
+                                <p class="{{ $concern->status == 'in progress' ? 'in-progress' : $concern->status }}">
+                                    <span class="icon {{ $concern->status === 'in progress' ? 'in-progress' : $concern->status }}">
+                                        @if ($concern->status == 'in progress')
+                                            <i class="fa-regular fa-hourglass"></i>
+                                        @elseif($concern->status == 'pending')
+                                            <i class="fa-solid fa-circle-exclamation"></i>
+                                        @else
+                                            <i class="fa-solid fa-clipboard-check"></i>
+                                        @endif
+                                    </span>
+                                    {{ $concern->status }}
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="details">
+                            <div class="category-wrapper progress">
+                                <p class="progress">
+                                    <span class="icon progress">
+                                        @if($concern->category === 'Roads')
+                                        <i class="fa-solid fa-road"></i>
+                                        @elseif($concern->category === 'Street Light')
+                                            <i class="fa-solid fa-lightbulb"></i>
+                                        @elseif($concern->category === 'Sidewalk and Pedestrian')
+                                            <i class="fa-solid fa-person-walking"></i>
+                                        @elseif($concern->category === 'Garbage Collection and Waste Disposal')
+                                            <i class="fa-solid fa-dumpster"></i>
+                                        @elseif($concern->category === 'Traffic Congestion')
+                                            <i class="fa-solid fa-road-circle-exclamation"></i>
+                                        @elseif($concern->category === 'Government Aid Request')
+                                            <i class="fa-solid fa-hand-holding-hand"></i>
+                                        @elseif($concern->category === 'Others')
+                                            <i class="fa-solid fa-ticket"></i>
+                                        @endif
+                                    </span>
+                                    {{ $concern->category }}
+                                </p>
+                            </div>
+
+                            <div class="location-wrapper">
+                                <p class="location"><span class="icon location"><i class="fa-solid fa-location-dot"></i></span>{{ $concern->city->city }}</p>
+                            </div>
+                        </div>
+
+                        <div class="description">
+                            <p>{{ $concern->description }}</p>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="interaction-container">
+                                <div class="date">
+                                    <p><i class="fa-regular fa-clock"></i> {{ $concern->created_at->format('F d, Y') }}</p>
+                                </div>
+
+                                <div class="priority">
+                                    <button class="{{ $concern->is_prioritized ? 'is-clicked' : '' }}">
+                                        <i class="fa-solid fa-arrow-up"></i>
+                                        <span class="priority-text">{{ $concern->priority_count }}</span>
+                                        <span class="hidden" id={{ $concern->id }}></span>
+                                    </button>
+                                </div>
+
+                                <div class="share">
+                                    <button><i class="fa-solid fa-retweet"></i> <span>share</span></button>
+                                </div>
+                            </div>
+
+                            <div class="view">
+                                <a class="links" href="{{ route('citizens.concerns.details', $concern->id) }}">View Details <i class="fa-solid fa-arrow-right-long"></i></a>
+                            </div>
                         </div>
                     </div>
-                    
-                    <div class="details">
-                        <div class="category-wrapper progress">
-                            <p class="progress"><span class="icon progress"><i class="fa-regular fa-map"></i></span>{{ $concern->category }}</p>
-                        </div>
+                @endforeach
+            @else
+                @php($fallback_message = '')
 
-                        <div class="location-wrapper">
-                            <p class="location"><span class="icon location"><i class="fa-solid fa-location-dot"></i></span>{{ $concern->city->city }}</p>
-                        </div>
-                    </div>
+                @if($page === 'in progress')
+                    @php($fallback_message = 'No Concerns with status in progress in your city yet.')
+                @elseif ($page === 'resolved')
+                    @php($fallback_message = 'No Concerns with status resolved in your city yet.')
+                @else
+                    @php($fallback_message = 'No Concerns Created yet.')
+                @endif
 
-                    <div class="description">
-                        <p>{{ $concern->description }}</p>
-                    </div>
-
-                    <div class="card-footer">
-                        <div class="date">
-                            <p><i class="fa-regular fa-clock"></i> {{ $concern->created_at->format('F d, Y') }}</p>
-                        </div>
-
-                        <div class="priority">
-                            <button><i class="fa-solid fa-arrow-up"></i></button>
-                            <span class="priority-text">{{ $concern->priority_count }}</span>
-
-                            <span class="hidden" id={{ $concern->id }}></span>
-                        </div>
-
-                        <div class="share">
-                            <button><i class="fa-solid fa-retweet"></i> <span>share</span></button>
-                        </div>
-
-                        <div class="view">
-                            <a class="links" href="{{ route('citizens.concerns.details', $concern->id) }}">View Details <i class="fa-solid fa-arrow-right-long"></i></a>
-                        </div>
+                <div class="fallback-container">
+                    <img src="{{ asset('images/svg/no_concerns.svg') }}" alt="No Concern Illustration">
+                    <div class="fallback-text-container">
+                        <span class="fallback-text">{{ $fallback_message }}</span>
+                        @if ($page === 'reported')
+                            <span class="fallback-text">
+                                    You could add one <a href="{{ route('create.concerns') }}" class="link">here</a>
+                            </span>
+                         @endif
                     </div>
                 </div>
-            @endforeach
+            @endif
         </section>
 
         <div class="message">
@@ -182,17 +241,36 @@
     </div>
 
     <script>
-        const search_concerns = "{{ route('search.concerns') }}"
-        const show_concerns = "{{ route('concern-list') }}"
-        const sort_concerns = "{{ route('sort.concerns') }}"
+       @if ($page === 'in progress')
+            const search_concerns = "{{ route('staffs.inprogress.search') }}"
+            const show_concerns = "{{ route('staffs.inprogress') }}"
+            const sort_concerns = "{{ route('staffs.inprogress.sort') }}"
+        @elseif ($page === 'resolved')
+            const search_concerns = "{{ route('staffs.resolved.search') }}"
+            const show_concerns = "{{ route('staffs.resolved') }}"
+            const sort_concerns = "{{ route('staffs.resolved.sort') }}"
+        @else
+            const search_concerns = "{{ route('search.concerns') }}"
+            const show_concerns = "{{ route('concern-list') }}"
+            const sort_concerns = "{{ route('sort.concerns') }}"
+        @endif
         const list_province = "{{ route('list.province') }}"
         const list_search_province = "{{ route('list.search-province') }}"
         const list_city = "{{ route('show.create-concern') }}"
         const list_search_city = "{{ route('search.create-concern') }}"
         const add_priority = "{{ route('add.priorities') }}"
         const user_id = parseInt("{{ Auth::user()->id }}")
+
+        // For the share url of the card
+        const concern_details_url = "{{ url('citizen/concern/details') }}"
+
+        // For staff
+        const staff_city = @json(auth()->user()->city_id);
+        console.log(staff_city);
     </script>
+    <!-- For Filtering or Searcing -->
     @vite('resources/js/homepage/filter.js')
+    
     <!-- For Prioritze and Share Button -->
     @vite('resources/js/homepage/functionality.js')
 </body>

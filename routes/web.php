@@ -9,10 +9,8 @@ use App\Http\Controllers\ConcernsController;
 use App\Http\Controllers\ProvincesController;
 use App\Http\Controllers\SystemFeedbackController;
 use App\Http\Controllers\DashboardController;
-use App\Models\provinces;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Models\concern_priorities;
 
 Route::get('/', function () {
     return view('home');
@@ -118,7 +116,6 @@ Route::controller(ProvincesController::class)->group(function () {
 
 
 //user profile
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/citizens/profile', [ProfileController::class, 'showProfile'])->name('citizen.profile');
     Route::put('/citizens/profile', [ProfileController::class, 'update'])->name('citizen.profile.update');
@@ -139,11 +136,16 @@ Route::get('/citizen/concern/details/{id}', [ConcernsController::class, 'show'])
 //comments 
 Route::post('/concerns/{concern}/comment', [ConcernsController::class, 'addComment'])->name('concerns.comment');
 
-Route::get('/concerns/in-progress', action: [ConcernsController::class, 'showInProgress'])->name('staffs.inprogress');
+// In Progress Concerns for staff only
+Route::get('/concerns/in-progress', [ConcernsController::class, 'showInProgress'])->name('staffs.inprogress');
+Route::get('/concerns/in-progress/search', [ConcernsController::class, 'showInProgress'])->name('staffs.inprogress.search');
+Route::get('/concerns/in-progress/sort', [ConcernsController::class, 'showInProgress'])->name('staffs.inprogress.sort');
 Route::post('/concerns/{concern}/update-status', [ConcernsController::class, 'updateStatus'])->name('concerns.updateStatus');
 
-Route::get('/concerns/resolved', action: [ConcernsController::class, 'showResolved'])->name('staffs.resolved');
-
+// Resolved Concerns for staff only
+Route::get('/concerns/resolved', [ConcernsController::class, 'showResolved'])->name('staffs.resolved');
+Route::get('/concerns/resolved/search', [ConcernsController::class, 'showResolved'])->name('staffs.resolved.search');
+Route::get('/concerns/resolved/sort', [ConcernsController::class, 'showResolved'])->name('staffs.resolved.sort');
 
 
 // User Profile Routes
@@ -163,6 +165,7 @@ Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard
 // Route for Admin Controller
 Route::controller(AdminController::class)->group(function () {
     Route::get('admin/staff/lists', 'staffList')->name('staff-lists');
+    Route::post('admin/user/delete/{id}', 'deleteUser')->name('user.delete');
 });
 
 // Route for Fallback page

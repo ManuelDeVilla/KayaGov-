@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('concerns_id')->constrained('concerns', 'id')->onDelete('cascade');
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // optional but recommended
+            $table->foreignId('parent_id')->nullable()->constrained('concerns_comments')->onDelete('cascade');
             $table->text('comment'); // renamed from 'comments'
             $table->timestamps();
         });

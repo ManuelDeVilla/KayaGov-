@@ -10,7 +10,7 @@ class concerns_comments extends Model
 
     protected $table = 'concerns_comments';
 
-    protected $fillable = ['comments', 'concerns_id', 'user_id'];
+    protected $fillable = ['comment', 'concerns_id', 'user_id', 'parent_id'];
     //
     public function concern () {
         return $this->belongsTo(concerns::class, 'concerns_id');
@@ -19,5 +19,13 @@ class concerns_comments extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function replies() {
+        return $this->hasMany(concerns_comments::class, 'parent_id');
+    }
+
+    public function parent() {
+        return $this->belongsTo(concerns_comments::class, 'parent_id');
     }
 }

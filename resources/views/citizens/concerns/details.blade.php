@@ -40,7 +40,7 @@
                         <div class="concern-card">
                             <div class="concern-header">
                                 <div class="concern-status">
-                                    <span class="status-badge in-progress">{{ $concerns->status }}</span>
+                                    <span class="status-badge {{ $concerns->status == 'in progress' ? 'in-progress' : $concerns->status }}">{{ $concerns->status }}</span>
                                     <span class="status-badge roads">{{ $concerns->category }}</span>
                                     <span class="date-submitted">{{ $concerns->created_at->format('M d, Y') }}</span>
                                 <div class="concern-actions">
@@ -85,7 +85,7 @@
                                     
                                 </div>
                                 <h1 class="concern-title">{{ $concerns->title }}</h1>
-                                @if(optional($concerns->concern_images)->count() > 0)
+                                @if($image_count > 0)
                                         <div class="carousel-container">
                                             <div class="carousel-track" id="carouselTrack">
                                                 @foreach($concerns->concern_images as $image)
@@ -94,17 +94,17 @@
                                                     </div>
                                                 @endforeach
                                             </div>
-                                            <div class="carousel-controls">
-                                               <button onclick="moveSlide(-1)" class="carousel-arrow left">
-                                                    <i class="fas fa-chevron-left"></i>
-                                                </button>
-                                                <button onclick="moveSlide(1)" class="carousel-arrow right">
-                                                    <i class="fas fa-chevron-right"></i>
-                                                </button>
-                                            </div>
+                                            @if ($image_count > 1)
+                                                <div class="carousel-controls">
+                                                <button onclick="moveSlide(-1)" class="carousel-arrow left">
+                                                        <i class="fas fa-chevron-left"></i>
+                                                    </button>
+                                                    <button onclick="moveSlide(1)" class="carousel-arrow right">
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </button>
+                                                </div>
+                                            @endif
                                         </div>
-                                    @else
-                                        <p>No image uploaded for this concern.</p>
                                     @endif
                                 <p class="concern-description">
                                     {{ $concerns->description }}
@@ -122,21 +122,61 @@
                                 Comments ({{ $concerns->comments->count() }})
                             </h3>   
 
-                            @foreach ($concerns->comments as $comment)
-                                {{ $comment->user->username}}
+                            @foreach ($concerns->comments->whereNull('parent_id') as $comment)
                                 <div class="comment">
                                     <div class="comment-user">
-                                        <div class="user-avatar">
-                                            <div class="avatar-initial">
-                                                {{ strtoupper(substr($comment->user->name, 0, 1)) }}
-                                            </div>
-                                        </div>
+                                        <img src="{{ $comment->user->image_path }}" class="user-avatar" alt="{{ Auth::user()->username }}'s avatar">
+
                                         <div class="user-info">
-                                            <span class="user-name">{{ $comment->user->name }}</span>
+                                            <span class="comment-user-name">{{ $comment->user->username }}</span>
                                             <span class="comment-date">{{ $comment->created_at->format('M d, Y') }}</span>
                                         </div>
                                     </div>
-                                    <p class="comment-text">{{ $comment->comments }}</p>
+                                    <p class="comment-text">{{ $comment->comment }}</p>
+
+                                    <!-- Nested Replies -->
+                                    @if($comment->replies->count())
+                                        <div class="comment-replies hidden">
+                                            @foreach ($comment->replies as $reply)
+                                                <div class="comment">
+                                                    <div class="comment-user">
+                                                        <img src="{{ $reply->user->image_path }}" class="user-avatar" alt="{{ $reply->user->username }}'s avatar">
+
+                                                        <div class="user-info">
+                                                            <span class="reply-user-name">{{ $reply->user->username }}</span>
+                                                            <span class="comment-date">{{ $reply->created_at->format('M d, Y') }}</span>
+                                                        </div>
+                                                    </div>
+                                                    <p class="comment-text">{{ $reply->comment }}</p>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                    @endif
+
+                                    <!-- Reply button -->
+                                    @if (auth()->check())
+                                        <div class="reply-footer">
+                                            <div class="reply-interaction-container">
+                                                <button class="reply-toggle" data-comment-id="{{ $comment->id }}">Reply</button>
+                                                <button class="see-reply {{ !$comment->replies->count() > 0 ? 'hidden' : '' }}">See replies</button>
+                                            </div>
+
+                                            <div class="reply-form-container hidden">
+                                                <form
+                                                    action="{{ route('concerns.comments.store', $concerns->id) }}"
+                                                    class="reply-form"
+                                                    method="POST"
+                                                >
+                                                    @csrf
+                                                    <input type="hidden" name="parent_id" value="{{ $comment->id }}">
+                                                    <div class="comment-input-container">
+                                                        <input type="text" class="comment-input" name="comment" placeholder="Add comment..." required>
+                                                        <button type="submit" class="comment-submit">></button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
                             @endforeach
 
@@ -160,4 +200,6 @@
     </div>
     
 </body>
+
+@vite('resources/js/details/reply.js')
 </html>

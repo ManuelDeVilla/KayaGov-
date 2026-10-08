@@ -639,3 +639,7 @@ input:read-only {
   margin-bottom: var(--space-4);
 }
 
+#profile-form select:disabled {
+    background-color: #f1f3f5; /* match your readonly input styling */
+    cursor: not-allowed;
+}

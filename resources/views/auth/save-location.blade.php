@@ -35,7 +35,7 @@
                         <div class="selector-wrapper" id="province-selector">
                             <div class="selector">
                                 <span class="selector_text">Select a Province</span>
-                                <span id="arrow">&#129131;</span>
+                                <span id="arrow">&#x1F86A;</span>
                             </div>
 
                             <div class="options">
@@ -56,7 +56,7 @@
                         <div class="selector-wrapper" id="city-selector">
                             <div class="selector">
                                 <span class="selector_text">Select a City</span>
-                                <span id="arrow">&#129131;</span>
+                                <span id="arrow">&#x1F86A;</span>
                             </div>
 
                             <div class="options">

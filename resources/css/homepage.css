@@ -11,22 +11,102 @@
 
 .list-section {
     display: grid;
-    column-gap: 50px;
-    row-gap: 20px;
-    grid-template-columns: 45% 45%;
+    gap: 1rem;
+    grid-template-columns: 1fr 1fr;
+    min-width: 0;
 }
+
+/* For loading when searching */
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+}
+
+.blocks-container {
+    display: grid;
+    grid-template-columns: 1.75rem 1.75rem;
+    grid-template-rows: 1.75rem 1.75rem;
+    justify-content: center;
+}
+
+.loading-block {
+    height: 1rem;
+    width: 1rem;
+    grid-row: 1;
+    grid-column: 1;
+    background-color: #155dfc;
+    animation: loadingBlocks 2s infinite ease-in-out;
+}
+
+.block-2 { animation-delay: -1.5s;}
+.block-3 { animation-delay: -1s;}
+
+@keyframes loadingBlocks {
+    0% {
+        transform: translate(0, 0);
+    }
+    25% {
+        transform: translate(1.75rem, 0);
+    }
+    50% {
+        transform: translate(1.75rem, 1.75rem);
+    }
+    75% {
+        transform: translate(0, 1.75rem);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+/* End styling for loading container */
+
+/* Fallback styling when sorting and searching */
+.fallback-container {
+    gap: 1rem;
+}
+
+.fallback-container,
+.fallback-text-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+/* End of Fallback styling when sorting and searching */
+
+/* When concerns are empty */
+.list-section.empty {
+    display: flex;
+    justify-content: center;
+}
+
+.fallback-container > img {
+    height: 15rem;
+    width: 15rem;
+}
+
+.fallback-text > a {
+    color: blue;
+}
+
+.fallback-text > a:hover {
+    text-decoration: underline;
+}
+/* End of styling when concerns are empty */
 
 .body-header {
     height: 100px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-evenly;
 }
 
 .body-header * {
     width: 80%;
-    margin-right: 30px;
+    margin-left: 5rem;
 }
 
 .search-section {
@@ -37,7 +117,7 @@
 }
 
 .search-wrapper {
-    width: 75%;
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -151,11 +231,17 @@
     cursor: pointer;
 }
 
-.pending, .in-progress, .resolved, .prioritize {
+.sort-by > .pending,
+.sort-by > .in-progress,
+.sort-by > .resolved,
+.sort-by > .prioritize {
     display: none;
 }
 
-.pending.active, .in-progress.active, .resolved.active, .prioritize.active {
+.sort-by > .pending.active,
+.sort-by > .in-progress.active,
+.sort-by > .resolved.active,
+.sort-by > .prioritize.active {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -183,6 +269,7 @@
 }
 
 .sort-search {
+    position: relative;
     display: none;
 }
 
@@ -202,18 +289,13 @@
 
 .sort-search input{
     border: 1px #E3E3E3 solid;
-    padding: 5px 20px 5px 35px;
+    padding: 0.2rem 0.5rem 0.2rem 1.8rem;
+    margin-left: 0.5rem;
 }
 
-.sort-search.sort-province i {
+.sort-search i {
     position: absolute;
-    left: 100px;
-    color: #808080;
-}
-
-.sort-search.sort-city i {
-    position: absolute;
-    left: 70px;
+    left: 1rem;
     color: #808080;
 }
 
@@ -235,6 +317,13 @@
 
 .province-options p:hover, .city-options p:hover {
     background-color: #407BFF;
+}
+
+.province-options >
+.loading-text,
+.city-options >
+.loading-text {
+    padding: 10px 25px;
 }
 
 /* Submit/Apply Filters CSS */
@@ -260,17 +349,15 @@
 
 /* Card CSS */
 .card {
-    height: 300px;
-    width: 90%;
+    min-width: 0;
+    width: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    margin-left: 90px;
-    margin-top: 15px;
-    padding: 20px 40px;
+    padding: 1rem 1.5rem;
+    gap: 1rem;
     border-radius: 20px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
-
 }
 
 .card-header {
@@ -298,7 +385,7 @@
 }
 
 /* Color of each status should change based on status */
-.icon.progress, .progress{
+.icon.in-progress, .in-progress{
     color: #9B7606;
 }
 
@@ -309,6 +396,7 @@
 .icon.resolved, .resolved{
     color: #00B74A;
 }
+
 .status {
     padding: 8px 20px;
     border-radius: 15px;
@@ -324,24 +412,20 @@
 
 /* Enhanced Pending Status */
 .status.pending, .category-wrapper.pending {
-    padding: 8px 20px;
+    padding: 0.2rem 0.5rem;
     background-color: #FFF2D1;
     border-radius: 15px;
-    border: 2px solid #FFB800;
-    position: relative;
 }
 
 /* Color of each status should change based on status */
-.status.progress, .category-wrapper.progress{
-    padding: 10px 25px;
+.status.in-progress, .category-wrapper.in-progress{
+    padding: 0.2rem 0.5rem;
     background-color: #FAEFB1;
     border-radius: 20px;
-    overflow: auto;
-    white-space: nowrap;
 }
 
 .status.resolved, .category-wrapper.resolved {
-    padding: 10px 25px;
+    padding: 0.2rem 0.5rem;
     background-color: #DFF2E1;
     border-radius: 20px;
 }
@@ -379,32 +463,31 @@
 .card-footer{
     display: flex;
     align-items: center;
-    margin-top: 20px;
+    justify-content: space-between;
+    margin-top: 0.5rem;
+}
+
+.interaction-container {
+    display: flex;
+    gap: 1rem;
 }
 
 .card-footer *{
     font-size: 12px;
 }
 
-.date {
-    width: 250px;
-    margin-right: 15px;
-}
-
-.priority, .share {
-    width: 70px;
-    margin-right: 10px;
-}
-
 .priority button, .share button {
+    display: flex;
+    gap: 0.2rem;
+    align-items: center;
     background-color: inherit;
     border: none;
     cursor: pointer;
 }
 
-.view {
-    width: 190px;
-    margin-left: 100px;
+/* When priority is clicked */
+.priority .is-clicked {
+    color: #155dfc;
 }
 
 .view a {
@@ -442,4 +525,3 @@
     opacity: 1;
     pointer-events: all;
 }
-

@@ -70,7 +70,24 @@
                             <p class="concern-meta">
                                 <span><i class="fas fa-map-marker-alt"></i> {{ $concern->city_name }}</span>
                                 <span><i class="fas fa-calendar"></i> {{ $concern->created_at ? $concern->created_at->format('M d, Y') : 'No date' }}</span>
-                                <span><i class="fas fa-tag"></i> {{ ucfirst($concern->category) }}</span>
+                                <span>
+                                    @if($concern->category === 'Roads')
+                                        <i class="fa-solid fa-road"></i>
+                                    @elseif($concern->category === 'Street Light')
+                                        <i class="fa-solid fa-lightbulb"></i>
+                                    @elseif($concern->category === 'Sidewalk and Pedestrian')
+                                        <i class="fa-solid fa-person-walking"></i>
+                                    @elseif($concern->category === 'Garbage Collection and Waste Disposal')
+                                        <i class="fa-solid fa-dumpster"></i>
+                                    @elseif($concern->category === 'Traffic Congestion')
+                                        <i class="fa-solid fa-road-circle-exclamation"></i>
+                                    @elseif($concern->category === 'Government Aid Request')
+                                        <i class="fa-solid fa-hand-holding-hand"></i>
+                                    @elseif($concern->category === 'Others')
+                                        <i class="fa-solid fa-ticket"></i>
+                                    @endif
+                                    {{ ucfirst($concern->category) }}
+                                </span>
                             </p>
                             <p class="concern-description">{{ Str::limit($concern->description, 100) }}</p>
                         </div>
